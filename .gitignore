@@ -10,3 +10,4 @@ doc/
 *.ip_user_files/
 *.sim/
 *.runs/
+*.log

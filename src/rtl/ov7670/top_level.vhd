@@ -121,7 +121,18 @@ architecture Behavioral of top_level is
 		c1 : OUT std_logic
 		);
 	END COMPONENT;
-
+    
+    COMPONENT RGB2BW
+    PORT(
+       R : IN std_logic_vector(7 downto 0);
+       G : IN std_logic_vector(7 downto 0);
+       B : IN std_logic_vector(7 downto 0);
+       R_BW : OUT std_logic_vector(7 downto 0);
+       G_BW : OUT std_logic_vector(7 downto 0);
+       B_BW : OUT std_logic_vector(7 downto 0)
+    );
+    END COMPONENT;
+    
 	COMPONENT Address_Generator
 	PORT(
 		CLK25       : IN  std_logic;
@@ -149,6 +160,7 @@ architecture Behavioral of top_level is
    signal rdaddress  : std_logic_vector(18 downto 0);
    signal rddata     : std_logic_vector(11 downto 0);
    signal red,green,blue : std_logic_vector(7 downto 0);
+   signal red_bw, green_bw, blue_bw : std_logic_vector(7 downto 0);
    signal activeArea : std_logic;
    
    signal rez_160x120 : std_logic;
@@ -156,9 +168,9 @@ architecture Behavioral of top_level is
    signal size_select: std_logic_vector(1 downto 0);
    signal rd_addr,wr_addr  : std_logic_vector(16 downto 0);
 begin
-   vga_r <= red(7 downto 4);
-   vga_g <= green(7 downto 4);
-   vga_b <= blue(7 downto 4);
+   vga_r <= red_bw(7 downto 4);
+   vga_g <= green_bw(7 downto 4);
+   vga_b <= blue_bw(7 downto 4);
    
    rez_160x120 <= btnl;
    rez_320x240 <= btnr;
@@ -241,6 +253,15 @@ begin
 		R => red,
 		G => green,
 		B => blue
+	);
+	
+	Inst_RGB2BW: RGB2BW PORT MAP(
+	   R => red,
+	   G => green,
+	   B => blue,
+	   R_BW => red_bw,
+	   G_BW => green_bw,
+	   B_BW => blue_bw
 	);
 
 	Inst_Address_Generator: Address_Generator PORT MAP(

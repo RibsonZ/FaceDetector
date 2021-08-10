@@ -43,9 +43,9 @@ begin
 				
    			when x"06" => sreg <= x"8C00"; -- RGB444 Set RGB format
    			when x"07" => sreg <= x"0400"; -- COM1   no CCIR601
- 				when x"08" => sreg <= x"4010"; -- COM15  Full 0-255 output, RGB 565
+ 				when x"08" => sreg <= x"40D0"; -- 10"; -- COM15  Full 0-255 output, RGB 565 //today
 				when x"09" => sreg <= x"3a04"; -- TSLB   Set UV ordering,  do not auto-reset window
-				when x"0A" => sreg <= x"1438"; -- COM9  - AGC Celling
+				when x"0A" => sreg <= x"146A"; -- 38"; -- COM9  - AGC Celling
 				when x"0B" => sreg <= x"4f80"; --b3"; -- MTX1  - colour conversion matrix
 				when x"0C" => sreg <= x"5060"; --b3"; -- MTX2  - colour conversion matrix
 				when x"0D" => sreg <= x"5100"; -- MTX3  - colour conversion matrix
@@ -86,9 +86,9 @@ begin
             when x"27" => sreg <= x"4d40"; 
                                   
             when x"28" => sreg <= x"4e20";
-            when x"29" => sreg <= x"6900"; -- GFIX (0x69) 0x00
+            when x"29" => sreg <= x"690A"; -- GFIX (0x69) 0x00
                                    
-            when x"2A" => sreg <= x"6b4a";
+            when x"2A" => sreg <= x"6b0a"; -- 4a";
             when x"2B" => sreg <= x"7410";
                                   
             when x"2C" => sreg <= x"8d4f";

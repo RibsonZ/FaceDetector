@@ -7,7 +7,7 @@
 -- The length of href last controls how often pixels are captive - (2 downto 0) stores
 -- one pixel every 4 cycles.
 --
--- "line" is used to control how often data is captured. In this case every forth 
+-- "line" is used to control how often data is captured. In this case every fourth 
 -- line
 ----------------------------------------------------------------------------------
 library IEEE;
