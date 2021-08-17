@@ -14,6 +14,7 @@ entity top_level is
            btnc            : in  STD_LOGIC;
            btnr            : in  STD_LOGIC;
            config_finished : out STD_LOGIC;
+           sw              : in STD_LOGIC_vector(3 downto 0);
            
            vga_hsync : out  STD_LOGIC;
            vga_vsync : out  STD_LOGIC;
@@ -124,12 +125,14 @@ architecture Behavioral of top_level is
     
     COMPONENT RGB2BW
     PORT(
-       R : IN std_logic_vector(7 downto 0);
-       G : IN std_logic_vector(7 downto 0);
-       B : IN std_logic_vector(7 downto 0);
-       R_BW : OUT std_logic_vector(7 downto 0);
-       G_BW : OUT std_logic_vector(7 downto 0);
-       B_BW : OUT std_logic_vector(7 downto 0)
+        rgb : IN std_logic_vector(11 downto 0);
+        bw : OUT std_logic_vector(11 downto 0)
+--       R : IN std_logic_vector(7 downto 0);
+--       G : IN std_logic_vector(7 downto 0);
+--       B : IN std_logic_vector(7 downto 0);
+--       R_BW : OUT std_logic_vector(7 downto 0);
+--       G_BW : OUT std_logic_vector(7 downto 0);
+--       B_BW : OUT std_logic_vector(7 downto 0)
     );
     END COMPONENT;
     
@@ -158,23 +161,26 @@ architecture Behavioral of top_level is
    signal wrdata     : std_logic_vector(11 downto 0);
    
    signal rdaddress  : std_logic_vector(18 downto 0);
-   signal rddata     : std_logic_vector(11 downto 0);
+   signal rddata, wrdata_rgb, wrdata_bw     : std_logic_vector(11 downto 0);
    signal red,green,blue : std_logic_vector(7 downto 0);
-   signal red_bw, green_bw, blue_bw : std_logic_vector(7 downto 0);
    signal activeArea : std_logic;
    
    signal rez_160x120 : std_logic;
    signal rez_320x240 : std_logic;
    signal size_select: std_logic_vector(1 downto 0);
    signal rd_addr,wr_addr  : std_logic_vector(16 downto 0);
+   signal color_sel : std_logic;
 begin
-   vga_r <= red_bw(7 downto 4);
-   vga_g <= green_bw(7 downto 4);
-   vga_b <= blue_bw(7 downto 4);
+   color_sel <= sw(0);
+   wrdata <= wrdata_bw when (color_sel = '1') else wrdata_rgb;
+   
+   vga_r <= red(7 downto 4);
+   vga_g <= green(7 downto 4);
+   vga_b <= blue(7 downto 4);
    
    rez_160x120 <= btnl;
    rez_320x240 <= btnr;
- your_instance_name : clocking
+    Inst_clocking : clocking
      port map
       (-- Clock in ports
        CLK_100 => CLK100,
@@ -243,7 +249,7 @@ begin
 		href  => ov7670_href,
 		d     => ov7670_data,
 		addr  => wraddress,
-		dout  => wrdata,
+		dout  => wrdata_rgb,
 		we    => wren(0)
 	);
 
@@ -256,12 +262,15 @@ begin
 	);
 	
 	Inst_RGB2BW: RGB2BW PORT MAP(
-	   R => red,
-	   G => green,
-	   B => blue,
-	   R_BW => red_bw,
-	   G_BW => green_bw,
-	   B_BW => blue_bw
+	   rgb => wrdata_rgb,
+	   bw => wrdata_bw
+	   
+--	   R => red,
+--	   G => green,
+--	   B => blue,
+--	   R_BW => red_bw,
+--	   G_BW => green_bw,
+--	   B_BW => blue_bw
 	);
 
 	Inst_Address_Generator: Address_Generator PORT MAP(

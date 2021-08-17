@@ -43,15 +43,15 @@ begin
 				
    			when x"06" => sreg <= x"8C00"; -- RGB444 Set RGB format
    			when x"07" => sreg <= x"0400"; -- COM1   no CCIR601
- 				when x"08" => sreg <= x"40D0"; -- 10"; -- COM15  Full 0-255 output, RGB 565 //today
+ 				when x"08" => sreg <= x"4010";--D0"; -- 10"; -- COM15  Full 0-255 output, RGB 565
 				when x"09" => sreg <= x"3a04"; -- TSLB   Set UV ordering,  do not auto-reset window
-				when x"0A" => sreg <= x"146A"; -- 38"; -- COM9  - AGC Celling
-				when x"0B" => sreg <= x"4f80"; --b3"; -- MTX1  - colour conversion matrix
-				when x"0C" => sreg <= x"5060"; --b3"; -- MTX2  - colour conversion matrix
+				when x"0A" => sreg <= x"1438";--6A"; -- 38"; -- COM9  - AGC Celling
+				when x"0B" => sreg <= x"4fb3"; --80"; --b3"; -- MTX1  - colour conversion matrix
+				when x"0C" => sreg <= x"50b3"; --60"; --b3"; -- MTX2  - colour conversion matrix
 				when x"0D" => sreg <= x"5100"; -- MTX3  - colour conversion matrix
-				when x"0E" => sreg <= x"5222"; --3d"; -- MTX4  - colour conversion matrix
-				when x"0F" => sreg <= x"534e"; --a7"; -- MTX5  - colour conversion matrix
-				when x"10" => sreg <= x"5480"; --e4"; -- MTX6  - colour conversion matrix
+				when x"0E" => sreg <= x"523d";--22"; --3d"; -- MTX4  - colour conversion matrix
+				when x"0F" => sreg <= x"53a7";--4e"; --a7"; -- MTX5  - colour conversion matrix
+				when x"10" => sreg <= x"54e4";--80"; --e4"; -- MTX6  - colour conversion matrix
 				when x"11" => sreg <= x"589e"; -- MTXS  - Matrix sign and auto contrast
 				when x"12" => sreg <= x"3dc0"; -- COM13 - Turn on GAMMA and UV Auto adjust
 				when x"13" => sreg <= x"1100"; -- CLKRC  Prescaler - Fin/(1+1)
@@ -88,7 +88,7 @@ begin
             when x"28" => sreg <= x"4e20";
             when x"29" => sreg <= x"690A"; -- GFIX (0x69) 0x00
                                    
-            when x"2A" => sreg <= x"6b0a"; -- 4a";
+            when x"2A" => sreg <= x"6b0a"; -- 4a"; // PLL control
             when x"2B" => sreg <= x"7410";
                                   
             when x"2C" => sreg <= x"8d4f";
@@ -108,6 +108,7 @@ begin
                                   
             when x"36" => sreg <= x"b382";
             when x"37" => sreg <= x"b80a";
+            when x"38" => sreg <= x"6f9f"; -- White balance
 --				when x"10" => sreg <= x"703a"; -- SCALING_XSC
 --				when x"11" => sreg <= x"7135"; -- SCALING_YSC
 --				when x"12" => sreg <= x"7200"; -- SCALING_DCWCTR  -- zzz was 11 
