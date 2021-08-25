@@ -22,7 +22,7 @@
 
 module RGB2BW(
         input [11:0] rgb,
-        output [11:0] bw
+        output [3:0] bw
 //    input [7:0] R,
 //    input [7:0] G,
 //    input [7:0] B,
@@ -38,7 +38,7 @@ module RGB2BW(
         sum = rgb[11:8] + rgb[7:4] + rgb[3:0];
     end
     
-    assign bw = {sum[5:2], sum[5:2], sum[5:2]};
+    assign bw = sum[5:2];
 //    assign R_BW = sum[9:2];
 //    assign G_BW = sum[9:2];
 //    assign B_BW = sum[9:2];

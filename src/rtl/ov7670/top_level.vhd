@@ -101,9 +101,9 @@ architecture Behavioral of top_level is
 	PORT(
 		Din : IN std_logic_vector(11 downto 0);
 		Nblank : IN std_logic;          
-		R : OUT std_logic_vector(7 downto 0);
-		G : OUT std_logic_vector(7 downto 0);
-		B : OUT std_logic_vector(7 downto 0)
+		R : OUT std_logic_vector(3 downto 0);
+		G : OUT std_logic_vector(3 downto 0);
+		B : OUT std_logic_vector(3 downto 0)
 		);
 	END COMPONENT;
 
@@ -126,7 +126,7 @@ architecture Behavioral of top_level is
     COMPONENT RGB2BW
     PORT(
         rgb : IN std_logic_vector(11 downto 0);
-        bw : OUT std_logic_vector(11 downto 0)
+        bw : OUT std_logic_vector(3 downto 0)
 --       R : IN std_logic_vector(7 downto 0);
 --       G : IN std_logic_vector(7 downto 0);
 --       B : IN std_logic_vector(7 downto 0);
@@ -161,8 +161,8 @@ architecture Behavioral of top_level is
    signal wrdata     : std_logic_vector(11 downto 0);
    
    signal rdaddress  : std_logic_vector(18 downto 0);
-   signal rddata, wrdata_rgb, wrdata_bw     : std_logic_vector(11 downto 0);
-   signal red,green,blue : std_logic_vector(7 downto 0);
+   signal rddata, rddata_rgb, wrdata_rgb, wrdata_bw     : std_logic_vector(11 downto 0);
+   signal red,green,blue, rddata_bw : std_logic_vector(3 downto 0);
    signal activeArea : std_logic;
    
    signal rez_160x120 : std_logic;
@@ -172,11 +172,11 @@ architecture Behavioral of top_level is
    signal color_sel : std_logic;
 begin
    color_sel <= sw(0);
-   wrdata <= wrdata_bw when (color_sel = '1') else wrdata_rgb;
+   wrdata <= wrdata_rgb;--wrdata_bw when (color_sel = '1') else wrdata_rgb;
    
-   vga_r <= red(7 downto 4);
-   vga_g <= green(7 downto 4);
-   vga_b <= blue(7 downto 4);
+   vga_r <= red;
+   vga_g <= green;
+   vga_b <= blue;
    
    rez_160x120 <= btnl;
    rez_320x240 <= btnr;
@@ -233,7 +233,7 @@ begin
 	Inst_frame_buffer: frame_buffer PORT MAP(
 		addrb => rd_addr,
 		clkb   => clk_vga,
-		doutb        => rddata,
+		doutb        => rddata_rgb,
       
 		clka   => ov7670_pclk,
 		addra => wr_addr,
@@ -252,7 +252,9 @@ begin
 		dout  => wrdata_rgb,
 		we    => wren(0)
 	);
-
+    
+    rddata <= rddata_rgb when color_sel = '1' else (rddata_bw & rddata_bw & rddata_bw);
+    
 	Inst_RGB: RGB PORT MAP(
 		Din => rddata,
 		Nblank => activeArea,
@@ -262,8 +264,8 @@ begin
 	);
 	
 	Inst_RGB2BW: RGB2BW PORT MAP(
-	   rgb => wrdata_rgb,
-	   bw => wrdata_bw
+	   rgb => rddata_rgb,
+	   bw => rddata_bw
 	   
 --	   R => red,
 --	   G => green,
