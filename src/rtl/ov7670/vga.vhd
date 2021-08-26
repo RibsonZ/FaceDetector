@@ -1,4 +1,5 @@
-
+-- source
+-- Wojciech Zebrowski: added reset
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -8,7 +9,8 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 
 entity VGA is
-    Port ( CLK25 : in  STD_LOGIC;									-- Horloge d'entrée de 25 MHz							
+    Port ( CLK25 : in  STD_LOGIC;									-- Horloge d'entrée de 25 MHz	
+            rst : in std_logic;						
 			  clkout : out  STD_LOGIC;					-- Horloge de sortie vers le ADV7123 et l'écran TFT
            rez_160x120 : IN std_logic;
            rez_320x240 : IN std_logic;
@@ -38,55 +40,63 @@ begin
 -- initialisation d'un compteur de 0 à 799 (800 pixel par ligne):
 -- à chaque front d'horloge en incrémente le compteur de colonnes
 -- c-a-d du 0 à 799.
-	process(CLK25)
-		begin
-			if (CLK25'event and CLK25='1') then
-				if (Hcnt = HM) then
-					Hcnt <= "0000000000";
-               if (Vcnt= VM) then
-                  Vcnt <= "0000000000";
-                  activeArea <= '1';
-               else
-                  if rez_160x120 = '1' then
-                     if vCnt < 120-1 then
+	process(CLK25) 
+        begin
+            if (CLK25'event and CLK25='1') then
+                if (rst = '1') then
+                    Hcnt <= "0000000000";
+                    Vcnt <= "1000001000";
+                    activeArea <= '0';
+                elsif (Hcnt = HM) then
+                    Hcnt <= "0000000000";
+                    if (Vcnt= VM) then
+                        Vcnt <= "0000000000";
                         activeArea <= '1';
-                     end if;
-                  elsif rez_320x240 = '1' then
-                     if vCnt < 240-1 then
-                        activeArea <= '1';
-                     end if;
-                  else
-                     if vCnt < 480-1 then
-                        activeArea <= '1';
-                     end if;
-                  end if;
-                  Vcnt <= Vcnt+1;
-               end if;
-				else
-               if rez_160x120 = '1' then
-                  if hcnt = 160-1 then
-                     activeArea <= '0';
-                  end if;
-               elsif rez_320x240 = '1' then
-                  if hcnt = 320-1 then
-                     activeArea <= '0';
-                  end if;
-               else
-                  if hcnt = 640-1 then
-                     activeArea <= '0';
-                  end if;
-               end if;
-					Hcnt <= Hcnt + 1;
-				end if;
-			end if;
-		end process;
+                    else
+                        activeArea <= '0';
+                        if rez_160x120 = '1' then
+                            if vCnt < 120-1 then
+                                activeArea <= '1';
+                            end if;
+                        elsif rez_320x240 = '1' then
+                            if vCnt < 240-1 then
+                                activeArea <= '1';
+                            end if;
+                        else
+                            if vCnt < 480-1 then
+                                activeArea <= '1';
+                            end if;
+                        end if;
+                        Vcnt <= Vcnt+1;
+                    end if;
+                else
+                    activeArea <= '1';
+                    if rez_160x120 = '1' then
+                        if hcnt = 160-1 then
+                            activeArea <= '0';
+                        end if;
+                    elsif rez_320x240 = '1' then
+                        if hcnt = 320-1 then
+                            activeArea <= '0';
+                        end if;
+                    else
+                        if hcnt = 640-1 then
+                            activeArea <= '0';
+                        end if;
+                    end if;
+                    Hcnt <= Hcnt + 1;
+                end if;
+            end if;
+        end process;
 ----------------------------------------------------------------
 
 -- génération du signal de synchronisation horizontale Hsync:
 	process(CLK25)
 		begin
 			if (CLK25'event and CLK25='1') then
-				if (Hcnt >= (HD+HF) and Hcnt <= (HD+HF+HR-1)) then   --- Hcnt >= 656 and Hcnt <= 751
+				if (rst = '1') then
+				    Hsync <= '0';
+				elsif (Hcnt >= (HD+HF) and Hcnt <= (HD+HF+HR-1)) then   --- Hcnt >= 656 and Hcnt <= 751
 					Hsync <= '0';
 				else
 					Hsync <= '1';
@@ -99,7 +109,9 @@ begin
 	process(CLK25)
 		begin
 			if (CLK25'event and CLK25='1') then
-				if (Vcnt >= (VD+VF) and Vcnt <= (VD+VF+VR-1)) then  ---Vcnt >= 490 and vcnt<= 491
+				if (rst = '1') then
+                    Vsync <= '0';				    
+                elsif (Vcnt >= (VD+VF) and Vcnt <= (VD+VF+VR-1)) then  ---Vcnt >= 490 and vcnt<= 491
 					Vsync <= '0';
 				else
 					Vsync <= '1';
@@ -117,4 +129,3 @@ clkout <= CLK25;
 
 		
 end Behavioral;
-

@@ -22,19 +22,15 @@
 
 module top_level(
     input wire clk100,
-    
-    input wire rst,
-    
+    input wire reset_in,
     input wire btnl,
     input wire btnc,
     input wire btnr,
     input wire [3:0] sw,
-    
     output wire config_finished,
     output vga_hsync,
     output vga_vsync,
     output [3:0] vga_r, vga_g, vga_b,
-    
     input ov7670_pclk,
     output ov7670_xclk,
     input ov7670_vsync,
@@ -48,42 +44,63 @@ module top_level(
     
     wire clk_camera;
     wire clk_vga;
+    wire xclk;
     wire [0:0] wren;
     wire resend;
     wire nblank;
     wire vsync;
     wire nsync;
-    
     wire [18:0] wraddress;
     wire [11:0] wrdata;
-    
     wire [18:0] rdaddress;
     wire [11:0] rddata, rddata_rgb, wrdata_bw;
     wire [3:0] rddata_bw;
     wire active_area;
-    
     wire rez_160x120;
     wire rez_320x240;
     wire [1:0] size_select;
     reg [16:0] rd_addr, wr_addr;
     wire color_sel;
+    wire rst_vga, rst_camera, rst;
+    wire locked;
     
     assign color_sel = sw[0];
-    
     assign rez_160x120 = btnl;
     assign rez_320x240 = btnr;
-    
     assign vga_vsync = vsync;
-    
     assign size_select = {btnl, btnr};
     
-    clocking u1_clocking(
-        .CLK_100(clk100),
-        .CLK_50(clk_camera),
-        .CLK_25(clk_vga)        
+    clock_generator u1_clock_generator(
+        .reset(reset_in),
+        .clk_in_100(clk100),
+        .clk_out_50(clk_camera),
+        .clk_out_25(clk_vga),
+        .clk_out_12_5(xclk),
+        .locked(locked)
     );
     
+    resetter u1_resetter(
+        .pclk(clk_vga),
+        .locked(locked),
+        .rst_out(rst_vga)
+    );
+    
+    resetter u2_resetter(
+        .pclk(clk_camera),
+        .locked(locked),
+        .rst_out(rst_camera)
+    );
+    
+    assign rst = rst_vga | rst_camera;
+    
+//    clocking u1_clocking(
+//        .CLK_100(clk100),
+//        .CLK_50(clk_camera),
+//        .CLK_25(clk_vga)        
+//    );
+    
     VGA u1_VGA(
+        .rst(rst),
         .CLK25(clk_vga),
         .rez_160x120(rez_160x120),
         .rez_320x240(rez_320x240),
@@ -96,6 +113,7 @@ module top_level(
     );
     
     debounce u1_debounce(
+        .rst(rst),
         .clk(clk_vga),
         .i(btnc),
         .o(resend)
@@ -103,13 +121,15 @@ module top_level(
     
     ov7670_controller u1_ov7670_controller (
         .clk(clk_camera),
+        .rst(rst),
+        .xclk_in(xclk),
         .resend(resend),
         .config_finished(config_finished),
         .sioc(ov7670_sioc),
         .siod(ov7670_siod),
         .reset(ov7670_reset),
         .pwdn(ov7670_pwdn),
-        .xclk(ov7670_xclk)
+        .xclk_out(ov7670_xclk)
     );
     
     always @* begin
@@ -134,9 +154,10 @@ module top_level(
         .dina(wrdata),
         .wea(wren)
     );
-    
+    // this reset might not work
     ov7670_capture u1_ov7670_capture(
         .pclk(ov7670_pclk),
+        .rst(rst),
         .rez_160x120(rez_160x120),
         .rez_320x240(rez_320x240),
         .vsync(ov7670_vsync),
@@ -164,6 +185,7 @@ module top_level(
     
     address_generator u1_address_generator(
         .CLK25(clk_vga),
+        .rst(rst),
         .rez_160x120(rez_160x120),
         .rez_320x240(rez_320x240),
         .enable(active_area),

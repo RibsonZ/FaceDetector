@@ -50,13 +50,21 @@ set_property PACKAGE_PIN W5 [get_ports clk100]
 set_property PACKAGE_PIN U16 [get_ports {config_finished}]					
 	set_property IOSTANDARD LVCMOS33 [get_ports {config_finished}]
 					
-##Buttons
+## Buttons
+#Bank = 14, Sch name = BTNU
+set_property PACKAGE_PIN T18 [get_ports {reset_in}]
+    set_property IOSTANDARD LVCMOS33 [get_ports {reset_in}]
+#Bank = 14, Sch name = BTNC
 set_property PACKAGE_PIN U18 [get_ports btnc]						
 	set_property IOSTANDARD LVCMOS33 [get_ports btnc]
+#Bank = 14, Sch name = BTNL
 set_property PACKAGE_PIN W19 [get_ports btnl]                        
      set_property IOSTANDARD LVCMOS33 [get_ports btnl]
+#Bank = 14, Sch name = BTNR
 set_property PACKAGE_PIN T17 [get_ports btnr]						
          set_property IOSTANDARD LVCMOS33 [get_ports btnr]
+
+
 ## OV7670 Camera header pins
 
 ##Pmod Header JB

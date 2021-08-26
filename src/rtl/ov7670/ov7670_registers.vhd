@@ -11,6 +11,7 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity ov7670_registers is
     Port ( clk      : in  STD_LOGIC;
+           rst      : in STD_LOGIC;
            resend   : in  STD_LOGIC;
            advance  : in  STD_LOGIC;
            command  : out  std_logic_vector(15 downto 0);
@@ -27,12 +28,15 @@ begin
 	process(clk)
 	begin
 		if rising_edge(clk) then
-			if resend = '1' then 
+			if rst = '1' then
+                address <= (others => '0');
+                sreg <= (others => '0');
+			elsif resend = '1' then 
 				address <= (others => '0');
 			elsif advance = '1' then
 				address <= std_logic_vector(unsigned(address)+1);
 			end if;
-
+			
 			case address is
 				when x"00" => sreg <= x"1280"; -- COM7   Reset
 				when x"01" => sreg <= x"1280"; -- COM7   Reset
