@@ -115,13 +115,13 @@ architecture Behavioral of top_level is
     CLK_25          : out    std_logic);
 	end component;
 	
-	COMPONENT vga_pll
-	PORT(
-		inclk0 : IN std_logic;          
-		c0 : OUT std_logic;
-		c1 : OUT std_logic
-		);
-	END COMPONENT;
+--	COMPONENT vga_pll
+--	PORT(
+--		inclk0 : IN std_logic;          
+--		c0 : OUT std_logic;
+--		c1 : OUT std_logic
+--		);
+--	END COMPONENT;
     
     COMPONENT RGB2BW
     PORT(
