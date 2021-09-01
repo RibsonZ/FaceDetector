@@ -1,6 +1,6 @@
 ----------------------------------------------------------------------------------
 -- Engineer: <mfield@concepts.co.nz
--- 
+-- source: https://www.fpga4student.com/2018/08/basys-3-fpga-ov7670-camera.html
 -- Description: Send the commands to the OV7670 over an I2C-like interface
 --
 ----------------------------------------------------------------------------------

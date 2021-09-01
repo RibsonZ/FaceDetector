@@ -1,6 +1,6 @@
 ----------------------------------------------------------------------------------
 -- Engineer: Mike Field <hamster@snap.net.nz>
--- 
+-- Source: https://www.fpga4student.com/2018/08/basys-3-fpga-ov7670-camera.html
 -- Module Name: top_level - Behavioral 
 -- Description: Top level module of the Zedboard OV7670 design
 --

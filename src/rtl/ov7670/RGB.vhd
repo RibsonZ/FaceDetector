@@ -1,3 +1,4 @@
+-- Source: https://www.fpga4student.com/2018/08/basys-3-fpga-ov7670-camera.html
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;

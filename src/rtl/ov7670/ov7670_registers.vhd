@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------------------
 -- Company: 
 -- Engineer: Mike Field <hamster@sanp.net.nz>, modified by Wojciech Zebrowski for AGH UST
--- 
+-- source: https://www.fpga4student.com/2018/08/basys-3-fpga-ov7670-camera.html
 -- Description: Register settings for the OV7670 Camera (partially from OV7670.c
 --              in the Linux Kernel)
 ------------------------------------------------------------------------------------
