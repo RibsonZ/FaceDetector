@@ -1,4 +1,4 @@
--- source
+-- source https://www.fpga4student.com/2018/08/basys-3-fpga-ov7670-camera.html
 -- Wojciech Zebrowski: added reset
 ----------------------------------------------------------------------------------
 library IEEE;

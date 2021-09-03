@@ -1,6 +1,8 @@
 ----------------------------------------------------------------------------------
 -- Engineer: Mike Field <hamster@snap.net.nz>
 -- 
+-- Source: https://www.fpga4student.com/2018/08/basys-3-fpga-ov7670-camera.html
+--
 -- Description: Captures the pixels coming from the OV7670 camera and 
 --              Stores them in block RAM
 --

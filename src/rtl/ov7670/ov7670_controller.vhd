@@ -1,6 +1,6 @@
 ----------------------------------------------------------------------------------
 -- Engineer: Mike Field <hamster@snap.net.nz>
--- 
+-- source https://www.fpga4student.com/2018/08/basys-3-fpga-ov7670-camera.html
 -- Description: Controller for the OV760 camera - transferes registers to the 
 --              camera over an I2C like bus
 ----------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 ----------------------------------------------------------------------------------
--- Engineer: Mike Field <hamster@snap.net.nz>, Wojciech Zebrowski
--- 
+-- Engineer: Mike Field <hamster@snap.net.nz>, Wojciech Zebrowski, Miko³aj Karelus
+-- source https://www.fpga4student.com/2018/08/basys-3-fpga-ov7670-camera.html
 -- Description: Convert the push button to a tick (formerly 1PPS) that can be used to restart
 --              camera initialisation
 ----------------------------------------------------------------------------------
