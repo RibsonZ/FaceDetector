@@ -68,7 +68,7 @@ begin
              -- cycle 1   0    |    10      RRRRRGGGGGGBBBBB  xxxxxxxxxxxx  x   addr     addr
              -- cycle 2   x    |    0x      GGGBBBBBxxxxxxxx  RRRRGGGGBBBB  1   addr     addr+1
     
-             -- detect the rising edge on href - the start of the scan line
+             -- detect the rising edge on href - the start of the scan line (NEW ROW)
             if href_hold = '0' and latched_href = '1' then
                 case line is
                     when "00"   => line <= "01";

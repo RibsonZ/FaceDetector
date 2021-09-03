@@ -45,6 +45,7 @@ module top_level(
     wire clk_camera;
     wire clk_vga;
     wire xclk;
+    wire clk_25;
     wire [0:0] wren;
     wire resend;
     wire nblank;
@@ -69,13 +70,15 @@ module top_level(
     assign rez_320x240 = btnr;
     assign vga_vsync = vsync;
     assign size_select = {btnl, btnr};
+    assign clk_vga = clk_25;
+    assign xclk = clk_25;
     
     clock_generator u1_clock_generator(
         .reset(reset_in),
         .clk_in_100(clk100),
         .clk_out_50(clk_camera),
-        .clk_out_25(clk_vga),
-        .clk_out_12_5(xclk),
+        .clk_out_25(clk_25),
+//        .clk_out_12_5(xclk), //DELETE
         .locked(locked)
     );
     
@@ -93,17 +96,11 @@ module top_level(
     
     assign rst = rst_vga | rst_camera;
     
-//    clocking u1_clocking(
-//        .CLK_100(clk100),
-//        .CLK_50(clk_camera),
-//        .CLK_25(clk_vga)        
-//    );
-    
     VGA u1_VGA(
         .rst(rst),
         .CLK25(clk_vga),
-        .rez_160x120(rez_160x120),
-        .rez_320x240(rez_320x240),
+        .rez_160x120(1),
+        .rez_320x240(0),
         .clkout(), //open
         .hsync(vga_hsync),
         .vsync(vsync),
@@ -133,16 +130,16 @@ module top_level(
     );
     
     always @* begin
-        case(size_select)
-            2'b00: begin
-                rd_addr = rdaddress[18:2];
-                wr_addr = wraddress [18:2];
-            end
-            default: begin
+//        case(size_select)
+//            2'b00: begin
+//                rd_addr = rdaddress[18:2];
+//                wr_addr = wraddress [18:2];
+//            end
+//            default: begin
                 rd_addr = rdaddress[16:0];
                 wr_addr = wraddress[16:0];
-            end
-        endcase
+//            end
+//        endcase
     end
     
     frame_buffer u1_frame_buffer(
@@ -155,17 +152,28 @@ module top_level(
         .wea(wren)
     );
     // this reset might not work
-    ov7670_capture u1_ov7670_capture(
-        .pclk(ov7670_pclk),
-        .rst(rst),
-        .rez_160x120(rez_160x120),
-        .rez_320x240(rez_320x240),
-        .vsync(ov7670_vsync),
-        .href(ov7670_href),
-        .d(ov7670_data),
-        .addr(wraddress),
-        .dout(wrdata),
-        .we(wren[0])
+//    ov7670_capture u1_ov7670_capture(
+//        .pclk(ov7670_pclk),
+//        .rst(rst),
+//        .rez_160x120(1),
+//        .rez_320x240(0),
+//        .vsync(ov7670_vsync),
+//        .href(ov7670_href),
+//        .d(ov7670_data),
+//        .addr(wraddress),
+//        .dout(wrdata),
+//        .we(wren[0])
+//    );
+    
+    integral_image_capture u1_integral_image_capture(
+            .ov7670_pclk(ov7670_pclk),
+            .rst(rst),
+            .ov7670_vsync(ov7670_vsync),
+            .ov7670_href(ov7670_href),
+            .ov7670_data(ov7670_data),
+            .wraddress(wraddress),
+            .wrdata(wrdata),
+            .we(wren[0])
     );
     
     assign rddata = color_sel ? rddata_rgb : {rddata_bw, rddata_bw, rddata_bw};
@@ -186,8 +194,8 @@ module top_level(
     address_generator u1_address_generator(
         .CLK25(clk_vga),
         .rst(rst),
-        .rez_160x120(rez_160x120),
-        .rez_320x240(rez_320x240),
+        .rez_160x120(1),
+        .rez_320x240(0),
         .enable(active_area),
         .vsync(vsync),
         .address(rdaddress)

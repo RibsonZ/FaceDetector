@@ -53,7 +53,6 @@ begin
                         Vcnt <= "0000000000";
                         activeArea <= '1';
                     else
-                        activeArea <= '0';
                         if rez_160x120 = '1' then
                             if vCnt < 120-1 then
                                 activeArea <= '1';
@@ -70,7 +69,6 @@ begin
                         Vcnt <= Vcnt+1;
                     end if;
                 else
-                    activeArea <= '1';
                     if rez_160x120 = '1' then
                         if hcnt = 160-1 then
                             activeArea <= '0';

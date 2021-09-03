@@ -21,6 +21,7 @@ end ov7670_registers;
 architecture Behavioral of ov7670_registers is
 	signal sreg   : std_logic_vector(15 downto 0);
 	signal address : std_logic_vector(7 downto 0) := (others => '0');
+	signal delay : unsigned(31 downto 0) := x"FFFFFFFF";
 begin
 	command <= sreg;
 	with sreg select finished  <= '1' when x"FFFF", '0' when others;
@@ -28,9 +29,14 @@ begin
 	process(clk)
 	begin
 		if rising_edge(clk) then
+			delay <= delay;
 			if rst = '1' then
                 address <= (others => '0');
                 sreg <= (others => '0');
+                delay <= x"00FFFFFF";
+            elsif delay > 0 then
+                delay <= delay - 1;
+                address <= (others => '0');
 			elsif resend = '1' then 
 				address <= (others => '0');
 			elsif advance = '1' then
