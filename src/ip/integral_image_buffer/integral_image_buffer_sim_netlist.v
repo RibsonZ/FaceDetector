@@ -1,10 +1,10 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2017.3 (win64) Build 2018833 Wed Oct  4 19:58:22 MDT 2017
-// Date        : Tue Aug 31 20:52:26 2021
-// Host        : DESKTOP-PP7RK9J running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode funcsim -rename_top integral_image_buffer -prefix
-//               integral_image_buffer_ integral_image_buffer_sim_netlist.v
+// Date        : Tue Sep  7 10:20:37 2021
+// Host        : LAPTOP-UNNHVI5M running 64-bit major release  (build 9200)
+// Command     : write_verilog -force -mode funcsim
+//               C:/Users/wojci/OneDrive/Dokumenty/AGH/S4/UEC2/FaceDetection/FaceDetector/src/ip/integral_image_buffer/integral_image_buffer_sim_netlist.v
 // Design      : integral_image_buffer
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -16,6 +16,7 @@
 (* NotValidForBitStream *)
 module integral_image_buffer
    (clka,
+    ena,
     wea,
     addra,
     dina,
@@ -23,6 +24,7 @@ module integral_image_buffer
     addrb,
     doutb);
   (* x_interface_info = "xilinx.com:interface:bram:1.0 BRAM_PORTA CLK" *) (* x_interface_parameter = "XIL_INTERFACENAME BRAM_PORTA, MEM_SIZE 8192, MEM_WIDTH 32, MEM_ECC NONE, MASTER_TYPE OTHER, READ_WRITE_MODE READ_WRITE" *) input clka;
+  (* x_interface_info = "xilinx.com:interface:bram:1.0 BRAM_PORTA EN" *) input ena;
   (* x_interface_info = "xilinx.com:interface:bram:1.0 BRAM_PORTA WE" *) input [0:0]wea;
   (* x_interface_info = "xilinx.com:interface:bram:1.0 BRAM_PORTA ADDR" *) input [14:0]addra;
   (* x_interface_info = "xilinx.com:interface:bram:1.0 BRAM_PORTA DIN" *) input [19:0]dina;
@@ -36,6 +38,7 @@ module integral_image_buffer
   wire clkb;
   wire [19:0]dina;
   wire [19:0]doutb;
+  wire ena;
   wire [0:0]wea;
   wire NLW_U0_dbiterr_UNCONNECTED;
   wire NLW_U0_rsta_busy_UNCONNECTED;
@@ -84,7 +87,7 @@ module integral_image_buffer
   (* C_EST_POWER_SUMMARY = "Estimated Power for IP     :     13.335237 mW" *) 
   (* C_FAMILY = "artix7" *) 
   (* C_HAS_AXI_ID = "0" *) 
-  (* C_HAS_ENA = "0" *) 
+  (* C_HAS_ENA = "1" *) 
   (* C_HAS_ENB = "0" *) 
   (* C_HAS_INJECTERR = "0" *) 
   (* C_HAS_MEM_OUTPUT_REGS_A = "0" *) 
@@ -144,7 +147,7 @@ module integral_image_buffer
         .douta(NLW_U0_douta_UNCONNECTED[19:0]),
         .doutb(doutb),
         .eccpipece(1'b0),
-        .ena(1'b0),
+        .ena(ena),
         .enb(1'b0),
         .injectdbiterr(1'b0),
         .injectsbiterr(1'b0),
@@ -198,24 +201,25 @@ module integral_image_buffer
         .web(1'b0));
 endmodule
 
+(* ORIG_REF_NAME = "bindec" *) 
 module integral_image_buffer_bindec
    (ena_array,
     addra,
-    wea);
+    ena);
   output [3:0]ena_array;
   input [2:0]addra;
-  input [0:0]wea;
+  input ena;
 
   wire [2:0]addra;
+  wire ena;
   wire [3:0]ena_array;
-  wire [0:0]wea;
 
   LUT4 #(
     .INIT(16'h0010)) 
     ENOUT
        (.I0(addra[2]),
         .I1(addra[1]),
-        .I2(wea),
+        .I2(ena),
         .I3(addra[0]),
         .O(ena_array[0]));
   LUT4 #(
@@ -223,14 +227,14 @@ module integral_image_buffer_bindec
     \ENOUT_inferred__1/i_ 
        (.I0(addra[2]),
         .I1(addra[0]),
-        .I2(wea),
+        .I2(ena),
         .I3(addra[1]),
         .O(ena_array[1]));
   LUT4 #(
     .INIT(16'h4000)) 
     \ENOUT_inferred__2/i_ 
        (.I0(addra[2]),
-        .I1(wea),
+        .I1(ena),
         .I2(addra[1]),
         .I3(addra[0]),
         .O(ena_array[2]));
@@ -240,7 +244,7 @@ module integral_image_buffer_bindec
        (.I0(addra[1]),
         .I1(addra[0]),
         .I2(addra[2]),
-        .I3(wea),
+        .I3(ena),
         .O(ena_array[3]));
 endmodule
 
@@ -291,6 +295,7 @@ module integral_image_buffer_bindec_0
         .O(enb_array[4]));
 endmodule
 
+(* ORIG_REF_NAME = "blk_mem_gen_generic_cstr" *) 
 module integral_image_buffer_blk_mem_gen_generic_cstr
    (doutb,
     clka,
@@ -298,7 +303,8 @@ module integral_image_buffer_blk_mem_gen_generic_cstr
     addra,
     addrb,
     dina,
-    wea);
+    wea,
+    ena);
   output [19:0]doutb;
   input clka;
   input clkb;
@@ -306,6 +312,7 @@ module integral_image_buffer_blk_mem_gen_generic_cstr
   input [14:0]addrb;
   input [19:0]dina;
   input [0:0]wea;
+  input ena;
 
   wire [14:0]addra;
   wire [14:0]addrb;
@@ -313,6 +320,7 @@ module integral_image_buffer_blk_mem_gen_generic_cstr
   wire clkb;
   wire [19:0]dina;
   wire [19:0]doutb;
+  wire ena;
   wire [4:0]ena_array;
   wire [4:0]enb_array;
   wire ram_doutb;
@@ -415,8 +423,8 @@ module integral_image_buffer_blk_mem_gen_generic_cstr
 
   integral_image_buffer_bindec \bindec_a.bindec_inst_a 
        (.addra(addra[14:12]),
-        .ena_array({ena_array[4:2],ena_array[0]}),
-        .wea(wea));
+        .ena(ena),
+        .ena_array({ena_array[4:2],ena_array[0]}));
   integral_image_buffer_bindec_0 \bindec_b.bindec_inst_b 
        (.addrb(addrb[14:12]),
         .enb_array(enb_array));
@@ -451,7 +459,7 @@ module integral_image_buffer_blk_mem_gen_generic_cstr
     .INIT(4'h4)) 
     ram_ena
        (.I0(addra[14]),
-        .I1(wea),
+        .I1(ena),
         .O(ram_ena_n_0));
   LUT1 #(
     .INIT(2'h1)) 
@@ -466,7 +474,8 @@ module integral_image_buffer_blk_mem_gen_generic_cstr
         .clkb(clkb),
         .dina(dina[0]),
         .\doutb[0] (ram_doutb),
-        .\wea[0] (ram_ena_n_0));
+        .ena(ram_ena_n_0),
+        .wea(wea));
   integral_image_buffer_blk_mem_gen_prim_width__parameterized9 \ramloop[10].ram.r 
        (.addra(addra[11:0]),
         .addrb(addrb[11:0]),
@@ -476,7 +485,8 @@ module integral_image_buffer_blk_mem_gen_generic_cstr
         .\doutb[18] ({\ramloop[10].ram.r_n_0 ,\ramloop[10].ram.r_n_1 ,\ramloop[10].ram.r_n_2 ,\ramloop[10].ram.r_n_3 ,\ramloop[10].ram.r_n_4 ,\ramloop[10].ram.r_n_5 ,\ramloop[10].ram.r_n_6 ,\ramloop[10].ram.r_n_7 }),
         .\doutb[19] (\ramloop[10].ram.r_n_8 ),
         .ena_array(ena_array[2]),
-        .enb_array(enb_array[2]));
+        .enb_array(enb_array[2]),
+        .wea(wea));
   integral_image_buffer_blk_mem_gen_prim_width__parameterized10 \ramloop[11].ram.r 
        (.addra(addra[11:0]),
         .addrb(addrb[11:0]),
@@ -486,7 +496,8 @@ module integral_image_buffer_blk_mem_gen_generic_cstr
         .\doutb[18] ({\ramloop[11].ram.r_n_0 ,\ramloop[11].ram.r_n_1 ,\ramloop[11].ram.r_n_2 ,\ramloop[11].ram.r_n_3 ,\ramloop[11].ram.r_n_4 ,\ramloop[11].ram.r_n_5 ,\ramloop[11].ram.r_n_6 ,\ramloop[11].ram.r_n_7 }),
         .\doutb[19] (\ramloop[11].ram.r_n_8 ),
         .ena_array(ena_array[3]),
-        .enb_array(enb_array[3]));
+        .enb_array(enb_array[3]),
+        .wea(wea));
   integral_image_buffer_blk_mem_gen_prim_width__parameterized11 \ramloop[12].ram.r 
        (.addra(addra[11:0]),
         .addrb(addrb[11:0]),
@@ -496,7 +507,8 @@ module integral_image_buffer_blk_mem_gen_generic_cstr
         .\doutb[18] ({\ramloop[12].ram.r_n_0 ,\ramloop[12].ram.r_n_1 ,\ramloop[12].ram.r_n_2 ,\ramloop[12].ram.r_n_3 ,\ramloop[12].ram.r_n_4 ,\ramloop[12].ram.r_n_5 ,\ramloop[12].ram.r_n_6 ,\ramloop[12].ram.r_n_7 }),
         .\doutb[19] (\ramloop[12].ram.r_n_8 ),
         .ena_array(ena_array[4]),
-        .enb_array(enb_array[4]));
+        .enb_array(enb_array[4]),
+        .wea(wea));
   integral_image_buffer_blk_mem_gen_prim_width__parameterized0 \ramloop[1].ram.r 
        (.addra(addra),
         .addrb(addrb),
@@ -504,6 +516,7 @@ module integral_image_buffer_blk_mem_gen_generic_cstr
         .clkb(clkb),
         .dina(dina[1:0]),
         .\doutb[1] ({\ramloop[1].ram.r_n_0 ,\ramloop[1].ram.r_n_1 }),
+        .ena(ena),
         .wea(wea));
   integral_image_buffer_blk_mem_gen_prim_width__parameterized1 \ramloop[2].ram.r 
        (.addra(addra[13:0]),
@@ -513,7 +526,8 @@ module integral_image_buffer_blk_mem_gen_generic_cstr
         .clkb(clkb),
         .dina(dina[1]),
         .\doutb[1] (\ramloop[2].ram.r_n_0 ),
-        .\wea[0] (ram_ena_n_0));
+        .ena(ram_ena_n_0),
+        .wea(wea));
   integral_image_buffer_blk_mem_gen_prim_width__parameterized2 \ramloop[3].ram.r 
        (.addra(addra[11:0]),
         .addrb(addrb[11:0]),
@@ -523,7 +537,8 @@ module integral_image_buffer_blk_mem_gen_generic_cstr
         .\doutb[10] (\ramloop[3].ram.r_n_8 ),
         .\doutb[9] ({\ramloop[3].ram.r_n_0 ,\ramloop[3].ram.r_n_1 ,\ramloop[3].ram.r_n_2 ,\ramloop[3].ram.r_n_3 ,\ramloop[3].ram.r_n_4 ,\ramloop[3].ram.r_n_5 ,\ramloop[3].ram.r_n_6 ,\ramloop[3].ram.r_n_7 }),
         .ena_array(ena_array[0]),
-        .enb_array(enb_array[0]));
+        .enb_array(enb_array[0]),
+        .wea(wea));
   integral_image_buffer_blk_mem_gen_prim_width__parameterized3 \ramloop[4].ram.r 
        (.addra(addra[11:0]),
         .addrb(addrb[11:0]),
@@ -533,7 +548,8 @@ module integral_image_buffer_blk_mem_gen_generic_cstr
         .\doutb[10] (\ramloop[4].ram.r_n_8 ),
         .\doutb[9] ({\ramloop[4].ram.r_n_0 ,\ramloop[4].ram.r_n_1 ,\ramloop[4].ram.r_n_2 ,\ramloop[4].ram.r_n_3 ,\ramloop[4].ram.r_n_4 ,\ramloop[4].ram.r_n_5 ,\ramloop[4].ram.r_n_6 ,\ramloop[4].ram.r_n_7 }),
         .ena_array(ena_array[1]),
-        .enb_array(enb_array[1]));
+        .enb_array(enb_array[1]),
+        .wea(wea));
   integral_image_buffer_blk_mem_gen_prim_width__parameterized4 \ramloop[5].ram.r 
        (.addra(addra[11:0]),
         .addrb(addrb[11:0]),
@@ -543,7 +559,8 @@ module integral_image_buffer_blk_mem_gen_generic_cstr
         .\doutb[10] (\ramloop[5].ram.r_n_8 ),
         .\doutb[9] ({\ramloop[5].ram.r_n_0 ,\ramloop[5].ram.r_n_1 ,\ramloop[5].ram.r_n_2 ,\ramloop[5].ram.r_n_3 ,\ramloop[5].ram.r_n_4 ,\ramloop[5].ram.r_n_5 ,\ramloop[5].ram.r_n_6 ,\ramloop[5].ram.r_n_7 }),
         .ena_array(ena_array[2]),
-        .enb_array(enb_array[2]));
+        .enb_array(enb_array[2]),
+        .wea(wea));
   integral_image_buffer_blk_mem_gen_prim_width__parameterized5 \ramloop[6].ram.r 
        (.addra(addra[11:0]),
         .addrb(addrb[11:0]),
@@ -553,7 +570,8 @@ module integral_image_buffer_blk_mem_gen_generic_cstr
         .\doutb[10] (\ramloop[6].ram.r_n_8 ),
         .\doutb[9] ({\ramloop[6].ram.r_n_0 ,\ramloop[6].ram.r_n_1 ,\ramloop[6].ram.r_n_2 ,\ramloop[6].ram.r_n_3 ,\ramloop[6].ram.r_n_4 ,\ramloop[6].ram.r_n_5 ,\ramloop[6].ram.r_n_6 ,\ramloop[6].ram.r_n_7 }),
         .ena_array(ena_array[3]),
-        .enb_array(enb_array[3]));
+        .enb_array(enb_array[3]),
+        .wea(wea));
   integral_image_buffer_blk_mem_gen_prim_width__parameterized6 \ramloop[7].ram.r 
        (.DOBDO({\ramloop[7].ram.r_n_0 ,\ramloop[7].ram.r_n_1 ,\ramloop[7].ram.r_n_2 ,\ramloop[7].ram.r_n_3 ,\ramloop[7].ram.r_n_4 ,\ramloop[7].ram.r_n_5 ,\ramloop[7].ram.r_n_6 ,\ramloop[7].ram.r_n_7 }),
         .DOPBDOP(\ramloop[7].ram.r_n_8 ),
@@ -563,7 +581,8 @@ module integral_image_buffer_blk_mem_gen_generic_cstr
         .clkb(clkb),
         .dina(dina[10:2]),
         .ena_array(ena_array[4]),
-        .enb_array(enb_array[4]));
+        .enb_array(enb_array[4]),
+        .wea(wea));
   integral_image_buffer_blk_mem_gen_prim_width__parameterized7 \ramloop[8].ram.r 
        (.addra(addra[11:0]),
         .addrb(addrb[11:0]),
@@ -573,7 +592,8 @@ module integral_image_buffer_blk_mem_gen_generic_cstr
         .\doutb[18] ({\ramloop[8].ram.r_n_0 ,\ramloop[8].ram.r_n_1 ,\ramloop[8].ram.r_n_2 ,\ramloop[8].ram.r_n_3 ,\ramloop[8].ram.r_n_4 ,\ramloop[8].ram.r_n_5 ,\ramloop[8].ram.r_n_6 ,\ramloop[8].ram.r_n_7 }),
         .\doutb[19] (\ramloop[8].ram.r_n_8 ),
         .ena_array(ena_array[0]),
-        .enb_array(enb_array[0]));
+        .enb_array(enb_array[0]),
+        .wea(wea));
   integral_image_buffer_blk_mem_gen_prim_width__parameterized8 \ramloop[9].ram.r 
        (.addra(addra),
         .addrb(addrb[11:0]),
@@ -582,6 +602,7 @@ module integral_image_buffer_blk_mem_gen_generic_cstr
         .dina(dina[19:11]),
         .\doutb[18] ({\ramloop[9].ram.r_n_0 ,\ramloop[9].ram.r_n_1 ,\ramloop[9].ram.r_n_2 ,\ramloop[9].ram.r_n_3 ,\ramloop[9].ram.r_n_4 ,\ramloop[9].ram.r_n_5 ,\ramloop[9].ram.r_n_6 ,\ramloop[9].ram.r_n_7 }),
         .\doutb[19] (\ramloop[9].ram.r_n_8 ),
+        .ena(ena),
         .ena_array(ena_array[1]),
         .enb_array(enb_array[1]),
         .wea(wea));
@@ -1169,23 +1190,26 @@ module integral_image_buffer_blk_mem_gen_mux__parameterized0
         .R(1'b0));
 endmodule
 
+(* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
 module integral_image_buffer_blk_mem_gen_prim_width
    (\doutb[0] ,
     clka,
     clkb,
-    \wea[0] ,
+    ena,
     \addrb[14] ,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [0:0]\doutb[0] ;
   input clka;
   input clkb;
-  input \wea[0] ;
+  input ena;
   input \addrb[14] ;
   input [13:0]addra;
   input [13:0]addrb;
   input [0:0]dina;
+  input [0:0]wea;
 
   wire [13:0]addra;
   wire [13:0]addrb;
@@ -1194,7 +1218,8 @@ module integral_image_buffer_blk_mem_gen_prim_width
   wire clkb;
   wire [0:0]dina;
   wire [0:0]\doutb[0] ;
-  wire \wea[0] ;
+  wire ena;
+  wire [0:0]wea;
 
   integral_image_buffer_blk_mem_gen_prim_wrapper \prim_noinit.ram 
        (.addra(addra),
@@ -1204,7 +1229,8 @@ module integral_image_buffer_blk_mem_gen_prim_width
         .clkb(clkb),
         .dina(dina),
         .\doutb[0] (\doutb[0] ),
-        .\wea[0] (\wea[0] ));
+        .ena(ena),
+        .wea(wea));
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
@@ -1215,7 +1241,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized0
     addra,
     addrb,
     dina,
-    wea);
+    wea,
+    ena);
   output [1:0]\doutb[1] ;
   input clka;
   input clkb;
@@ -1223,6 +1250,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized0
   input [14:0]addrb;
   input [1:0]dina;
   input [0:0]wea;
+  input ena;
 
   wire [14:0]addra;
   wire [14:0]addrb;
@@ -1230,6 +1258,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized0
   wire clkb;
   wire [1:0]dina;
   wire [1:0]\doutb[1] ;
+  wire ena;
   wire [0:0]wea;
 
   integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized0 \prim_noinit.ram 
@@ -1239,6 +1268,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized0
         .clkb(clkb),
         .dina(dina),
         .\doutb[1] (\doutb[1] ),
+        .ena(ena),
         .wea(wea));
 endmodule
 
@@ -1247,19 +1277,21 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized1
    (\doutb[1] ,
     clka,
     clkb,
-    \wea[0] ,
+    ena,
     \addrb[14] ,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [0:0]\doutb[1] ;
   input clka;
   input clkb;
-  input \wea[0] ;
+  input ena;
   input \addrb[14] ;
   input [13:0]addra;
   input [13:0]addrb;
   input [0:0]dina;
+  input [0:0]wea;
 
   wire [13:0]addra;
   wire [13:0]addrb;
@@ -1268,7 +1300,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized1
   wire clkb;
   wire [0:0]dina;
   wire [0:0]\doutb[1] ;
-  wire \wea[0] ;
+  wire ena;
+  wire [0:0]wea;
 
   integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized1 \prim_noinit.ram 
        (.addra(addra),
@@ -1278,7 +1311,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized1
         .clkb(clkb),
         .dina(dina),
         .\doutb[1] (\doutb[1] ),
-        .\wea[0] (\wea[0] ));
+        .ena(ena),
+        .wea(wea));
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
@@ -1291,7 +1325,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized10
     enb_array,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [7:0]\doutb[18] ;
   output [0:0]\doutb[19] ;
   input clka;
@@ -1301,6 +1336,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized10
   input [11:0]addra;
   input [11:0]addrb;
   input [8:0]dina;
+  input [0:0]wea;
 
   wire [11:0]addra;
   wire [11:0]addrb;
@@ -1311,6 +1347,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized10
   wire [0:0]\doutb[19] ;
   wire [0:0]ena_array;
   wire [0:0]enb_array;
+  wire [0:0]wea;
 
   integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized10 \prim_noinit.ram 
        (.addra(addra),
@@ -1321,7 +1358,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized10
         .\doutb[18] (\doutb[18] ),
         .\doutb[19] (\doutb[19] ),
         .ena_array(ena_array),
-        .enb_array(enb_array));
+        .enb_array(enb_array),
+        .wea(wea));
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
@@ -1334,7 +1372,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized11
     enb_array,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [7:0]\doutb[18] ;
   output [0:0]\doutb[19] ;
   input clka;
@@ -1344,6 +1383,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized11
   input [11:0]addra;
   input [11:0]addrb;
   input [8:0]dina;
+  input [0:0]wea;
 
   wire [11:0]addra;
   wire [11:0]addrb;
@@ -1354,6 +1394,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized11
   wire [0:0]\doutb[19] ;
   wire [0:0]ena_array;
   wire [0:0]enb_array;
+  wire [0:0]wea;
 
   integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized11 \prim_noinit.ram 
        (.addra(addra),
@@ -1364,7 +1405,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized11
         .\doutb[18] (\doutb[18] ),
         .\doutb[19] (\doutb[19] ),
         .ena_array(ena_array),
-        .enb_array(enb_array));
+        .enb_array(enb_array),
+        .wea(wea));
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
@@ -1377,7 +1419,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized2
     enb_array,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [7:0]\doutb[9] ;
   output [0:0]\doutb[10] ;
   input clka;
@@ -1387,6 +1430,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized2
   input [11:0]addra;
   input [11:0]addrb;
   input [8:0]dina;
+  input [0:0]wea;
 
   wire [11:0]addra;
   wire [11:0]addrb;
@@ -1397,6 +1441,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized2
   wire [7:0]\doutb[9] ;
   wire [0:0]ena_array;
   wire [0:0]enb_array;
+  wire [0:0]wea;
 
   integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized2 \prim_noinit.ram 
        (.addra(addra),
@@ -1407,7 +1452,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized2
         .\doutb[10] (\doutb[10] ),
         .\doutb[9] (\doutb[9] ),
         .ena_array(ena_array),
-        .enb_array(enb_array));
+        .enb_array(enb_array),
+        .wea(wea));
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
@@ -1420,7 +1466,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized3
     enb_array,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [7:0]\doutb[9] ;
   output [0:0]\doutb[10] ;
   input clka;
@@ -1430,6 +1477,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized3
   input [11:0]addra;
   input [11:0]addrb;
   input [8:0]dina;
+  input [0:0]wea;
 
   wire [11:0]addra;
   wire [11:0]addrb;
@@ -1440,6 +1488,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized3
   wire [7:0]\doutb[9] ;
   wire [0:0]ena_array;
   wire [0:0]enb_array;
+  wire [0:0]wea;
 
   integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized3 \prim_noinit.ram 
        (.addra(addra),
@@ -1450,7 +1499,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized3
         .\doutb[10] (\doutb[10] ),
         .\doutb[9] (\doutb[9] ),
         .ena_array(ena_array),
-        .enb_array(enb_array));
+        .enb_array(enb_array),
+        .wea(wea));
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
@@ -1463,7 +1513,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized4
     enb_array,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [7:0]\doutb[9] ;
   output [0:0]\doutb[10] ;
   input clka;
@@ -1473,6 +1524,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized4
   input [11:0]addra;
   input [11:0]addrb;
   input [8:0]dina;
+  input [0:0]wea;
 
   wire [11:0]addra;
   wire [11:0]addrb;
@@ -1483,6 +1535,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized4
   wire [7:0]\doutb[9] ;
   wire [0:0]ena_array;
   wire [0:0]enb_array;
+  wire [0:0]wea;
 
   integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized4 \prim_noinit.ram 
        (.addra(addra),
@@ -1493,7 +1546,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized4
         .\doutb[10] (\doutb[10] ),
         .\doutb[9] (\doutb[9] ),
         .ena_array(ena_array),
-        .enb_array(enb_array));
+        .enb_array(enb_array),
+        .wea(wea));
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
@@ -1506,7 +1560,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized5
     enb_array,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [7:0]\doutb[9] ;
   output [0:0]\doutb[10] ;
   input clka;
@@ -1516,6 +1571,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized5
   input [11:0]addra;
   input [11:0]addrb;
   input [8:0]dina;
+  input [0:0]wea;
 
   wire [11:0]addra;
   wire [11:0]addrb;
@@ -1526,6 +1582,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized5
   wire [7:0]\doutb[9] ;
   wire [0:0]ena_array;
   wire [0:0]enb_array;
+  wire [0:0]wea;
 
   integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized5 \prim_noinit.ram 
        (.addra(addra),
@@ -1536,7 +1593,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized5
         .\doutb[10] (\doutb[10] ),
         .\doutb[9] (\doutb[9] ),
         .ena_array(ena_array),
-        .enb_array(enb_array));
+        .enb_array(enb_array),
+        .wea(wea));
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
@@ -1549,7 +1607,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized6
     enb_array,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [7:0]DOBDO;
   output [0:0]DOPBDOP;
   input clka;
@@ -1559,6 +1618,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized6
   input [11:0]addra;
   input [11:0]addrb;
   input [8:0]dina;
+  input [0:0]wea;
 
   wire [7:0]DOBDO;
   wire [0:0]DOPBDOP;
@@ -1569,6 +1629,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized6
   wire [8:0]dina;
   wire [0:0]ena_array;
   wire [0:0]enb_array;
+  wire [0:0]wea;
 
   integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized6 \prim_noinit.ram 
        (.DOBDO(DOBDO),
@@ -1579,7 +1640,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized6
         .clkb(clkb),
         .dina(dina),
         .ena_array(ena_array),
-        .enb_array(enb_array));
+        .enb_array(enb_array),
+        .wea(wea));
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
@@ -1592,7 +1654,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized7
     enb_array,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [7:0]\doutb[18] ;
   output [0:0]\doutb[19] ;
   input clka;
@@ -1602,6 +1665,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized7
   input [11:0]addra;
   input [11:0]addrb;
   input [8:0]dina;
+  input [0:0]wea;
 
   wire [11:0]addra;
   wire [11:0]addrb;
@@ -1612,6 +1676,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized7
   wire [0:0]\doutb[19] ;
   wire [0:0]ena_array;
   wire [0:0]enb_array;
+  wire [0:0]wea;
 
   integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized7 \prim_noinit.ram 
        (.addra(addra),
@@ -1622,7 +1687,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized7
         .\doutb[18] (\doutb[18] ),
         .\doutb[19] (\doutb[19] ),
         .ena_array(ena_array),
-        .enb_array(enb_array));
+        .enb_array(enb_array),
+        .wea(wea));
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
@@ -1636,7 +1702,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized8
     addra,
     addrb,
     dina,
-    wea);
+    wea,
+    ena);
   output [7:0]\doutb[18] ;
   output [0:0]\doutb[19] ;
   output [0:0]ena_array;
@@ -1647,6 +1714,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized8
   input [11:0]addrb;
   input [8:0]dina;
   input [0:0]wea;
+  input ena;
 
   wire [14:0]addra;
   wire [11:0]addrb;
@@ -1655,6 +1723,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized8
   wire [8:0]dina;
   wire [7:0]\doutb[18] ;
   wire [0:0]\doutb[19] ;
+  wire ena;
   wire [0:0]ena_array;
   wire [0:0]enb_array;
   wire [0:0]wea;
@@ -1667,6 +1736,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized8
         .dina(dina),
         .\doutb[18] (\doutb[18] ),
         .\doutb[19] (\doutb[19] ),
+        .ena(ena),
         .ena_array(ena_array),
         .enb_array(enb_array),
         .wea(wea));
@@ -1682,7 +1752,8 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized9
     enb_array,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [7:0]\doutb[18] ;
   output [0:0]\doutb[19] ;
   input clka;
@@ -1692,6 +1763,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized9
   input [11:0]addra;
   input [11:0]addrb;
   input [8:0]dina;
+  input [0:0]wea;
 
   wire [11:0]addra;
   wire [11:0]addrb;
@@ -1702,6 +1774,7 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized9
   wire [0:0]\doutb[19] ;
   wire [0:0]ena_array;
   wire [0:0]enb_array;
+  wire [0:0]wea;
 
   integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized9 \prim_noinit.ram 
        (.addra(addra),
@@ -1712,26 +1785,30 @@ module integral_image_buffer_blk_mem_gen_prim_width__parameterized9
         .\doutb[18] (\doutb[18] ),
         .\doutb[19] (\doutb[19] ),
         .ena_array(ena_array),
-        .enb_array(enb_array));
+        .enb_array(enb_array),
+        .wea(wea));
 endmodule
 
+(* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
 module integral_image_buffer_blk_mem_gen_prim_wrapper
    (\doutb[0] ,
     clka,
     clkb,
-    \wea[0] ,
+    ena,
     \addrb[14] ,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [0:0]\doutb[0] ;
   input clka;
   input clkb;
-  input \wea[0] ;
+  input ena;
   input \addrb[14] ;
   input [13:0]addra;
   input [13:0]addrb;
   input [0:0]dina;
+  input [0:0]wea;
 
   wire [13:0]addra;
   wire [13:0]addrb;
@@ -1740,7 +1817,8 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper
   wire clkb;
   wire [0:0]dina;
   wire [0:0]\doutb[0] ;
-  wire \wea[0] ;
+  wire ena;
+  wire [0:0]wea;
   wire [15:0]\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM18.ram_DOADO_UNCONNECTED ;
   wire [15:1]\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM18.ram_DOBDO_UNCONNECTED ;
   wire [1:0]\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM18.ram_DOPADOP_UNCONNECTED ;
@@ -1860,7 +1938,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper
         .DOBDO({\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM18.ram_DOBDO_UNCONNECTED [15:1],\doutb[0] }),
         .DOPADOP(\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM18.ram_DOPADOP_UNCONNECTED [1:0]),
         .DOPBDOP(\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM18.ram_DOPBDOP_UNCONNECTED [1:0]),
-        .ENARDEN(\wea[0] ),
+        .ENARDEN(ena),
         .ENBWREN(\addrb[14] ),
         .REGCEAREGCE(1'b0),
         .REGCEB(1'b1),
@@ -1868,7 +1946,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper
         .RSTRAMB(1'b0),
         .RSTREGARSTREG(1'b0),
         .RSTREGB(1'b0),
-        .WEA({1'b1,1'b1}),
+        .WEA({wea,wea}),
         .WEBWE({1'b0,1'b0,1'b0,1'b0}));
 endmodule
 
@@ -1880,7 +1958,8 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized0
     addra,
     addrb,
     dina,
-    wea);
+    wea,
+    ena);
   output [1:0]\doutb[1] ;
   input clka;
   input clkb;
@@ -1888,6 +1967,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized0
   input [14:0]addrb;
   input [1:0]dina;
   input [0:0]wea;
+  input ena;
 
   wire [14:0]addra;
   wire [14:0]addrb;
@@ -1895,6 +1975,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized0
   wire clkb;
   wire [1:0]dina;
   wire [1:0]\doutb[1] ;
+  wire ena;
   wire ram_ena;
   wire ram_enb;
   wire [0:0]wea;
@@ -2025,12 +2106,12 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized0
         .RSTRAMB(1'b0),
         .RSTREGARSTREG(1'b0),
         .RSTREGB(1'b0),
-        .WEA({1'b1,1'b1}),
+        .WEA({wea,wea}),
         .WEBWE({1'b0,1'b0,1'b0,1'b0}));
   LUT3 #(
     .INIT(8'h08)) 
     \DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM18.ram_i_1 
-       (.I0(wea),
+       (.I0(ena),
         .I1(addra[14]),
         .I2(addra[13]),
         .O(ram_ena));
@@ -2047,19 +2128,21 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized1
    (\doutb[1] ,
     clka,
     clkb,
-    \wea[0] ,
+    ena,
     \addrb[14] ,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [0:0]\doutb[1] ;
   input clka;
   input clkb;
-  input \wea[0] ;
+  input ena;
   input \addrb[14] ;
   input [13:0]addra;
   input [13:0]addrb;
   input [0:0]dina;
+  input [0:0]wea;
 
   wire [13:0]addra;
   wire [13:0]addrb;
@@ -2068,7 +2151,8 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized1
   wire clkb;
   wire [0:0]dina;
   wire [0:0]\doutb[1] ;
-  wire \wea[0] ;
+  wire ena;
+  wire [0:0]wea;
   wire [15:0]\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM18.ram_DOADO_UNCONNECTED ;
   wire [15:1]\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM18.ram_DOBDO_UNCONNECTED ;
   wire [1:0]\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM18.ram_DOPADOP_UNCONNECTED ;
@@ -2188,7 +2272,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized1
         .DOBDO({\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM18.ram_DOBDO_UNCONNECTED [15:1],\doutb[1] }),
         .DOPADOP(\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM18.ram_DOPADOP_UNCONNECTED [1:0]),
         .DOPBDOP(\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM18.ram_DOPBDOP_UNCONNECTED [1:0]),
-        .ENARDEN(\wea[0] ),
+        .ENARDEN(ena),
         .ENBWREN(\addrb[14] ),
         .REGCEAREGCE(1'b0),
         .REGCEB(1'b1),
@@ -2196,7 +2280,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized1
         .RSTRAMB(1'b0),
         .RSTREGARSTREG(1'b0),
         .RSTREGB(1'b0),
-        .WEA({1'b1,1'b1}),
+        .WEA({wea,wea}),
         .WEBWE({1'b0,1'b0,1'b0,1'b0}));
 endmodule
 
@@ -2210,7 +2294,8 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized10
     enb_array,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [7:0]\doutb[18] ;
   output [0:0]\doutb[19] ;
   input clka;
@@ -2220,6 +2305,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized10
   input [11:0]addra;
   input [11:0]addrb;
   input [8:0]dina;
+  input [0:0]wea;
 
   wire [11:0]addra;
   wire [11:0]addrb;
@@ -2230,6 +2316,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized10
   wire [0:0]\doutb[19] ;
   wire [0:0]ena_array;
   wire [0:0]enb_array;
+  wire [0:0]wea;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_CASCADEOUTA_UNCONNECTED ;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_CASCADEOUTB_UNCONNECTED ;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_DBITERR_UNCONNECTED ;
@@ -2449,7 +2536,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized10
         .RSTREGARSTREG(1'b0),
         .RSTREGB(1'b0),
         .SBITERR(\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED ),
-        .WEA({1'b1,1'b1,1'b1,1'b1}),
+        .WEA({wea,wea,wea,wea}),
         .WEBWE({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}));
 endmodule
 
@@ -2463,7 +2550,8 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized11
     enb_array,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [7:0]\doutb[18] ;
   output [0:0]\doutb[19] ;
   input clka;
@@ -2473,6 +2561,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized11
   input [11:0]addra;
   input [11:0]addrb;
   input [8:0]dina;
+  input [0:0]wea;
 
   wire [11:0]addra;
   wire [11:0]addrb;
@@ -2483,6 +2572,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized11
   wire [0:0]\doutb[19] ;
   wire [0:0]ena_array;
   wire [0:0]enb_array;
+  wire [0:0]wea;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_CASCADEOUTA_UNCONNECTED ;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_CASCADEOUTB_UNCONNECTED ;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_DBITERR_UNCONNECTED ;
@@ -2702,7 +2792,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized11
         .RSTREGARSTREG(1'b0),
         .RSTREGB(1'b0),
         .SBITERR(\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED ),
-        .WEA({1'b1,1'b1,1'b1,1'b1}),
+        .WEA({wea,wea,wea,wea}),
         .WEBWE({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}));
 endmodule
 
@@ -2716,7 +2806,8 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized2
     enb_array,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [7:0]\doutb[9] ;
   output [0:0]\doutb[10] ;
   input clka;
@@ -2726,6 +2817,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized2
   input [11:0]addra;
   input [11:0]addrb;
   input [8:0]dina;
+  input [0:0]wea;
 
   wire [11:0]addra;
   wire [11:0]addrb;
@@ -2736,6 +2828,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized2
   wire [7:0]\doutb[9] ;
   wire [0:0]ena_array;
   wire [0:0]enb_array;
+  wire [0:0]wea;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_CASCADEOUTA_UNCONNECTED ;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_CASCADEOUTB_UNCONNECTED ;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_DBITERR_UNCONNECTED ;
@@ -2955,7 +3048,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized2
         .RSTREGARSTREG(1'b0),
         .RSTREGB(1'b0),
         .SBITERR(\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED ),
-        .WEA({1'b1,1'b1,1'b1,1'b1}),
+        .WEA({wea,wea,wea,wea}),
         .WEBWE({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}));
 endmodule
 
@@ -2969,7 +3062,8 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized3
     enb_array,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [7:0]\doutb[9] ;
   output [0:0]\doutb[10] ;
   input clka;
@@ -2979,6 +3073,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized3
   input [11:0]addra;
   input [11:0]addrb;
   input [8:0]dina;
+  input [0:0]wea;
 
   wire [11:0]addra;
   wire [11:0]addrb;
@@ -2989,6 +3084,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized3
   wire [7:0]\doutb[9] ;
   wire [0:0]ena_array;
   wire [0:0]enb_array;
+  wire [0:0]wea;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_CASCADEOUTA_UNCONNECTED ;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_CASCADEOUTB_UNCONNECTED ;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_DBITERR_UNCONNECTED ;
@@ -3208,7 +3304,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized3
         .RSTREGARSTREG(1'b0),
         .RSTREGB(1'b0),
         .SBITERR(\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED ),
-        .WEA({1'b1,1'b1,1'b1,1'b1}),
+        .WEA({wea,wea,wea,wea}),
         .WEBWE({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}));
 endmodule
 
@@ -3222,7 +3318,8 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized4
     enb_array,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [7:0]\doutb[9] ;
   output [0:0]\doutb[10] ;
   input clka;
@@ -3232,6 +3329,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized4
   input [11:0]addra;
   input [11:0]addrb;
   input [8:0]dina;
+  input [0:0]wea;
 
   wire [11:0]addra;
   wire [11:0]addrb;
@@ -3242,6 +3340,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized4
   wire [7:0]\doutb[9] ;
   wire [0:0]ena_array;
   wire [0:0]enb_array;
+  wire [0:0]wea;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_CASCADEOUTA_UNCONNECTED ;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_CASCADEOUTB_UNCONNECTED ;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_DBITERR_UNCONNECTED ;
@@ -3461,7 +3560,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized4
         .RSTREGARSTREG(1'b0),
         .RSTREGB(1'b0),
         .SBITERR(\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED ),
-        .WEA({1'b1,1'b1,1'b1,1'b1}),
+        .WEA({wea,wea,wea,wea}),
         .WEBWE({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}));
 endmodule
 
@@ -3475,7 +3574,8 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized5
     enb_array,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [7:0]\doutb[9] ;
   output [0:0]\doutb[10] ;
   input clka;
@@ -3485,6 +3585,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized5
   input [11:0]addra;
   input [11:0]addrb;
   input [8:0]dina;
+  input [0:0]wea;
 
   wire [11:0]addra;
   wire [11:0]addrb;
@@ -3495,6 +3596,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized5
   wire [7:0]\doutb[9] ;
   wire [0:0]ena_array;
   wire [0:0]enb_array;
+  wire [0:0]wea;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_CASCADEOUTA_UNCONNECTED ;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_CASCADEOUTB_UNCONNECTED ;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_DBITERR_UNCONNECTED ;
@@ -3714,7 +3816,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized5
         .RSTREGARSTREG(1'b0),
         .RSTREGB(1'b0),
         .SBITERR(\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED ),
-        .WEA({1'b1,1'b1,1'b1,1'b1}),
+        .WEA({wea,wea,wea,wea}),
         .WEBWE({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}));
 endmodule
 
@@ -3728,7 +3830,8 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized6
     enb_array,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [7:0]DOBDO;
   output [0:0]DOPBDOP;
   input clka;
@@ -3738,6 +3841,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized6
   input [11:0]addra;
   input [11:0]addrb;
   input [8:0]dina;
+  input [0:0]wea;
 
   wire [7:0]DOBDO;
   wire [0:0]DOPBDOP;
@@ -3748,6 +3852,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized6
   wire [8:0]dina;
   wire [0:0]ena_array;
   wire [0:0]enb_array;
+  wire [0:0]wea;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_CASCADEOUTA_UNCONNECTED ;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_CASCADEOUTB_UNCONNECTED ;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_DBITERR_UNCONNECTED ;
@@ -3967,7 +4072,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized6
         .RSTREGARSTREG(1'b0),
         .RSTREGB(1'b0),
         .SBITERR(\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED ),
-        .WEA({1'b1,1'b1,1'b1,1'b1}),
+        .WEA({wea,wea,wea,wea}),
         .WEBWE({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}));
 endmodule
 
@@ -3981,7 +4086,8 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized7
     enb_array,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [7:0]\doutb[18] ;
   output [0:0]\doutb[19] ;
   input clka;
@@ -3991,6 +4097,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized7
   input [11:0]addra;
   input [11:0]addrb;
   input [8:0]dina;
+  input [0:0]wea;
 
   wire [11:0]addra;
   wire [11:0]addrb;
@@ -4001,6 +4108,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized7
   wire [0:0]\doutb[19] ;
   wire [0:0]ena_array;
   wire [0:0]enb_array;
+  wire [0:0]wea;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_CASCADEOUTA_UNCONNECTED ;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_CASCADEOUTB_UNCONNECTED ;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_DBITERR_UNCONNECTED ;
@@ -4220,7 +4328,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized7
         .RSTREGARSTREG(1'b0),
         .RSTREGB(1'b0),
         .SBITERR(\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED ),
-        .WEA({1'b1,1'b1,1'b1,1'b1}),
+        .WEA({wea,wea,wea,wea}),
         .WEBWE({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}));
 endmodule
 
@@ -4235,7 +4343,8 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized8
     addra,
     addrb,
     dina,
-    wea);
+    wea,
+    ena);
   output [7:0]\doutb[18] ;
   output [0:0]\doutb[19] ;
   output [0:0]ena_array;
@@ -4246,6 +4355,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized8
   input [11:0]addrb;
   input [8:0]dina;
   input [0:0]wea;
+  input ena;
 
   wire [14:0]addra;
   wire [11:0]addrb;
@@ -4254,6 +4364,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized8
   wire [8:0]dina;
   wire [7:0]\doutb[18] ;
   wire [0:0]\doutb[19] ;
+  wire ena;
   wire [0:0]ena_array;
   wire [0:0]enb_array;
   wire [0:0]wea;
@@ -4476,14 +4587,14 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized8
         .RSTREGARSTREG(1'b0),
         .RSTREGB(1'b0),
         .SBITERR(\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED ),
-        .WEA({1'b1,1'b1,1'b1,1'b1}),
+        .WEA({wea,wea,wea,wea}),
         .WEBWE({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}));
   LUT4 #(
     .INIT(16'h1000)) 
     \DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_i_1 
        (.I0(addra[14]),
         .I1(addra[13]),
-        .I2(wea),
+        .I2(ena),
         .I3(addra[12]),
         .O(ena_array));
 endmodule
@@ -4498,7 +4609,8 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized9
     enb_array,
     addra,
     addrb,
-    dina);
+    dina,
+    wea);
   output [7:0]\doutb[18] ;
   output [0:0]\doutb[19] ;
   input clka;
@@ -4508,6 +4620,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized9
   input [11:0]addra;
   input [11:0]addrb;
   input [8:0]dina;
+  input [0:0]wea;
 
   wire [11:0]addra;
   wire [11:0]addrb;
@@ -4518,6 +4631,7 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized9
   wire [0:0]\doutb[19] ;
   wire [0:0]ena_array;
   wire [0:0]enb_array;
+  wire [0:0]wea;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_CASCADEOUTA_UNCONNECTED ;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_CASCADEOUTB_UNCONNECTED ;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_DBITERR_UNCONNECTED ;
@@ -4737,10 +4851,11 @@ module integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized9
         .RSTREGARSTREG(1'b0),
         .RSTREGB(1'b0),
         .SBITERR(\NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED ),
-        .WEA({1'b1,1'b1,1'b1,1'b1}),
+        .WEA({wea,wea,wea,wea}),
         .WEBWE({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}));
 endmodule
 
+(* ORIG_REF_NAME = "blk_mem_gen_top" *) 
 module integral_image_buffer_blk_mem_gen_top
    (doutb,
     clka,
@@ -4748,7 +4863,8 @@ module integral_image_buffer_blk_mem_gen_top
     addra,
     addrb,
     dina,
-    wea);
+    wea,
+    ena);
   output [19:0]doutb;
   input clka;
   input clkb;
@@ -4756,6 +4872,7 @@ module integral_image_buffer_blk_mem_gen_top
   input [14:0]addrb;
   input [19:0]dina;
   input [0:0]wea;
+  input ena;
 
   wire [14:0]addra;
   wire [14:0]addrb;
@@ -4763,6 +4880,7 @@ module integral_image_buffer_blk_mem_gen_top
   wire clkb;
   wire [19:0]dina;
   wire [19:0]doutb;
+  wire ena;
   wire [0:0]wea;
 
   integral_image_buffer_blk_mem_gen_generic_cstr \valid.cstr 
@@ -4772,6 +4890,7 @@ module integral_image_buffer_blk_mem_gen_top
         .clkb(clkb),
         .dina(dina),
         .doutb(doutb),
+        .ena(ena),
         .wea(wea));
 endmodule
 
@@ -4783,7 +4902,7 @@ endmodule
 (* C_ENABLE_32BIT_ADDRESS = "0" *) (* C_EN_DEEPSLEEP_PIN = "0" *) (* C_EN_ECC_PIPE = "0" *) 
 (* C_EN_RDADDRA_CHG = "0" *) (* C_EN_RDADDRB_CHG = "0" *) (* C_EN_SAFETY_CKT = "0" *) 
 (* C_EN_SHUTDOWN_PIN = "0" *) (* C_EN_SLEEP_PIN = "0" *) (* C_EST_POWER_SUMMARY = "Estimated Power for IP     :     13.335237 mW" *) 
-(* C_FAMILY = "artix7" *) (* C_HAS_AXI_ID = "0" *) (* C_HAS_ENA = "0" *) 
+(* C_FAMILY = "artix7" *) (* C_HAS_AXI_ID = "0" *) (* C_HAS_ENA = "1" *) 
 (* C_HAS_ENB = "0" *) (* C_HAS_INJECTERR = "0" *) (* C_HAS_MEM_OUTPUT_REGS_A = "0" *) 
 (* C_HAS_MEM_OUTPUT_REGS_B = "1" *) (* C_HAS_MUX_OUTPUT_REGS_A = "0" *) (* C_HAS_MUX_OUTPUT_REGS_B = "0" *) 
 (* C_HAS_REGCEA = "0" *) (* C_HAS_REGCEB = "0" *) (* C_HAS_RSTA = "0" *) 
@@ -4799,7 +4918,7 @@ endmodule
 (* C_USE_URAM = "0" *) (* C_WEA_WIDTH = "1" *) (* C_WEB_WIDTH = "1" *) 
 (* C_WRITE_DEPTH_A = "19481" *) (* C_WRITE_DEPTH_B = "19481" *) (* C_WRITE_MODE_A = "NO_CHANGE" *) 
 (* C_WRITE_MODE_B = "WRITE_FIRST" *) (* C_WRITE_WIDTH_A = "20" *) (* C_WRITE_WIDTH_B = "20" *) 
-(* C_XDEVICEFAMILY = "artix7" *) (* downgradeipidentifiedwarnings = "yes" *) 
+(* C_XDEVICEFAMILY = "artix7" *) (* ORIG_REF_NAME = "blk_mem_gen_v8_4_0" *) (* downgradeipidentifiedwarnings = "yes" *) 
 module integral_image_buffer_blk_mem_gen_v8_4_0
    (clka,
     rsta,
@@ -4935,6 +5054,7 @@ module integral_image_buffer_blk_mem_gen_v8_4_0
   wire clkb;
   wire [19:0]dina;
   wire [19:0]doutb;
+  wire ena;
   wire [0:0]wea;
 
   assign dbiterr = \<const0> ;
@@ -5040,9 +5160,11 @@ module integral_image_buffer_blk_mem_gen_v8_4_0
         .clkb(clkb),
         .dina(dina),
         .doutb(doutb),
+        .ena(ena),
         .wea(wea));
 endmodule
 
+(* ORIG_REF_NAME = "blk_mem_gen_v8_4_0_synth" *) 
 module integral_image_buffer_blk_mem_gen_v8_4_0_synth
    (doutb,
     clka,
@@ -5050,7 +5172,8 @@ module integral_image_buffer_blk_mem_gen_v8_4_0_synth
     addra,
     addrb,
     dina,
-    wea);
+    wea,
+    ena);
   output [19:0]doutb;
   input clka;
   input clkb;
@@ -5058,6 +5181,7 @@ module integral_image_buffer_blk_mem_gen_v8_4_0_synth
   input [14:0]addrb;
   input [19:0]dina;
   input [0:0]wea;
+  input ena;
 
   wire [14:0]addra;
   wire [14:0]addrb;
@@ -5065,6 +5189,7 @@ module integral_image_buffer_blk_mem_gen_v8_4_0_synth
   wire clkb;
   wire [19:0]dina;
   wire [19:0]doutb;
+  wire ena;
   wire [0:0]wea;
 
   integral_image_buffer_blk_mem_gen_top \gnbram.gnativebmg.native_blk_mem_gen 
@@ -5074,6 +5199,7 @@ module integral_image_buffer_blk_mem_gen_v8_4_0_synth
         .clkb(clkb),
         .dina(dina),
         .doutb(doutb),
+        .ena(ena),
         .wea(wea));
 endmodule
 `ifndef GLBL

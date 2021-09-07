@@ -99,7 +99,7 @@ begin
                     (rez_160x120 = '0' and rez_320x240  = '0' and href_last(0) = '1') then
                    
                     if rez_160x120 = '1' then
-                        if line = "10" then
+                        if line = "10" then -- FORMERLY "10"
                             we_reg <= '1';
                         end if;
                     elsif rez_320x240 = '1' then

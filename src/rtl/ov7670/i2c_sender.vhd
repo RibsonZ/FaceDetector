@@ -25,7 +25,7 @@ architecture Behavioral of i2c_sender is
 	signal   busy_sr  : std_logic_vector(31 downto 0) := (others => '0');
 	signal   data_sr  : std_logic_vector(31 downto 0) := (others => '1');
 begin
-	process(busy_sr, data_sr(31))
+	process(busy_sr, data_sr(31), rst)
 	begin
 		if rst = '1' then
             siod <= 'Z';

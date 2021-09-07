@@ -1,10 +1,10 @@
 -- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2017.3 (win64) Build 2018833 Wed Oct  4 19:58:22 MDT 2017
--- Date        : Tue Aug 31 20:52:26 2021
--- Host        : DESKTOP-PP7RK9J running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode funcsim -rename_top integral_image_buffer -prefix
---               integral_image_buffer_ integral_image_buffer_sim_netlist.vhdl
+-- Date        : Tue Sep  7 10:20:37 2021
+-- Host        : LAPTOP-UNNHVI5M running 64-bit major release  (build 9200)
+-- Command     : write_vhdl -force -mode funcsim
+--               C:/Users/wojci/OneDrive/Dokumenty/AGH/S4/UEC2/FaceDetection/FaceDetector/src/ip/integral_image_buffer/integral_image_buffer_sim_netlist.vhdl
 -- Design      : integral_image_buffer
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -18,8 +18,10 @@ entity integral_image_buffer_bindec is
   port (
     ena_array : out STD_LOGIC_VECTOR ( 3 downto 0 );
     addra : in STD_LOGIC_VECTOR ( 2 downto 0 );
-    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
+    ena : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of integral_image_buffer_bindec : entity is "bindec";
 end integral_image_buffer_bindec;
 
 architecture STRUCTURE of integral_image_buffer_bindec is
@@ -31,7 +33,7 @@ ENOUT: unisim.vcomponents.LUT4
         port map (
       I0 => addra(2),
       I1 => addra(1),
-      I2 => wea(0),
+      I2 => ena,
       I3 => addra(0),
       O => ena_array(0)
     );
@@ -42,7 +44,7 @@ ENOUT: unisim.vcomponents.LUT4
         port map (
       I0 => addra(2),
       I1 => addra(0),
-      I2 => wea(0),
+      I2 => ena,
       I3 => addra(1),
       O => ena_array(1)
     );
@@ -52,7 +54,7 @@ ENOUT: unisim.vcomponents.LUT4
     )
         port map (
       I0 => addra(2),
-      I1 => wea(0),
+      I1 => ena,
       I2 => addra(1),
       I3 => addra(0),
       O => ena_array(2)
@@ -65,7 +67,7 @@ ENOUT: unisim.vcomponents.LUT4
       I0 => addra(1),
       I1 => addra(0),
       I2 => addra(2),
-      I3 => wea(0),
+      I3 => ena,
       O => ena_array(3)
     );
 end STRUCTURE;
@@ -850,12 +852,15 @@ entity integral_image_buffer_blk_mem_gen_prim_wrapper is
     \doutb[0]\ : out STD_LOGIC_VECTOR ( 0 to 0 );
     clka : in STD_LOGIC;
     clkb : in STD_LOGIC;
-    \wea[0]\ : in STD_LOGIC;
+    ena : in STD_LOGIC;
     \addrb[14]\ : in STD_LOGIC;
     addra : in STD_LOGIC_VECTOR ( 13 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 13 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 0 to 0 )
+    dina : in STD_LOGIC_VECTOR ( 0 to 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of integral_image_buffer_blk_mem_gen_prim_wrapper : entity is "blk_mem_gen_prim_wrapper";
 end integral_image_buffer_blk_mem_gen_prim_wrapper;
 
 architecture STRUCTURE of integral_image_buffer_blk_mem_gen_prim_wrapper is
@@ -983,7 +988,7 @@ begin
       DOBDO(0) => \doutb[0]\(0),
       DOPADOP(1 downto 0) => \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM18.ram_DOPADOP_UNCONNECTED\(1 downto 0),
       DOPBDOP(1 downto 0) => \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM18.ram_DOPBDOP_UNCONNECTED\(1 downto 0),
-      ENARDEN => \wea[0]\,
+      ENARDEN => ena,
       ENBWREN => \addrb[14]\,
       REGCEAREGCE => '0',
       REGCEB => '1',
@@ -991,7 +996,8 @@ begin
       RSTRAMB => '0',
       RSTREGARSTREG => '0',
       RSTREGB => '0',
-      WEA(1 downto 0) => B"11",
+      WEA(1) => wea(0),
+      WEA(0) => wea(0),
       WEBWE(3 downto 0) => B"0000"
     );
 end STRUCTURE;
@@ -1007,7 +1013,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized0\ is
     addra : in STD_LOGIC_VECTOR ( 14 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 14 downto 0 );
     dina : in STD_LOGIC_VECTOR ( 1 downto 0 );
-    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 );
+    ena : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized0\ : entity is "blk_mem_gen_prim_wrapper";
@@ -1150,7 +1157,8 @@ begin
       RSTRAMB => '0',
       RSTREGARSTREG => '0',
       RSTREGB => '0',
-      WEA(1 downto 0) => B"11",
+      WEA(1) => wea(0),
+      WEA(0) => wea(0),
       WEBWE(3 downto 0) => B"0000"
     );
 \DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM18.ram_i_1\: unisim.vcomponents.LUT3
@@ -1158,7 +1166,7 @@ begin
       INIT => X"08"
     )
         port map (
-      I0 => wea(0),
+      I0 => ena,
       I1 => addra(14),
       I2 => addra(13),
       O => ram_ena
@@ -1182,11 +1190,12 @@ entity \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized1\ is
     \doutb[1]\ : out STD_LOGIC_VECTOR ( 0 to 0 );
     clka : in STD_LOGIC;
     clkb : in STD_LOGIC;
-    \wea[0]\ : in STD_LOGIC;
+    ena : in STD_LOGIC;
     \addrb[14]\ : in STD_LOGIC;
     addra : in STD_LOGIC_VECTOR ( 13 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 13 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 0 to 0 )
+    dina : in STD_LOGIC_VECTOR ( 0 to 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized1\ : entity is "blk_mem_gen_prim_wrapper";
@@ -1317,7 +1326,7 @@ begin
       DOBDO(0) => \doutb[1]\(0),
       DOPADOP(1 downto 0) => \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM18.ram_DOPADOP_UNCONNECTED\(1 downto 0),
       DOPBDOP(1 downto 0) => \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM18.ram_DOPBDOP_UNCONNECTED\(1 downto 0),
-      ENARDEN => \wea[0]\,
+      ENARDEN => ena,
       ENBWREN => \addrb[14]\,
       REGCEAREGCE => '0',
       REGCEB => '1',
@@ -1325,7 +1334,8 @@ begin
       RSTRAMB => '0',
       RSTREGARSTREG => '0',
       RSTREGB => '0',
-      WEA(1 downto 0) => B"11",
+      WEA(1) => wea(0),
+      WEA(0) => wea(0),
       WEBWE(3 downto 0) => B"0000"
     );
 end STRUCTURE;
@@ -1343,7 +1353,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized10\ is
     enb_array : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 8 downto 0 )
+    dina : in STD_LOGIC_VECTOR ( 8 downto 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized10\ : entity is "blk_mem_gen_prim_wrapper";
@@ -1580,7 +1591,10 @@ begin
       RSTREGARSTREG => '0',
       RSTREGB => '0',
       SBITERR => \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED\,
-      WEA(3 downto 0) => B"1111",
+      WEA(3) => wea(0),
+      WEA(2) => wea(0),
+      WEA(1) => wea(0),
+      WEA(0) => wea(0),
       WEBWE(7 downto 0) => B"00000000"
     );
 end STRUCTURE;
@@ -1598,7 +1612,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized11\ is
     enb_array : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 8 downto 0 )
+    dina : in STD_LOGIC_VECTOR ( 8 downto 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized11\ : entity is "blk_mem_gen_prim_wrapper";
@@ -1835,7 +1850,10 @@ begin
       RSTREGARSTREG => '0',
       RSTREGB => '0',
       SBITERR => \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED\,
-      WEA(3 downto 0) => B"1111",
+      WEA(3) => wea(0),
+      WEA(2) => wea(0),
+      WEA(1) => wea(0),
+      WEA(0) => wea(0),
       WEBWE(7 downto 0) => B"00000000"
     );
 end STRUCTURE;
@@ -1853,7 +1871,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized2\ is
     enb_array : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 8 downto 0 )
+    dina : in STD_LOGIC_VECTOR ( 8 downto 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized2\ : entity is "blk_mem_gen_prim_wrapper";
@@ -2090,7 +2109,10 @@ begin
       RSTREGARSTREG => '0',
       RSTREGB => '0',
       SBITERR => \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED\,
-      WEA(3 downto 0) => B"1111",
+      WEA(3) => wea(0),
+      WEA(2) => wea(0),
+      WEA(1) => wea(0),
+      WEA(0) => wea(0),
       WEBWE(7 downto 0) => B"00000000"
     );
 end STRUCTURE;
@@ -2108,7 +2130,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized3\ is
     enb_array : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 8 downto 0 )
+    dina : in STD_LOGIC_VECTOR ( 8 downto 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized3\ : entity is "blk_mem_gen_prim_wrapper";
@@ -2345,7 +2368,10 @@ begin
       RSTREGARSTREG => '0',
       RSTREGB => '0',
       SBITERR => \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED\,
-      WEA(3 downto 0) => B"1111",
+      WEA(3) => wea(0),
+      WEA(2) => wea(0),
+      WEA(1) => wea(0),
+      WEA(0) => wea(0),
       WEBWE(7 downto 0) => B"00000000"
     );
 end STRUCTURE;
@@ -2363,7 +2389,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized4\ is
     enb_array : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 8 downto 0 )
+    dina : in STD_LOGIC_VECTOR ( 8 downto 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized4\ : entity is "blk_mem_gen_prim_wrapper";
@@ -2600,7 +2627,10 @@ begin
       RSTREGARSTREG => '0',
       RSTREGB => '0',
       SBITERR => \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED\,
-      WEA(3 downto 0) => B"1111",
+      WEA(3) => wea(0),
+      WEA(2) => wea(0),
+      WEA(1) => wea(0),
+      WEA(0) => wea(0),
       WEBWE(7 downto 0) => B"00000000"
     );
 end STRUCTURE;
@@ -2618,7 +2648,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized5\ is
     enb_array : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 8 downto 0 )
+    dina : in STD_LOGIC_VECTOR ( 8 downto 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized5\ : entity is "blk_mem_gen_prim_wrapper";
@@ -2855,7 +2886,10 @@ begin
       RSTREGARSTREG => '0',
       RSTREGB => '0',
       SBITERR => \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED\,
-      WEA(3 downto 0) => B"1111",
+      WEA(3) => wea(0),
+      WEA(2) => wea(0),
+      WEA(1) => wea(0),
+      WEA(0) => wea(0),
       WEBWE(7 downto 0) => B"00000000"
     );
 end STRUCTURE;
@@ -2873,7 +2907,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized6\ is
     enb_array : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 8 downto 0 )
+    dina : in STD_LOGIC_VECTOR ( 8 downto 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized6\ : entity is "blk_mem_gen_prim_wrapper";
@@ -3110,7 +3145,10 @@ begin
       RSTREGARSTREG => '0',
       RSTREGB => '0',
       SBITERR => \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED\,
-      WEA(3 downto 0) => B"1111",
+      WEA(3) => wea(0),
+      WEA(2) => wea(0),
+      WEA(1) => wea(0),
+      WEA(0) => wea(0),
       WEBWE(7 downto 0) => B"00000000"
     );
 end STRUCTURE;
@@ -3128,7 +3166,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized7\ is
     enb_array : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 8 downto 0 )
+    dina : in STD_LOGIC_VECTOR ( 8 downto 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized7\ : entity is "blk_mem_gen_prim_wrapper";
@@ -3365,7 +3404,10 @@ begin
       RSTREGARSTREG => '0',
       RSTREGB => '0',
       SBITERR => \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED\,
-      WEA(3 downto 0) => B"1111",
+      WEA(3) => wea(0),
+      WEA(2) => wea(0),
+      WEA(1) => wea(0),
+      WEA(0) => wea(0),
       WEBWE(7 downto 0) => B"00000000"
     );
 end STRUCTURE;
@@ -3384,7 +3426,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized8\ is
     addra : in STD_LOGIC_VECTOR ( 14 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
     dina : in STD_LOGIC_VECTOR ( 8 downto 0 );
-    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 );
+    ena : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized8\ : entity is "blk_mem_gen_prim_wrapper";
@@ -3623,7 +3666,10 @@ begin
       RSTREGARSTREG => '0',
       RSTREGB => '0',
       SBITERR => \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED\,
-      WEA(3 downto 0) => B"1111",
+      WEA(3) => wea(0),
+      WEA(2) => wea(0),
+      WEA(1) => wea(0),
+      WEA(0) => wea(0),
       WEBWE(7 downto 0) => B"00000000"
     );
 \DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_i_1\: unisim.vcomponents.LUT4
@@ -3633,7 +3679,7 @@ begin
         port map (
       I0 => addra(14),
       I1 => addra(13),
-      I2 => wea(0),
+      I2 => ena,
       I3 => addra(12),
       O => \^ena_array\(0)
     );
@@ -3652,7 +3698,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized9\ is
     enb_array : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 8 downto 0 )
+    dina : in STD_LOGIC_VECTOR ( 8 downto 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_wrapper__parameterized9\ : entity is "blk_mem_gen_prim_wrapper";
@@ -3889,7 +3936,10 @@ begin
       RSTREGARSTREG => '0',
       RSTREGB => '0',
       SBITERR => \NLW_DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED\,
-      WEA(3 downto 0) => B"1111",
+      WEA(3) => wea(0),
+      WEA(2) => wea(0),
+      WEA(1) => wea(0),
+      WEA(0) => wea(0),
       WEBWE(7 downto 0) => B"00000000"
     );
 end STRUCTURE;
@@ -3902,12 +3952,15 @@ entity integral_image_buffer_blk_mem_gen_prim_width is
     \doutb[0]\ : out STD_LOGIC_VECTOR ( 0 to 0 );
     clka : in STD_LOGIC;
     clkb : in STD_LOGIC;
-    \wea[0]\ : in STD_LOGIC;
+    ena : in STD_LOGIC;
     \addrb[14]\ : in STD_LOGIC;
     addra : in STD_LOGIC_VECTOR ( 13 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 13 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 0 to 0 )
+    dina : in STD_LOGIC_VECTOR ( 0 to 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of integral_image_buffer_blk_mem_gen_prim_width : entity is "blk_mem_gen_prim_width";
 end integral_image_buffer_blk_mem_gen_prim_width;
 
 architecture STRUCTURE of integral_image_buffer_blk_mem_gen_prim_width is
@@ -3921,7 +3974,8 @@ begin
       clkb => clkb,
       dina(0) => dina(0),
       \doutb[0]\(0) => \doutb[0]\(0),
-      \wea[0]\ => \wea[0]\
+      ena => ena,
+      wea(0) => wea(0)
     );
 end STRUCTURE;
 library IEEE;
@@ -3936,7 +3990,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_width__parameterized0\ is
     addra : in STD_LOGIC_VECTOR ( 14 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 14 downto 0 );
     dina : in STD_LOGIC_VECTOR ( 1 downto 0 );
-    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 );
+    ena : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_width__parameterized0\ : entity is "blk_mem_gen_prim_width";
@@ -3952,6 +4007,7 @@ begin
       clkb => clkb,
       dina(1 downto 0) => dina(1 downto 0),
       \doutb[1]\(1 downto 0) => \doutb[1]\(1 downto 0),
+      ena => ena,
       wea(0) => wea(0)
     );
 end STRUCTURE;
@@ -3964,11 +4020,12 @@ entity \integral_image_buffer_blk_mem_gen_prim_width__parameterized1\ is
     \doutb[1]\ : out STD_LOGIC_VECTOR ( 0 to 0 );
     clka : in STD_LOGIC;
     clkb : in STD_LOGIC;
-    \wea[0]\ : in STD_LOGIC;
+    ena : in STD_LOGIC;
     \addrb[14]\ : in STD_LOGIC;
     addra : in STD_LOGIC_VECTOR ( 13 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 13 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 0 to 0 )
+    dina : in STD_LOGIC_VECTOR ( 0 to 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_width__parameterized1\ : entity is "blk_mem_gen_prim_width";
@@ -3985,7 +4042,8 @@ begin
       clkb => clkb,
       dina(0) => dina(0),
       \doutb[1]\(0) => \doutb[1]\(0),
-      \wea[0]\ => \wea[0]\
+      ena => ena,
+      wea(0) => wea(0)
     );
 end STRUCTURE;
 library IEEE;
@@ -4002,7 +4060,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_width__parameterized10\ is
     enb_array : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 8 downto 0 )
+    dina : in STD_LOGIC_VECTOR ( 8 downto 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_width__parameterized10\ : entity is "blk_mem_gen_prim_width";
@@ -4020,7 +4079,8 @@ begin
       \doutb[18]\(7 downto 0) => \doutb[18]\(7 downto 0),
       \doutb[19]\(0) => \doutb[19]\(0),
       ena_array(0) => ena_array(0),
-      enb_array(0) => enb_array(0)
+      enb_array(0) => enb_array(0),
+      wea(0) => wea(0)
     );
 end STRUCTURE;
 library IEEE;
@@ -4037,7 +4097,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_width__parameterized11\ is
     enb_array : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 8 downto 0 )
+    dina : in STD_LOGIC_VECTOR ( 8 downto 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_width__parameterized11\ : entity is "blk_mem_gen_prim_width";
@@ -4055,7 +4116,8 @@ begin
       \doutb[18]\(7 downto 0) => \doutb[18]\(7 downto 0),
       \doutb[19]\(0) => \doutb[19]\(0),
       ena_array(0) => ena_array(0),
-      enb_array(0) => enb_array(0)
+      enb_array(0) => enb_array(0),
+      wea(0) => wea(0)
     );
 end STRUCTURE;
 library IEEE;
@@ -4072,7 +4134,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_width__parameterized2\ is
     enb_array : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 8 downto 0 )
+    dina : in STD_LOGIC_VECTOR ( 8 downto 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_width__parameterized2\ : entity is "blk_mem_gen_prim_width";
@@ -4090,7 +4153,8 @@ begin
       \doutb[10]\(0) => \doutb[10]\(0),
       \doutb[9]\(7 downto 0) => \doutb[9]\(7 downto 0),
       ena_array(0) => ena_array(0),
-      enb_array(0) => enb_array(0)
+      enb_array(0) => enb_array(0),
+      wea(0) => wea(0)
     );
 end STRUCTURE;
 library IEEE;
@@ -4107,7 +4171,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_width__parameterized3\ is
     enb_array : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 8 downto 0 )
+    dina : in STD_LOGIC_VECTOR ( 8 downto 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_width__parameterized3\ : entity is "blk_mem_gen_prim_width";
@@ -4125,7 +4190,8 @@ begin
       \doutb[10]\(0) => \doutb[10]\(0),
       \doutb[9]\(7 downto 0) => \doutb[9]\(7 downto 0),
       ena_array(0) => ena_array(0),
-      enb_array(0) => enb_array(0)
+      enb_array(0) => enb_array(0),
+      wea(0) => wea(0)
     );
 end STRUCTURE;
 library IEEE;
@@ -4142,7 +4208,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_width__parameterized4\ is
     enb_array : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 8 downto 0 )
+    dina : in STD_LOGIC_VECTOR ( 8 downto 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_width__parameterized4\ : entity is "blk_mem_gen_prim_width";
@@ -4160,7 +4227,8 @@ begin
       \doutb[10]\(0) => \doutb[10]\(0),
       \doutb[9]\(7 downto 0) => \doutb[9]\(7 downto 0),
       ena_array(0) => ena_array(0),
-      enb_array(0) => enb_array(0)
+      enb_array(0) => enb_array(0),
+      wea(0) => wea(0)
     );
 end STRUCTURE;
 library IEEE;
@@ -4177,7 +4245,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_width__parameterized5\ is
     enb_array : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 8 downto 0 )
+    dina : in STD_LOGIC_VECTOR ( 8 downto 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_width__parameterized5\ : entity is "blk_mem_gen_prim_width";
@@ -4195,7 +4264,8 @@ begin
       \doutb[10]\(0) => \doutb[10]\(0),
       \doutb[9]\(7 downto 0) => \doutb[9]\(7 downto 0),
       ena_array(0) => ena_array(0),
-      enb_array(0) => enb_array(0)
+      enb_array(0) => enb_array(0),
+      wea(0) => wea(0)
     );
 end STRUCTURE;
 library IEEE;
@@ -4212,7 +4282,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_width__parameterized6\ is
     enb_array : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 8 downto 0 )
+    dina : in STD_LOGIC_VECTOR ( 8 downto 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_width__parameterized6\ : entity is "blk_mem_gen_prim_width";
@@ -4230,7 +4301,8 @@ begin
       clkb => clkb,
       dina(8 downto 0) => dina(8 downto 0),
       ena_array(0) => ena_array(0),
-      enb_array(0) => enb_array(0)
+      enb_array(0) => enb_array(0),
+      wea(0) => wea(0)
     );
 end STRUCTURE;
 library IEEE;
@@ -4247,7 +4319,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_width__parameterized7\ is
     enb_array : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 8 downto 0 )
+    dina : in STD_LOGIC_VECTOR ( 8 downto 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_width__parameterized7\ : entity is "blk_mem_gen_prim_width";
@@ -4265,7 +4338,8 @@ begin
       \doutb[18]\(7 downto 0) => \doutb[18]\(7 downto 0),
       \doutb[19]\(0) => \doutb[19]\(0),
       ena_array(0) => ena_array(0),
-      enb_array(0) => enb_array(0)
+      enb_array(0) => enb_array(0),
+      wea(0) => wea(0)
     );
 end STRUCTURE;
 library IEEE;
@@ -4283,7 +4357,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_width__parameterized8\ is
     addra : in STD_LOGIC_VECTOR ( 14 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
     dina : in STD_LOGIC_VECTOR ( 8 downto 0 );
-    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 );
+    ena : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_width__parameterized8\ : entity is "blk_mem_gen_prim_width";
@@ -4300,6 +4375,7 @@ begin
       dina(8 downto 0) => dina(8 downto 0),
       \doutb[18]\(7 downto 0) => \doutb[18]\(7 downto 0),
       \doutb[19]\(0) => \doutb[19]\(0),
+      ena => ena,
       ena_array(0) => ena_array(0),
       enb_array(0) => enb_array(0),
       wea(0) => wea(0)
@@ -4319,7 +4395,8 @@ entity \integral_image_buffer_blk_mem_gen_prim_width__parameterized9\ is
     enb_array : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 8 downto 0 )
+    dina : in STD_LOGIC_VECTOR ( 8 downto 0 );
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \integral_image_buffer_blk_mem_gen_prim_width__parameterized9\ : entity is "blk_mem_gen_prim_width";
@@ -4337,7 +4414,8 @@ begin
       \doutb[18]\(7 downto 0) => \doutb[18]\(7 downto 0),
       \doutb[19]\(0) => \doutb[19]\(0),
       ena_array(0) => ena_array(0),
-      enb_array(0) => enb_array(0)
+      enb_array(0) => enb_array(0),
+      wea(0) => wea(0)
     );
 end STRUCTURE;
 library IEEE;
@@ -4352,8 +4430,11 @@ entity integral_image_buffer_blk_mem_gen_generic_cstr is
     addra : in STD_LOGIC_VECTOR ( 14 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 14 downto 0 );
     dina : in STD_LOGIC_VECTOR ( 19 downto 0 );
-    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 );
+    ena : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of integral_image_buffer_blk_mem_gen_generic_cstr : entity is "blk_mem_gen_generic_cstr";
 end integral_image_buffer_blk_mem_gen_generic_cstr;
 
 architecture STRUCTURE of integral_image_buffer_blk_mem_gen_generic_cstr is
@@ -4459,9 +4540,9 @@ begin
 \bindec_a.bindec_inst_a\: entity work.integral_image_buffer_bindec
      port map (
       addra(2 downto 0) => addra(14 downto 12),
+      ena => ena,
       ena_array(3 downto 1) => ena_array(4 downto 2),
-      ena_array(0) => ena_array(0),
-      wea(0) => wea(0)
+      ena_array(0) => ena_array(0)
     );
 \bindec_b.bindec_inst_b\: entity work.integral_image_buffer_bindec_0
      port map (
@@ -4574,7 +4655,7 @@ ram_ena: unisim.vcomponents.LUT2
     )
         port map (
       I0 => addra(14),
-      I1 => wea(0),
+      I1 => ena,
       O => ram_ena_n_0
     );
 ram_enb: unisim.vcomponents.LUT1
@@ -4594,7 +4675,8 @@ ram_enb: unisim.vcomponents.LUT1
       clkb => clkb,
       dina(0) => dina(0),
       \doutb[0]\(0) => ram_doutb,
-      \wea[0]\ => ram_ena_n_0
+      ena => ram_ena_n_0,
+      wea(0) => wea(0)
     );
 \ramloop[10].ram.r\: entity work.\integral_image_buffer_blk_mem_gen_prim_width__parameterized9\
      port map (
@@ -4613,7 +4695,8 @@ ram_enb: unisim.vcomponents.LUT1
       \doutb[18]\(0) => \ramloop[10].ram.r_n_7\,
       \doutb[19]\(0) => \ramloop[10].ram.r_n_8\,
       ena_array(0) => ena_array(2),
-      enb_array(0) => enb_array(2)
+      enb_array(0) => enb_array(2),
+      wea(0) => wea(0)
     );
 \ramloop[11].ram.r\: entity work.\integral_image_buffer_blk_mem_gen_prim_width__parameterized10\
      port map (
@@ -4632,7 +4715,8 @@ ram_enb: unisim.vcomponents.LUT1
       \doutb[18]\(0) => \ramloop[11].ram.r_n_7\,
       \doutb[19]\(0) => \ramloop[11].ram.r_n_8\,
       ena_array(0) => ena_array(3),
-      enb_array(0) => enb_array(3)
+      enb_array(0) => enb_array(3),
+      wea(0) => wea(0)
     );
 \ramloop[12].ram.r\: entity work.\integral_image_buffer_blk_mem_gen_prim_width__parameterized11\
      port map (
@@ -4651,7 +4735,8 @@ ram_enb: unisim.vcomponents.LUT1
       \doutb[18]\(0) => \ramloop[12].ram.r_n_7\,
       \doutb[19]\(0) => \ramloop[12].ram.r_n_8\,
       ena_array(0) => ena_array(4),
-      enb_array(0) => enb_array(4)
+      enb_array(0) => enb_array(4),
+      wea(0) => wea(0)
     );
 \ramloop[1].ram.r\: entity work.\integral_image_buffer_blk_mem_gen_prim_width__parameterized0\
      port map (
@@ -4662,6 +4747,7 @@ ram_enb: unisim.vcomponents.LUT1
       dina(1 downto 0) => dina(1 downto 0),
       \doutb[1]\(1) => \ramloop[1].ram.r_n_0\,
       \doutb[1]\(0) => \ramloop[1].ram.r_n_1\,
+      ena => ena,
       wea(0) => wea(0)
     );
 \ramloop[2].ram.r\: entity work.\integral_image_buffer_blk_mem_gen_prim_width__parameterized1\
@@ -4673,7 +4759,8 @@ ram_enb: unisim.vcomponents.LUT1
       clkb => clkb,
       dina(0) => dina(1),
       \doutb[1]\(0) => \ramloop[2].ram.r_n_0\,
-      \wea[0]\ => ram_ena_n_0
+      ena => ram_ena_n_0,
+      wea(0) => wea(0)
     );
 \ramloop[3].ram.r\: entity work.\integral_image_buffer_blk_mem_gen_prim_width__parameterized2\
      port map (
@@ -4692,7 +4779,8 @@ ram_enb: unisim.vcomponents.LUT1
       \doutb[9]\(1) => \ramloop[3].ram.r_n_6\,
       \doutb[9]\(0) => \ramloop[3].ram.r_n_7\,
       ena_array(0) => ena_array(0),
-      enb_array(0) => enb_array(0)
+      enb_array(0) => enb_array(0),
+      wea(0) => wea(0)
     );
 \ramloop[4].ram.r\: entity work.\integral_image_buffer_blk_mem_gen_prim_width__parameterized3\
      port map (
@@ -4711,7 +4799,8 @@ ram_enb: unisim.vcomponents.LUT1
       \doutb[9]\(1) => \ramloop[4].ram.r_n_6\,
       \doutb[9]\(0) => \ramloop[4].ram.r_n_7\,
       ena_array(0) => ena_array(1),
-      enb_array(0) => enb_array(1)
+      enb_array(0) => enb_array(1),
+      wea(0) => wea(0)
     );
 \ramloop[5].ram.r\: entity work.\integral_image_buffer_blk_mem_gen_prim_width__parameterized4\
      port map (
@@ -4730,7 +4819,8 @@ ram_enb: unisim.vcomponents.LUT1
       \doutb[9]\(1) => \ramloop[5].ram.r_n_6\,
       \doutb[9]\(0) => \ramloop[5].ram.r_n_7\,
       ena_array(0) => ena_array(2),
-      enb_array(0) => enb_array(2)
+      enb_array(0) => enb_array(2),
+      wea(0) => wea(0)
     );
 \ramloop[6].ram.r\: entity work.\integral_image_buffer_blk_mem_gen_prim_width__parameterized5\
      port map (
@@ -4749,7 +4839,8 @@ ram_enb: unisim.vcomponents.LUT1
       \doutb[9]\(1) => \ramloop[6].ram.r_n_6\,
       \doutb[9]\(0) => \ramloop[6].ram.r_n_7\,
       ena_array(0) => ena_array(3),
-      enb_array(0) => enb_array(3)
+      enb_array(0) => enb_array(3),
+      wea(0) => wea(0)
     );
 \ramloop[7].ram.r\: entity work.\integral_image_buffer_blk_mem_gen_prim_width__parameterized6\
      port map (
@@ -4768,7 +4859,8 @@ ram_enb: unisim.vcomponents.LUT1
       clkb => clkb,
       dina(8 downto 0) => dina(10 downto 2),
       ena_array(0) => ena_array(4),
-      enb_array(0) => enb_array(4)
+      enb_array(0) => enb_array(4),
+      wea(0) => wea(0)
     );
 \ramloop[8].ram.r\: entity work.\integral_image_buffer_blk_mem_gen_prim_width__parameterized7\
      port map (
@@ -4787,7 +4879,8 @@ ram_enb: unisim.vcomponents.LUT1
       \doutb[18]\(0) => \ramloop[8].ram.r_n_7\,
       \doutb[19]\(0) => \ramloop[8].ram.r_n_8\,
       ena_array(0) => ena_array(0),
-      enb_array(0) => enb_array(0)
+      enb_array(0) => enb_array(0),
+      wea(0) => wea(0)
     );
 \ramloop[9].ram.r\: entity work.\integral_image_buffer_blk_mem_gen_prim_width__parameterized8\
      port map (
@@ -4805,6 +4898,7 @@ ram_enb: unisim.vcomponents.LUT1
       \doutb[18]\(1) => \ramloop[9].ram.r_n_6\,
       \doutb[18]\(0) => \ramloop[9].ram.r_n_7\,
       \doutb[19]\(0) => \ramloop[9].ram.r_n_8\,
+      ena => ena,
       ena_array(0) => ena_array(1),
       enb_array(0) => enb_array(1),
       wea(0) => wea(0)
@@ -4822,8 +4916,11 @@ entity integral_image_buffer_blk_mem_gen_top is
     addra : in STD_LOGIC_VECTOR ( 14 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 14 downto 0 );
     dina : in STD_LOGIC_VECTOR ( 19 downto 0 );
-    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 );
+    ena : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of integral_image_buffer_blk_mem_gen_top : entity is "blk_mem_gen_top";
 end integral_image_buffer_blk_mem_gen_top;
 
 architecture STRUCTURE of integral_image_buffer_blk_mem_gen_top is
@@ -4836,6 +4933,7 @@ begin
       clkb => clkb,
       dina(19 downto 0) => dina(19 downto 0),
       doutb(19 downto 0) => doutb(19 downto 0),
+      ena => ena,
       wea(0) => wea(0)
     );
 end STRUCTURE;
@@ -4851,8 +4949,11 @@ entity integral_image_buffer_blk_mem_gen_v8_4_0_synth is
     addra : in STD_LOGIC_VECTOR ( 14 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 14 downto 0 );
     dina : in STD_LOGIC_VECTOR ( 19 downto 0 );
-    wea : in STD_LOGIC_VECTOR ( 0 to 0 )
+    wea : in STD_LOGIC_VECTOR ( 0 to 0 );
+    ena : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of integral_image_buffer_blk_mem_gen_v8_4_0_synth : entity is "blk_mem_gen_v8_4_0_synth";
 end integral_image_buffer_blk_mem_gen_v8_4_0_synth;
 
 architecture STRUCTURE of integral_image_buffer_blk_mem_gen_v8_4_0_synth is
@@ -4865,6 +4966,7 @@ begin
       clkb => clkb,
       dina(19 downto 0) => dina(19 downto 0),
       doutb(19 downto 0) => doutb(19 downto 0),
+      ena => ena,
       wea(0) => wea(0)
     );
 end STRUCTURE;
@@ -4991,7 +5093,7 @@ entity integral_image_buffer_blk_mem_gen_v8_4_0 is
   attribute C_HAS_AXI_ID : integer;
   attribute C_HAS_AXI_ID of integral_image_buffer_blk_mem_gen_v8_4_0 : entity is 0;
   attribute C_HAS_ENA : integer;
-  attribute C_HAS_ENA of integral_image_buffer_blk_mem_gen_v8_4_0 : entity is 0;
+  attribute C_HAS_ENA of integral_image_buffer_blk_mem_gen_v8_4_0 : entity is 1;
   attribute C_HAS_ENB : integer;
   attribute C_HAS_ENB of integral_image_buffer_blk_mem_gen_v8_4_0 : entity is 0;
   attribute C_HAS_INJECTERR : integer;
@@ -5084,6 +5186,8 @@ entity integral_image_buffer_blk_mem_gen_v8_4_0 is
   attribute C_WRITE_WIDTH_B of integral_image_buffer_blk_mem_gen_v8_4_0 : entity is 20;
   attribute C_XDEVICEFAMILY : string;
   attribute C_XDEVICEFAMILY of integral_image_buffer_blk_mem_gen_v8_4_0 : entity is "artix7";
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of integral_image_buffer_blk_mem_gen_v8_4_0 : entity is "blk_mem_gen_v8_4_0";
   attribute downgradeipidentifiedwarnings : string;
   attribute downgradeipidentifiedwarnings of integral_image_buffer_blk_mem_gen_v8_4_0 : entity is "yes";
 end integral_image_buffer_blk_mem_gen_v8_4_0;
@@ -5197,6 +5301,7 @@ inst_blk_mem_gen: entity work.integral_image_buffer_blk_mem_gen_v8_4_0_synth
       clkb => clkb,
       dina(19 downto 0) => dina(19 downto 0),
       doutb(19 downto 0) => doutb(19 downto 0),
+      ena => ena,
       wea(0) => wea(0)
     );
 end STRUCTURE;
@@ -5207,6 +5312,7 @@ use UNISIM.VCOMPONENTS.ALL;
 entity integral_image_buffer is
   port (
     clka : in STD_LOGIC;
+    ena : in STD_LOGIC;
     wea : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 14 downto 0 );
     dina : in STD_LOGIC_VECTOR ( 19 downto 0 );
@@ -5298,7 +5404,7 @@ architecture STRUCTURE of integral_image_buffer is
   attribute C_HAS_AXI_ID : integer;
   attribute C_HAS_AXI_ID of U0 : label is 0;
   attribute C_HAS_ENA : integer;
-  attribute C_HAS_ENA of U0 : label is 0;
+  attribute C_HAS_ENA of U0 : label is 1;
   attribute C_HAS_ENB : integer;
   attribute C_HAS_ENB of U0 : label is 0;
   attribute C_HAS_INJECTERR : integer;
@@ -5398,6 +5504,7 @@ architecture STRUCTURE of integral_image_buffer is
   attribute x_interface_parameter of clka : signal is "XIL_INTERFACENAME BRAM_PORTA, MEM_SIZE 8192, MEM_WIDTH 32, MEM_ECC NONE, MASTER_TYPE OTHER, READ_WRITE_MODE READ_WRITE";
   attribute x_interface_info of clkb : signal is "xilinx.com:interface:bram:1.0 BRAM_PORTB CLK";
   attribute x_interface_parameter of clkb : signal is "XIL_INTERFACENAME BRAM_PORTB, MEM_SIZE 8192, MEM_WIDTH 32, MEM_ECC NONE, MASTER_TYPE OTHER, READ_WRITE_MODE READ_WRITE";
+  attribute x_interface_info of ena : signal is "xilinx.com:interface:bram:1.0 BRAM_PORTA EN";
   attribute x_interface_info of addra : signal is "xilinx.com:interface:bram:1.0 BRAM_PORTA ADDR";
   attribute x_interface_info of addrb : signal is "xilinx.com:interface:bram:1.0 BRAM_PORTB ADDR";
   attribute x_interface_info of dina : signal is "xilinx.com:interface:bram:1.0 BRAM_PORTA DIN";
@@ -5417,7 +5524,7 @@ U0: entity work.integral_image_buffer_blk_mem_gen_v8_4_0
       douta(19 downto 0) => NLW_U0_douta_UNCONNECTED(19 downto 0),
       doutb(19 downto 0) => doutb(19 downto 0),
       eccpipece => '0',
-      ena => '0',
+      ena => ena,
       enb => '0',
       injectdbiterr => '0',
       injectsbiterr => '0',

@@ -58,7 +58,6 @@
 //----------------------------------------------------------------------------
 // clk_out_50____50.000______0.000______50.0______203.457____155.540
 // clk_out_25____25.000______0.000______50.0______235.962____155.540
-// clk_out_12_5____12.500______0.000______50.0______269.669____155.540
 //
 //----------------------------------------------------------------------------
 // Input Clock   Freq (MHz)    Input Jitter (UI)
@@ -67,14 +66,13 @@
 
 `timescale 1ps/1ps
 
-(* CORE_GENERATION_INFO = "clock_generator,clk_wiz_v5_4_2_0,{component_name=clock_generator,use_phase_alignment=true,use_min_o_jitter=false,use_max_i_jitter=false,use_dyn_phase_shift=false,use_inclk_switchover=false,use_dyn_reconfig=false,enable_axi=0,feedback_source=FDBK_AUTO,PRIMITIVE=PLL,num_out_clk=3,clkin1_period=10.000,clkin2_period=10.000,use_power_down=false,use_reset=true,use_locked=true,use_inclk_stopped=false,feedback_type=SINGLE,CLOCK_MGR_TYPE=NA,manual_override=false}" *)
+(* CORE_GENERATION_INFO = "clock_generator,clk_wiz_v5_4_2_0,{component_name=clock_generator,use_phase_alignment=true,use_min_o_jitter=false,use_max_i_jitter=false,use_dyn_phase_shift=false,use_inclk_switchover=false,use_dyn_reconfig=false,enable_axi=0,feedback_source=FDBK_AUTO,PRIMITIVE=PLL,num_out_clk=2,clkin1_period=10.000,clkin2_period=10.000,use_power_down=false,use_reset=true,use_locked=true,use_inclk_stopped=false,feedback_type=SINGLE,CLOCK_MGR_TYPE=NA,manual_override=false}" *)
 
 module clock_generator 
  (
   // Clock out ports
   output        clk_out_50,
   output        clk_out_25,
-  output        clk_out_12_5,
   // Status and control signals
   input         reset,
   output        locked,
@@ -87,7 +85,6 @@ module clock_generator
   // Clock out ports  
   .clk_out_50(clk_out_50),
   .clk_out_25(clk_out_25),
-  .clk_out_12_5(clk_out_12_5),
   // Status and control signals               
   .reset(reset), 
   .locked(locked),

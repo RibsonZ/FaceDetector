@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="integral_image_capture_test_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="integral_image_capture_test" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="6153314166666fs"></ZoomStartTime>
+      <ZoomEndTime time="6153645166667fs"></ZoomEndTime>
+      <Cursor1Time time="6153590000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="175"></NameColumnWidth>
+      <ValueColumnWidth column_width="138"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="20" />
+   <wvobject fp_name="/integral_image_capture_test/wr_addr" type="array">
+      <obj_property name="ElementShortName">wr_addr[14:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_addr[14:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_capture_test/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_capture_test/wren" type="array">
+      <obj_property name="ElementShortName">wren[0:0]</obj_property>
+      <obj_property name="ObjectShortName">wren[0:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_capture_test/ov7670_data" type="array">
+      <obj_property name="ElementShortName">ov7670_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ov7670_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_capture_test/ov7670_vsync" type="logic">
+      <obj_property name="ElementShortName">ov7670_vsync</obj_property>
+      <obj_property name="ObjectShortName">ov7670_vsync</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_capture_test/ov7670_href" type="logic">
+      <obj_property name="ElementShortName">ov7670_href</obj_property>
+      <obj_property name="ObjectShortName">ov7670_href</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_capture_test/ov7670_pclk" type="logic">
+      <obj_property name="ElementShortName">ov7670_pclk</obj_property>
+      <obj_property name="ObjectShortName">ov7670_pclk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_capture_test/u1_camera_simulator/counter" type="array">
+      <obj_property name="ElementShortName">counter[31:0]</obj_property>
+      <obj_property name="ObjectShortName">counter[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_capture_test/u1_camera_simulator/vctr" type="array">
+      <obj_property name="ElementShortName">vctr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">vctr[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_capture_test/dut_integral_image_capture/wrdata" type="array">
+      <obj_property name="ElementShortName">wrdata[3:0]</obj_property>
+      <obj_property name="ObjectShortName">wrdata[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_capture_test/dut_integral_image_capture/wrdata_rgb" type="array">
+      <obj_property name="ElementShortName">wrdata_rgb[11:0]</obj_property>
+      <obj_property name="ObjectShortName">wrdata_rgb[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_capture_test/dut_integral_image_capture/row_buff" type="array">
+      <obj_property name="ElementShortName">row_buff[19:0]</obj_property>
+      <obj_property name="ObjectShortName">row_buff[19:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_capture_test/dut_integral_image_capture/we" type="logic">
+      <obj_property name="ElementShortName">we</obj_property>
+      <obj_property name="ObjectShortName">we</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_capture_test/dut_integral_image_capture/u1_ov7670_capture/line" type="array">
+      <obj_property name="ElementShortName">line[1:0]</obj_property>
+      <obj_property name="ObjectShortName">line[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_capture_test/dut_integral_image_capture/u1_ov7670_capture/href" type="logic">
+      <obj_property name="ElementShortName">href</obj_property>
+      <obj_property name="ObjectShortName">href</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_capture_test/ii_wrdata" type="array">
+      <obj_property name="ElementShortName">ii_wrdata[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ii_wrdata[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_capture_test/log_ii_wrdata" type="array">
+      <obj_property name="ElementShortName">log_ii_wrdata[31:0]</obj_property>
+      <obj_property name="ObjectShortName">log_ii_wrdata[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_capture_test/log_ii_wrdata_z" type="array">
+      <obj_property name="ElementShortName">log_ii_wrdata_z[31:0]</obj_property>
+      <obj_property name="ObjectShortName">log_ii_wrdata_z[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_capture_test/dut_integral_image_capture/row_ctr" type="array">
+      <obj_property name="ElementShortName">row_ctr[7:0]</obj_property>
+      <obj_property name="ObjectShortName">row_ctr[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_capture_test/dut_integral_image_capture/ii_z_buff" type="array">
+      <obj_property name="ElementShortName">ii_z_buff[159:0][19:0]</obj_property>
+      <obj_property name="ObjectShortName">ii_z_buff[159:0][19:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+</wave_config>

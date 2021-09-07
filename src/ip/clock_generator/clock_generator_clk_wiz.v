@@ -58,7 +58,6 @@
 //----------------------------------------------------------------------------
 // clk_out_50____50.000______0.000______50.0______203.457____155.540
 // clk_out_25____25.000______0.000______50.0______235.962____155.540
-// clk_out_12_5____12.500______0.000______50.0______269.669____155.540
 //
 //----------------------------------------------------------------------------
 // Input Clock   Freq (MHz)    Input Jitter (UI)
@@ -73,7 +72,6 @@ module clock_generator_clk_wiz
   // Clock out ports
   output        clk_out_50,
   output        clk_out_25,
-  output        clk_out_12_5,
   // Status and control signals
   input         reset,
   output        locked,
@@ -112,6 +110,7 @@ wire clk_in2_clock_generator;
   wire        clkfbout_clock_generator;
   wire        clkfbout_buf_clock_generator;
   wire        clkfboutb_unused;
+   wire clkout2_unused;
    wire clkout3_unused;
    wire clkout4_unused;
   wire        clkout5_unused;
@@ -133,9 +132,6 @@ wire clk_in2_clock_generator;
     .CLKOUT1_DIVIDE       (34),
     .CLKOUT1_PHASE        (0.000),
     .CLKOUT1_DUTY_CYCLE   (0.500),
-    .CLKOUT2_DIVIDE       (68),
-    .CLKOUT2_PHASE        (0.000),
-    .CLKOUT2_DUTY_CYCLE   (0.500),
     .CLKIN1_PERIOD        (10.000))
   plle2_adv_inst
     // Output clocks
@@ -143,7 +139,7 @@ wire clk_in2_clock_generator;
     .CLKFBOUT            (clkfbout_clock_generator),
     .CLKOUT0             (clk_out_50_clock_generator),
     .CLKOUT1             (clk_out_25_clock_generator),
-    .CLKOUT2             (clk_out_12_5_clock_generator),
+    .CLKOUT2             (clkout2_unused),
     .CLKOUT3             (clkout3_unused),
     .CLKOUT4             (clkout4_unused),
     .CLKOUT5             (clkout5_unused),
@@ -190,10 +186,6 @@ wire clk_in2_clock_generator;
   BUFG clkout2_buf
    (.O   (clk_out_25),
     .I   (clk_out_25_clock_generator));
-
-  BUFG clkout3_buf
-   (.O   (clk_out_12_5),
-    .I   (clk_out_12_5_clock_generator));
 
 
 

@@ -1,10 +1,10 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2017.3 (win64) Build 2018833 Wed Oct  4 19:58:22 MDT 2017
-// Date        : Thu Aug 26 12:53:47 2021
+// Date        : Fri Sep  3 17:36:17 2021
 // Host        : LAPTOP-UNNHVI5M running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode funcsim
-//               c:/Users/wojci/OneDrive/Dokumenty/AGH/S4/UEC2/FaceDetection/FaceDetector/src/ip/clock_generator/clock_generator_sim_netlist.v
+//               C:/Users/wojci/OneDrive/Dokumenty/AGH/S4/UEC2/FaceDetection/FaceDetector/src/ip/clock_generator/clock_generator_sim_netlist.v
 // Design      : clock_generator
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -16,19 +16,16 @@
 module clock_generator
    (clk_out_50,
     clk_out_25,
-    clk_out_12_5,
     reset,
     locked,
     clk_in_100);
   output clk_out_50;
   output clk_out_25;
-  output clk_out_12_5;
   input reset;
   output locked;
   input clk_in_100;
 
   (* IBUF_LOW_PWR *) wire clk_in_100;
-  wire clk_out_12_5;
   wire clk_out_25;
   wire clk_out_50;
   wire locked;
@@ -36,7 +33,6 @@ module clock_generator
 
   clock_generator_clock_generator_clk_wiz inst
        (.clk_in_100(clk_in_100),
-        .clk_out_12_5(clk_out_12_5),
         .clk_out_25(clk_out_25),
         .clk_out_50(clk_out_50),
         .locked(locked),
@@ -47,21 +43,17 @@ endmodule
 module clock_generator_clock_generator_clk_wiz
    (clk_out_50,
     clk_out_25,
-    clk_out_12_5,
     reset,
     locked,
     clk_in_100);
   output clk_out_50;
   output clk_out_25;
-  output clk_out_12_5;
   input reset;
   output locked;
   input clk_in_100;
 
   wire clk_in_100;
   wire clk_in_100_clock_generator;
-  wire clk_out_12_5;
-  wire clk_out_12_5_clock_generator;
   wire clk_out_25;
   wire clk_out_25_clock_generator;
   wire clk_out_50;
@@ -70,6 +62,7 @@ module clock_generator_clock_generator_clk_wiz
   wire clkfbout_clock_generator;
   wire locked;
   wire reset;
+  wire NLW_plle2_adv_inst_CLKOUT2_UNCONNECTED;
   wire NLW_plle2_adv_inst_CLKOUT3_UNCONNECTED;
   wire NLW_plle2_adv_inst_CLKOUT4_UNCONNECTED;
   wire NLW_plle2_adv_inst_CLKOUT5_UNCONNECTED;
@@ -98,10 +91,6 @@ module clock_generator_clock_generator_clk_wiz
        (.I(clk_out_25_clock_generator),
         .O(clk_out_25));
   (* BOX_TYPE = "PRIMITIVE" *) 
-  BUFG clkout3_buf
-       (.I(clk_out_12_5_clock_generator),
-        .O(clk_out_12_5));
-  (* BOX_TYPE = "PRIMITIVE" *) 
   PLLE2_ADV #(
     .BANDWIDTH("OPTIMIZED"),
     .CLKFBOUT_MULT(17),
@@ -114,7 +103,7 @@ module clock_generator_clock_generator_clk_wiz
     .CLKOUT1_DIVIDE(34),
     .CLKOUT1_DUTY_CYCLE(0.500000),
     .CLKOUT1_PHASE(0.000000),
-    .CLKOUT2_DIVIDE(68),
+    .CLKOUT2_DIVIDE(1),
     .CLKOUT2_DUTY_CYCLE(0.500000),
     .CLKOUT2_PHASE(0.000000),
     .CLKOUT3_DIVIDE(1),
@@ -142,7 +131,7 @@ module clock_generator_clock_generator_clk_wiz
         .CLKINSEL(1'b1),
         .CLKOUT0(clk_out_50_clock_generator),
         .CLKOUT1(clk_out_25_clock_generator),
-        .CLKOUT2(clk_out_12_5_clock_generator),
+        .CLKOUT2(NLW_plle2_adv_inst_CLKOUT2_UNCONNECTED),
         .CLKOUT3(NLW_plle2_adv_inst_CLKOUT3_UNCONNECTED),
         .CLKOUT4(NLW_plle2_adv_inst_CLKOUT4_UNCONNECTED),
         .CLKOUT5(NLW_plle2_adv_inst_CLKOUT5_UNCONNECTED),

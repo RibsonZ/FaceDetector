@@ -1,10 +1,10 @@
 -- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2017.3 (win64) Build 2018833 Wed Oct  4 19:58:22 MDT 2017
--- Date        : Thu Aug 26 12:53:47 2021
+-- Date        : Fri Sep  3 17:36:17 2021
 -- Host        : LAPTOP-UNNHVI5M running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim
---               c:/Users/wojci/OneDrive/Dokumenty/AGH/S4/UEC2/FaceDetection/FaceDetector/src/ip/clock_generator/clock_generator_sim_netlist.vhdl
+--               C:/Users/wojci/OneDrive/Dokumenty/AGH/S4/UEC2/FaceDetection/FaceDetector/src/ip/clock_generator/clock_generator_sim_netlist.vhdl
 -- Design      : clock_generator
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -18,7 +18,6 @@ entity clock_generator_clock_generator_clk_wiz is
   port (
     clk_out_50 : out STD_LOGIC;
     clk_out_25 : out STD_LOGIC;
-    clk_out_12_5 : out STD_LOGIC;
     reset : in STD_LOGIC;
     locked : out STD_LOGIC;
     clk_in_100 : in STD_LOGIC
@@ -29,11 +28,11 @@ end clock_generator_clock_generator_clk_wiz;
 
 architecture STRUCTURE of clock_generator_clock_generator_clk_wiz is
   signal clk_in_100_clock_generator : STD_LOGIC;
-  signal clk_out_12_5_clock_generator : STD_LOGIC;
   signal clk_out_25_clock_generator : STD_LOGIC;
   signal clk_out_50_clock_generator : STD_LOGIC;
   signal clkfbout_buf_clock_generator : STD_LOGIC;
   signal clkfbout_clock_generator : STD_LOGIC;
+  signal NLW_plle2_adv_inst_CLKOUT2_UNCONNECTED : STD_LOGIC;
   signal NLW_plle2_adv_inst_CLKOUT3_UNCONNECTED : STD_LOGIC;
   signal NLW_plle2_adv_inst_CLKOUT4_UNCONNECTED : STD_LOGIC;
   signal NLW_plle2_adv_inst_CLKOUT5_UNCONNECTED : STD_LOGIC;
@@ -50,7 +49,6 @@ architecture STRUCTURE of clock_generator_clock_generator_clk_wiz is
   attribute IFD_DELAY_VALUE of clkin1_ibufg : label is "AUTO";
   attribute BOX_TYPE of clkout1_buf : label is "PRIMITIVE";
   attribute BOX_TYPE of clkout2_buf : label is "PRIMITIVE";
-  attribute BOX_TYPE of clkout3_buf : label is "PRIMITIVE";
   attribute BOX_TYPE of plle2_adv_inst : label is "PRIMITIVE";
 begin
 clkf_buf: unisim.vcomponents.BUFG
@@ -76,11 +74,6 @@ clkout2_buf: unisim.vcomponents.BUFG
       I => clk_out_25_clock_generator,
       O => clk_out_25
     );
-clkout3_buf: unisim.vcomponents.BUFG
-     port map (
-      I => clk_out_12_5_clock_generator,
-      O => clk_out_12_5
-    );
 plle2_adv_inst: unisim.vcomponents.PLLE2_ADV
     generic map(
       BANDWIDTH => "OPTIMIZED",
@@ -94,7 +87,7 @@ plle2_adv_inst: unisim.vcomponents.PLLE2_ADV
       CLKOUT1_DIVIDE => 34,
       CLKOUT1_DUTY_CYCLE => 0.500000,
       CLKOUT1_PHASE => 0.000000,
-      CLKOUT2_DIVIDE => 68,
+      CLKOUT2_DIVIDE => 1,
       CLKOUT2_DUTY_CYCLE => 0.500000,
       CLKOUT2_PHASE => 0.000000,
       CLKOUT3_DIVIDE => 1,
@@ -123,7 +116,7 @@ plle2_adv_inst: unisim.vcomponents.PLLE2_ADV
       CLKINSEL => '1',
       CLKOUT0 => clk_out_50_clock_generator,
       CLKOUT1 => clk_out_25_clock_generator,
-      CLKOUT2 => clk_out_12_5_clock_generator,
+      CLKOUT2 => NLW_plle2_adv_inst_CLKOUT2_UNCONNECTED,
       CLKOUT3 => NLW_plle2_adv_inst_CLKOUT3_UNCONNECTED,
       CLKOUT4 => NLW_plle2_adv_inst_CLKOUT4_UNCONNECTED,
       CLKOUT5 => NLW_plle2_adv_inst_CLKOUT5_UNCONNECTED,
@@ -147,7 +140,6 @@ entity clock_generator is
   port (
     clk_out_50 : out STD_LOGIC;
     clk_out_25 : out STD_LOGIC;
-    clk_out_12_5 : out STD_LOGIC;
     reset : in STD_LOGIC;
     locked : out STD_LOGIC;
     clk_in_100 : in STD_LOGIC
@@ -161,7 +153,6 @@ begin
 inst: entity work.clock_generator_clock_generator_clk_wiz
      port map (
       clk_in_100 => clk_in_100,
-      clk_out_12_5 => clk_out_12_5,
       clk_out_25 => clk_out_25,
       clk_out_50 => clk_out_50,
       locked => locked,

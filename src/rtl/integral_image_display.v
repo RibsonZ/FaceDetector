@@ -28,9 +28,13 @@ module integral_image_display(
         output vsync,
         output nblank,
         output nsync,
-        output active_area,
-        output [11:0] rgb
+//        output active_area,
+        output [11:0] rgb,
+        output [14:0] rd_addr,
+        input  [19:0] ii_rddata
     );
+    
+    wire active_area;
     
     VGA u1_VGA(
         .rst(rst),
@@ -50,7 +54,7 @@ module integral_image_display(
     II_HEIGHT = 120;
     
     reg [14:0] ii_address = 0; // future address output
-    reg [19:0] ii_rddata; // future data input
+//    reg [19:0] ii_rddata; // future data input
     reg [19:0] ii_z_buff [II_WIDTH - 1 : 0]; // allows access to up to II_WIDTH elements back without direct block ram access
     integer i;
     reg [19:0] row_buff;
@@ -58,11 +62,12 @@ module integral_image_display(
     reg [7:0] col_ctr;
     reg [19:0] bw_reg;
     
+    assign rd_addr = ii_address;
     assign rgb = {bw_reg[3:0], bw_reg[3:0], bw_reg[3:0]};
     
     always @(posedge clk_vga) begin
         if (rst) begin
-            for (i = 0 ; i < 4 ; i = i + 1) begin
+            for (i = 0 ; i < II_WIDTH ; i = i + 1) begin
                 ii_z_buff[i] <= 0;
             end
             row_buff <= 0;
@@ -72,7 +77,7 @@ module integral_image_display(
         end
         else begin
             if (vsync == 0) begin // vertical sync
-                for (i = 0 ; i < 4 ; i = i + 1) begin
+                for (i = 0 ; i < II_WIDTH ; i = i + 1) begin
                     ii_z_buff[i] <= 0;
                 end
                 row_buff <= 0;
@@ -81,23 +86,34 @@ module integral_image_display(
                 ii_address <= 0;
             end
             else if(active_area) begin
-                if (col_ctr == II_WIDTH) begin
+                if (col_ctr == II_WIDTH - 1) begin
                     row_ctr <= row_ctr + 1;
-                    row_buff <= 0;
+                    row_buff <= 0;//ii_rddata - ii_z_buff[II_WIDTH - 1 - 1];// <= 0 + bw_reg;
+//                    if (row_ctr == II_HEIGHT) begin // here to prevent overflow, this is also reset by vsync above
+//                        ii_address <= 0;
+//                    end
+                    bw_reg <= ii_rddata - ii_z_buff[II_WIDTH - 1 - 1] - row_buff;
+                    ii_address <= ii_address + 1;
+                    for (i = II_WIDTH - 1; i > 0 ; i = i - 1) begin
+                        ii_z_buff[i] <= ii_z_buff[i - 1];
+                    end
+                    ii_z_buff[0] <= ii_rddata;
                     col_ctr <= 0;
-                        if (row_ctr == II_HEIGHT) begin // here to prevent overflow, this is also reset by vsync above
-                            ii_address <= 0;
-                        end
                 end
-                bw_reg <= ii_rddata - ii_z_buff[II_WIDTH - 1] - row_buff;
-                ii_address <= ii_address + 1;
-                row_buff <= row_buff + bw_reg;
-                // shifting z buffer
-                for (i = 160; i > 0 ; i = i - 1) begin
-                    ii_z_buff[i] <= ii_z_buff[i - 1];
+                else begin
+                    bw_reg <= ii_rddata - ii_z_buff[II_WIDTH - 1 - 1] - row_buff; // row buff contains the previous current row, so up to the current element exclusively
+                    ii_address <= ii_address + 1;
+                    row_buff <= ii_rddata - ii_z_buff[II_WIDTH - 1 - 1]; // equation for current row up to current element inclusively
+                    // shifting z buffer
+                    for (i = II_WIDTH - 1; i > 0 ; i = i - 1) begin
+                        ii_z_buff[i] <= ii_z_buff[i - 1];
+                    end
+                    ii_z_buff[0] <= ii_rddata;
+                    col_ctr <= col_ctr + 1;
                 end
-                ii_z_buff[0] <= ii_rddata;
-                col_ctr <= col_ctr + 1;
+            end
+            else begin
+                bw_reg <= 0;
             end
         end
         
