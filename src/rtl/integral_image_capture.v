@@ -27,8 +27,6 @@ module integral_image_capture(
         input ov7670_vsync,
         input ov7670_href,
         input [7:0] ov7670_data,
-//        output [18:0] wraddress,
-//        output [11:0] wrdata,
         output we,
         output reg [14:0] ii_address,
         output reg [31:0] ii_wrdata
@@ -60,8 +58,6 @@ module integral_image_capture(
     II_WIDTH = 160,
     II_HEIGHT = 120;
     
-//    reg [14:0] ii_address = 0; // future address output
-//    reg [19:0] ii_wrdata; // future data output
     reg [19:0] ii_z_buff [II_WIDTH - 1 : 0]; // allows access to up to II_WIDTH elements back without direct block ram access
     integer i;
     reg [19:0] row_buff;
