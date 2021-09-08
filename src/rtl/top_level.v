@@ -195,17 +195,17 @@ module top_level(
 //        .we(wren[0])
 //    );
     
-    always @(ov7670_pclk) begin
-        if (rst) begin
-            write_en = 0;
-        end
-        else if (ov7670_vsync & !btnl) begin
-            write_en = 0;
-        end
-        else if (ov7670_vsync & btnl) begin
-            write_en = 1;
-        end
-    end
+//    always @(ov7670_pclk) begin
+//        if (rst) begin
+//            write_en = 0;
+//        end
+//        else if (ov7670_vsync & !btnl) begin
+//            write_en = 0;
+//        end
+//        else if (ov7670_vsync & btnl) begin
+//            write_en = 1;
+//        end
+//    end
     
     integral_image_capture u1_integral_image_capture(
             .ov7670_pclk(ov7670_pclk),
