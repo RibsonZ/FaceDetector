@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: AGH UST
-// Engineer: Wojciech Zebrowski
+// Engineer: Mike Field, Wojciech Zebrowski
 // 
 // Create Date: 08/25/2021 03:14:06 PM
 // Design Name: 
@@ -16,16 +16,17 @@
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
-// 
+//      Based on the design provided under:
+//          https://www.fpga4student.com/2018/08/basys-3-fpga-ov7670-camera.html
 //////////////////////////////////////////////////////////////////////////////////
 
 
 module top_level(
     input wire clk100,
-    input wire reset_in,
-    input wire btnl,
-    input wire btnc,
-    input wire btnr,
+    input wire reset_in, //BTNU
+    input wire btnl, // 
+    input wire btnc, // hold for resend (camera re-init)
+    input wire btnr, //
     input wire [3:0] sw,
     output wire config_finished,
     output vga_hsync,
@@ -57,22 +58,22 @@ module top_level(
 //    wire [11:0] rddata, rddata_rgb, wrdata_bw;
 //    wire [3:0] rddata_bw;
 //    wire active_area;
-    wire rez_160x120;
-    wire rez_320x240;
-    wire [1:0] size_select;
+//    wire rez_160x120;
+//    wire rez_320x240;
+//    wire [1:0] size_select;
     wire [14:0] rd_addr, wr_addr; //ii addrs
-    wire color_sel;
+//    wire color_sel;
     wire rst_vga, rst_camera, rst;
     wire locked;
-    
+    reg write_en;
     wire [19:0] ii_wrdata, ii_rddata;
     wire [11:0] rgb_display_data;
     
-    assign color_sel = sw[0];
-    assign rez_160x120 = btnl;
-    assign rez_320x240 = btnr;
+//    assign color_sel = sw[0];
+//    assign rez_160x120 = btnl;
+//    assign rez_320x240 = btnr;
     assign vga_vsync = vsync;
-    assign size_select = {btnl, btnr};
+//    assign size_select = {btnl, btnr};
     assign clk_vga = clk_25;
     assign xclk = clk_25;
     
@@ -115,7 +116,7 @@ module top_level(
         .rst(rst),
         .clk_vga(clk_vga),
         .vga_hsync(vga_hsync),
-        .vsync(vsync),
+        .vsync_out(vsync),
         .nblank(nblank),
         .nsync(nsync),
         .rgb(rgb_display_data),
@@ -193,6 +194,18 @@ module top_level(
 //        .dout(wrdata),
 //        .we(wren[0])
 //    );
+    
+    always @(ov7670_pclk) begin
+        if (rst) begin
+            write_en = 0;
+        end
+        else if (ov7670_vsync & !btnl) begin
+            write_en = 0;
+        end
+        else if (ov7670_vsync & btnl) begin
+            write_en = 1;
+        end
+    end
     
     integral_image_capture u1_integral_image_capture(
             .ov7670_pclk(ov7670_pclk),

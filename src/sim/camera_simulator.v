@@ -21,11 +21,12 @@
 
 
 module camera_simulator(
+    input wire en_pattern,
     input wire en,
     output reg sim_pclk,
     output reg sim_vsync,
     output reg sim_href,
-    output wire [7:0] sim_data
+    output reg [7:0] sim_data
     
     );
     
@@ -36,11 +37,10 @@ module camera_simulator(
     reg [7:0] sim_data_nxt;
     integer counter=0, vctr=0, vctr_nxt , counter_nxt;
     reg sim_vsync_nxt, sim_href_nxt;
+    reg [2:0] data_state = 0;
     
     localparam HEIGHT = 480,
     WIDTH = 640;
-    
-    assign sim_data = 8'hFF;
     
     initial begin sim_pclk = 0; end
     
@@ -59,6 +59,24 @@ module camera_simulator(
     always @(posedge int_pclk) begin
         counter <= counter_nxt;
         sim_vsync <= sim_vsync_nxt;
+        if (!en_pattern) begin
+            sim_data = 8'hFF;
+        end
+        else begin
+            case(data_state)
+                3'b000:
+                    sim_data <= 8'hAA;
+                3'b001:
+                    sim_data <= 8'h0B;
+                3'b010:
+                    sim_data <= 8'hAC;
+                3'b011:
+                    sim_data <= 8'h0D;
+                3'b100:
+                    sim_data <= 8'hAE;
+            endcase
+            data_state = (data_state + 1) % 5;
+        end
 //        vctr <= vctr_nxt;
 //        sim_href <= sim_href_nxt;
     end

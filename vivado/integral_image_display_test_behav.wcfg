@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="6201542301515fs"></ZoomStartTime>
-      <ZoomEndTime time="6201674956972fs"></ZoomEndTime>
-      <Cursor1Time time="6201600000000fs"></Cursor1Time>
+      <ZoomStartTime time="12752139140fs"></ZoomStartTime>
+      <ZoomEndTime time="12887572172fs"></ZoomEndTime>
+      <Cursor1Time time="12865000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="175"></NameColumnWidth>
-      <ValueColumnWidth column_width="122"></ValueColumnWidth>
+      <ValueColumnWidth column_width="114"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="14" />
+   <WVObjectSize size="18" />
    <wvobject fp_name="/integral_image_display_test/ov7670_pclk" type="logic">
       <obj_property name="ElementShortName">ov7670_pclk</obj_property>
       <obj_property name="ObjectShortName">ov7670_pclk</obj_property>
@@ -31,6 +31,18 @@
    <wvobject fp_name="/integral_image_display_test/ov7670_href" type="logic">
       <obj_property name="ElementShortName">ov7670_href</obj_property>
       <obj_property name="ObjectShortName">ov7670_href</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_display_test/ov7670_data" type="array">
+      <obj_property name="ElementShortName">ov7670_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ov7670_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_display_test/dut_integral_image_capture/we" type="logic">
+      <obj_property name="ElementShortName">we</obj_property>
+      <obj_property name="ObjectShortName">we</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_display_test/dut_integral_image_capture/wrdata" type="array">
+      <obj_property name="ElementShortName">wrdata[3:0]</obj_property>
+      <obj_property name="ObjectShortName">wrdata[3:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/integral_image_display_test/clk_vga" type="logic">
       <obj_property name="ElementShortName">clk_vga</obj_property>
@@ -51,6 +63,11 @@
    <wvobject fp_name="/integral_image_display_test/rgb" type="array">
       <obj_property name="ElementShortName">rgb[11:0]</obj_property>
       <obj_property name="ObjectShortName">rgb[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/integral_image_display_test/dut_integral_image_display/col_ctr" type="array">
+      <obj_property name="ElementShortName">col_ctr[7:0]</obj_property>
+      <obj_property name="ObjectShortName">col_ctr[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/integral_image_display_test/rd_addr" type="array">
       <obj_property name="ElementShortName">rd_addr[14:0]</obj_property>
@@ -76,6 +93,5 @@
    <wvobject fp_name="/integral_image_display_test/dut_integral_image_display/ii_z_buff" type="array">
       <obj_property name="ElementShortName">ii_z_buff[159:0][19:0]</obj_property>
       <obj_property name="ObjectShortName">ii_z_buff[159:0][19:0]</obj_property>
-      <obj_property name="isExpanded"></obj_property>
    </wvobject>
 </wave_config>

@@ -32,7 +32,7 @@ module integral_image_display_test();
     wire ov7670_pclk;
     
     initial begin
-        $monitor("ii_cap.col_ctr: %d, wr_addr: %d, ii_wrdata: %d, ii_wrdata/11: %d", dut_integral_image_capture.col_ctr, wr_addr, ii_wrdata, ii_wrdata/11);
+        $monitor("ii_cap.col_ctr: %d, wr_addr: %d, ii_wrdata: %d, ii_cap.wrdata: %d", dut_integral_image_capture.col_ctr, wr_addr, ii_wrdata, dut_integral_image_capture.wrdata);
         rst = 1;
         @(posedge ov7670_pclk)
         rst = 0;
@@ -72,6 +72,7 @@ module integral_image_display_test();
     end
     
     camera_simulator u1_camera_simulator(
+        .en_pattern(1),
         .en(!save_done),
         .sim_pclk(ov7670_pclk),
         .sim_vsync(ov7670_vsync),
@@ -120,7 +121,7 @@ module integral_image_display_test();
         .rst(rst_vga),
         .clk_vga(clk_vga),
         .vga_hsync(vga_hsync),
-        .vsync(vga_vsync),
+        .vsync_out(vga_vsync),
         .nblank(),
         .nsync(),
         .rgb(rgb),
@@ -128,7 +129,7 @@ module integral_image_display_test();
         .ii_rddata(ii_rddata)
     );
     
-    always @(vga_hsync) begin
+    always @(vga_vsync) begin
         $stop;
     end
     
