@@ -15,6 +15,55 @@ set_property PACKAGE_PIN W5 [get_ports clk100]
     set_property PACKAGE_PIN W17 [get_ports {sw[3]}]
         set_property IOSTANDARD LVCMOS33 [get_ports {sw[3]}]
 
+#7 segment display
+#Bank = 34, Pin name = ,						Sch name = CA
+set_property PACKAGE_PIN W7 [get_ports {sseg[0]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sseg[0]}]
+#Bank = 34, Pin name = ,					Sch name = CB
+set_property PACKAGE_PIN W6 [get_ports {sseg[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sseg[1]}]
+#Bank = 34, Pin name = ,					Sch name = CC
+set_property PACKAGE_PIN U8 [get_ports {sseg[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sseg[2]}]
+#Bank = 34, Pin name = ,						Sch name = CD
+set_property PACKAGE_PIN V8 [get_ports {sseg[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sseg[3]}]
+#Bank = 34, Pin name = ,						Sch name = CE
+set_property PACKAGE_PIN U5 [get_ports {sseg[4]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sseg[4]}]
+#Bank = 34, Pin name = ,						Sch name = CF
+set_property PACKAGE_PIN V5 [get_ports {sseg[5]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sseg[5]}]
+#Bank = 34, Pin name = ,						Sch name = CG
+set_property PACKAGE_PIN U7 [get_ports {sseg[6]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sseg[6]}]
+#Bank = 34, Pin name = ,						Sch name = DP
+set_property PACKAGE_PIN V7 [get_ports {sseg[7]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sseg[7]}]
+
+#Bank = 34, Pin name = ,						Sch name = AN0
+set_property PACKAGE_PIN U2 [get_ports {an[0]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {an[0]}]
+#Bank = 34, Pin name = ,						Sch name = AN1
+set_property PACKAGE_PIN U4 [get_ports {an[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {an[1]}]
+#Bank = 34, Pin name = ,						Sch name = AN2
+set_property PACKAGE_PIN V4 [get_ports {an[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {an[2]}]
+#Bank = 34, Pin name = ,					Sch name = AN3
+set_property PACKAGE_PIN W4 [get_ports {an[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {an[3]}]
+
+ set_property PACKAGE_PIN U3 [get_ports {led_no[0]}]
+ set_property IOSTANDARD LVCMOS33 [get_ports {led_no[0]}]
+ set_property PACKAGE_PIN P3 [get_ports {led_no[1]}]
+ set_property IOSTANDARD LVCMOS33 [get_ports {led_no[1]}]
+ set_property PACKAGE_PIN N3 [get_ports {led_no[2]}]
+ set_property IOSTANDARD LVCMOS33 [get_ports {led_no[2]}]
+ set_property PACKAGE_PIN P1 [get_ports {led_no[3]}]
+ set_property IOSTANDARD LVCMOS33 [get_ports {led_no[3]}]
+ set_property PACKAGE_PIN L1 [get_ports {led_no[4]}]
+ set_property IOSTANDARD LVCMOS33 [get_ports {led_no[4]}]
 
     ##VGA Connector
     set_property PACKAGE_PIN G19 [get_ports {vga_r[0]}]                
@@ -47,16 +96,24 @@ set_property PACKAGE_PIN W5 [get_ports clk100]
         set_property IOSTANDARD LVCMOS33 [get_ports vga_vsync]
 
 ## LEDs
-set_property PACKAGE_PIN U16 [get_ports {config_finished}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {config_finished}]
+set_property PACKAGE_PIN U16 [get_ports {led}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {led}]
 					
-##Buttons
+## Buttons
+#Bank = 14, Sch name = BTNU
+set_property PACKAGE_PIN T18 [get_ports {reset_in}]
+    set_property IOSTANDARD LVCMOS33 [get_ports {reset_in}]
+#Bank = 14, Sch name = BTNC
 set_property PACKAGE_PIN U18 [get_ports btnc]						
 	set_property IOSTANDARD LVCMOS33 [get_ports btnc]
+#Bank = 14, Sch name = BTNL
 set_property PACKAGE_PIN W19 [get_ports btnl]                        
      set_property IOSTANDARD LVCMOS33 [get_ports btnl]
+#Bank = 14, Sch name = BTNR
 set_property PACKAGE_PIN T17 [get_ports btnr]						
          set_property IOSTANDARD LVCMOS33 [get_ports btnr]
+
+
 ## OV7670 Camera header pins
 
 ##Pmod Header JB

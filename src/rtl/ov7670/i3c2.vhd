@@ -1,6 +1,6 @@
 ----------------------------------------------------------------------------------
 -- Engineer: Mike Field <hamster@snap.net.nz>
--- 
+-- Source: https://www.fpga4student.com/2018/08/basys-3-fpga-ov7670-camera.html
 -- Create Date:    21:30:20 05/25/2013 
 -- Design Name:    i3c2 - Intelligent I2C Controller
 -- Module Name:    i3c2 - Behavioral 

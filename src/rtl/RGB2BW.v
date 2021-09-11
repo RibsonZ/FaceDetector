@@ -24,14 +24,17 @@ module RGB2BW(
         input [11:0] rgb,
         output [3:0] bw
     );
+    localparam
+    FIXED_POINT_DEPTH = 10,
+    THIRD = (1 << FIXED_POINT_DEPTH) / 3;
     
-    reg [5:0] sum;
+    reg [5 + FIXED_POINT_DEPTH:0] sum;
     
     always @*
     begin
-        sum = rgb[11:8] + rgb[7:4] + rgb[3:0];
+        sum = ((rgb[11:8] + rgb[7:4] + rgb[3:0])) * THIRD;
     end
     
-    assign bw = sum[5:2];
+    assign bw = sum[3 + FIXED_POINT_DEPTH : FIXED_POINT_DEPTH];
     
 endmodule

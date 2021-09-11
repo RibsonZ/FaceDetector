@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------------------
 -- Company: 
 -- Engineer: Mike Field <hamster@sanp.net.nz>, modified by Wojciech Zebrowski for AGH UST
--- 
+-- source: https://www.fpga4student.com/2018/08/basys-3-fpga-ov7670-camera.html
 -- Description: Register settings for the OV7670 Camera (partially from OV7670.c
 --              in the Linux Kernel)
 ------------------------------------------------------------------------------------
@@ -11,6 +11,7 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity ov7670_registers is
     Port ( clk      : in  STD_LOGIC;
+           rst      : in STD_LOGIC;
            resend   : in  STD_LOGIC;
            advance  : in  STD_LOGIC;
            command  : out  std_logic_vector(15 downto 0);
@@ -20,6 +21,7 @@ end ov7670_registers;
 architecture Behavioral of ov7670_registers is
 	signal sreg   : std_logic_vector(15 downto 0);
 	signal address : std_logic_vector(7 downto 0) := (others => '0');
+	signal delay : unsigned(31 downto 0) := x"FFFFFFFF";
 begin
 	command <= sreg;
 	with sreg select finished  <= '1' when x"FFFF", '0' when others;
@@ -27,12 +29,20 @@ begin
 	process(clk)
 	begin
 		if rising_edge(clk) then
-			if resend = '1' then 
+			delay <= delay;
+			if rst = '1' then
+                address <= (others => '0');
+                sreg <= (others => '0');
+                delay <= x"00FFFFFF";
+            elsif delay > 0 then
+                delay <= delay - 1;
+                address <= (others => '0');
+			elsif resend = '1' then 
 				address <= (others => '0');
 			elsif advance = '1' then
 				address <= std_logic_vector(unsigned(address)+1);
 			end if;
-
+			
 			case address is
 				when x"00" => sreg <= x"1280"; -- COM7   Reset
 				when x"01" => sreg <= x"1280"; -- COM7   Reset

@@ -1,6 +1,6 @@
 ----------------------------------------------------------------------------------
 -- Engineer: <mfield@concepts.co.nz
--- 
+-- source: https://www.fpga4student.com/2018/08/basys-3-fpga-ov7670-camera.html
 -- Description: Send the commands to the OV7670 over an I2C-like interface
 --
 ----------------------------------------------------------------------------------
@@ -9,7 +9,8 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity i2c_sender is
-    Port ( clk   : in  STD_LOGIC;	 
+    Port ( clk   : in  STD_LOGIC;
+            rst : in STD_LOGIC;
            siod  : inout  STD_LOGIC;
            sioc  : out  STD_LOGIC;
 			  taken : out  STD_LOGIC;
@@ -24,11 +25,13 @@ architecture Behavioral of i2c_sender is
 	signal   busy_sr  : std_logic_vector(31 downto 0) := (others => '0');
 	signal   data_sr  : std_logic_vector(31 downto 0) := (others => '1');
 begin
-	process(busy_sr, data_sr(31))
+	process(busy_sr, data_sr(31), rst)
 	begin
-		if busy_sr(11 downto 10) = "10" or 
-		   busy_sr(20 downto 19) = "10" or 
-		   busy_sr(29 downto 28) = "10"  then
+		if rst = '1' then
+            siod <= 'Z';
+		elsif busy_sr(11 downto 10) = "10" or 
+                busy_sr(20 downto 19) = "10" or 
+                busy_sr(29 downto 28) = "10"  then
 			siod <= 'Z';
 		else
 			siod <= data_sr(31);
@@ -39,7 +42,12 @@ begin
 	begin
 		if rising_edge(clk) then
 			taken <= '0';
-			if busy_sr(31) = '0' then
+			if rst = '1' then
+			    SIOC <= '0';
+			    data_sr <= (others => '1');
+			    busy_sr <= (others => '0');
+			    divider <= "00000001";
+			elsif busy_sr(31) = '0' then
 				SIOC <= '1';
 				if send = '1' then
 					if divider = "00000000" then
