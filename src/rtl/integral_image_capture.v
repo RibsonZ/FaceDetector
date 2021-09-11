@@ -29,6 +29,7 @@ module integral_image_capture(
         input [7:0] ov7670_data,
         output we,
         output reg [14:0] ii_address,
+        output reg cap_done,
         output reg [31:0] ii_wrdata
     );
     
@@ -74,6 +75,7 @@ module integral_image_capture(
             col_ctr <= 0;
             ii_address <= 0;
             ii_wrdata <= 0;
+            cap_done <= 0;
         end
         else begin // no reset
             if (ov7670_vsync) begin
@@ -85,6 +87,7 @@ module integral_image_capture(
                 col_ctr <= 0;
                 ii_address <= 0;
                 ii_wrdata <= 0;
+                cap_done <= 1;
             end
             else if (we) begin// if there's a new pixel
                 if (col_ctr == II_WIDTH - 1) begin // if we start a new row, reset row_buff
@@ -112,6 +115,9 @@ module integral_image_capture(
                     ii_z_buff[0] <= ii_wrdata;
                     col_ctr <= col_ctr + 1; // the next col number, will go to II_WIDTH - 1 on last row element
                 end
+                
+                cap_done <= 0;
+                
             end
         end
     end

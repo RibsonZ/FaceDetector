@@ -3,8 +3,8 @@
 // Tool Version: Vivado v.2017.3 (win64) Build 2018833 Wed Oct  4 19:58:22 MDT 2017
 // Date        : Fri Sep  3 17:36:17 2021
 // Host        : LAPTOP-UNNHVI5M running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode synth_stub
-//               C:/Users/wojci/OneDrive/Dokumenty/AGH/S4/UEC2/FaceDetection/FaceDetector/src/ip/clock_generator/clock_generator_stub.v
+// Command     : write_verilog -force -mode synth_stub -rename_top clock_generator -prefix
+//               clock_generator_ clock_generator_stub.v
 // Design      : clock_generator
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7a35tcpg236-1

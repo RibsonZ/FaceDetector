@@ -3,8 +3,8 @@
 // Tool Version: Vivado v.2017.3 (win64) Build 2018833 Wed Oct  4 19:58:22 MDT 2017
 // Date        : Fri Sep  3 17:36:17 2021
 // Host        : LAPTOP-UNNHVI5M running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode funcsim
-//               C:/Users/wojci/OneDrive/Dokumenty/AGH/S4/UEC2/FaceDetection/FaceDetector/src/ip/clock_generator/clock_generator_sim_netlist.v
+// Command     : write_verilog -force -mode funcsim -rename_top clock_generator -prefix
+//               clock_generator_ clock_generator_sim_netlist.v
 // Design      : clock_generator
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -39,7 +39,6 @@ module clock_generator
         .reset(reset));
 endmodule
 
-(* ORIG_REF_NAME = "clock_generator_clk_wiz" *) 
 module clock_generator_clock_generator_clk_wiz
    (clk_out_50,
     clk_out_25,

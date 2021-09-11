@@ -1,8 +1,8 @@
 ----------------------------------------------------------------------------------
 -- Engineer: Mike Field <hamster@snap.net.nz>, Wojciech Zebrowski, Miko³aj Karelus
--- source https://www.fpga4student.com/2018/08/basys-3-fpga-ov7670-camera.html
--- Description: Convert the push button to a tick (formerly 1PPS) that can be used to restart
---              camera initialisation
+-- source: https://www.fpga4student.com/2018/08/basys-3-fpga-ov7670-camera.html
+-- Description: Convert the push button to a tick (formerly 1PPS) that can be used
+-- to restart camera initialisation
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -18,6 +18,7 @@ end debounce;
 architecture Behavioral of debounce is
 	signal c : unsigned(23 downto 0);
 	signal tick_flag : STD_LOGIC;
+    constant threshold : unsigned(23 downto 0) := x"1312D0";
 	
 begin
 	process(clk)
@@ -29,7 +30,7 @@ begin
                 tick_flag <= '0';
             elsif i = '1' then
                 tick_flag <= tick_flag;
-                if c = x"FFFFFF" then
+                if c = threshold then
 					if tick_flag = '1' then
                         o <= '0';
                     else
