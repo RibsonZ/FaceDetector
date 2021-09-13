@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: AGH UST
+// Engineer: Wojciech Zebrowski
 // 
 // Create Date: 09/13/2021 07:10:56 PM
 // Design Name: 
@@ -37,7 +37,9 @@ module cascade(
     DETECT_1 = 4'h1,
     DETECT_2 = 4'h2,
     DETECT_3 = 4'h3,
-    RETURN = 4'hF;
+    RETURN = 4'hF,
+    II_WIDTH = 160,
+    II_HEIGHT = 120;
     
     reg signed [4:0] result, result_nxt; // -16 : 15
     
@@ -71,7 +73,13 @@ module cascade(
     wire detected_flag_3;
     /*********************/
     
-    classifier u1_classifier(
+    classifier_1x2 u1_classifier(
+        .address_0(104 + 20 + 52 * II_WIDTH),
+        .address_1( 39 + 20 + 52 * II_WIDTH),
+        .address_2(104 + 20 + 32 * II_WIDTH),
+        .address_3( 39 + 20 + 32 * II_WIDTH),
+        .address_4(104 + 20 + 72 * II_WIDTH),
+        .address_5( 39 + 20 + 72 * II_WIDTH),
         .clk(clk),
         .rst(rst),
         .detect_en(detect_en_1), //in
@@ -83,7 +91,13 @@ module cascade(
         .decrement_threshold(decrement_threshold)
     );
     
-    classifier u2_classifier(
+    classifier_2x1 u2_classifier( // top_left = (31,14), width = 50, height = 45
+        .address_0(56 + 20 + 59 * II_WIDTH),
+        .address_1(56 + 20 + 14 * II_WIDTH),
+        .address_2(31 + 20 + 59 * II_WIDTH),
+        .address_3(31 + 20 + 14 * II_WIDTH),
+        .address_4(81 + 20 + 59 * II_WIDTH),
+        .address_5(81 + 20 + 14 * II_WIDTH),
         .clk(clk),
         .rst(rst),
         .detect_en(detect_en_2), //in
@@ -95,7 +109,15 @@ module cascade(
         .decrement_threshold(decrement_threshold)
     );
         
-    classifier u3_classifier(
+    classifier_3x1 u3_classifier( // top left = (24, 78), width = 84, height = 40
+        .address_0( 52 + 20 + 118 * II_WIDTH),
+        .address_1( 52 + 20 +  78 * II_WIDTH),
+        .address_2( 24 + 20 + 118 * II_WIDTH),
+        .address_3( 24 + 20 +  78 * II_WIDTH),
+        .address_4( 80 + 20 + 118 * II_WIDTH),
+        .address_5( 80 + 20 +  78 * II_WIDTH),
+        .address_6(108 + 20 + 118 * II_WIDTH),
+        .address_7(108 + 20 +  78 * II_WIDTH),
         .clk(clk),
         .rst(rst),
         .detect_en(detect_en_3), //in

@@ -31,7 +31,8 @@ module integral_image_display(
 //        output active_area,
         output [11:0] rgb,
         output [14:0] rd_addr,
-        input  [19:0] ii_rddata
+        input  [19:0] ii_rddata,
+        input detected_flag
     );
     
     localparam
@@ -50,7 +51,7 @@ module integral_image_display(
     reg vsync_z, vsync_z_z, vsync_z_z_z, active_area_z, active_area_z_z, active_area_z_z_z;
     
     assign rd_addr = ii_address;
-    assign rgb = {bw_reg[3:0], bw_reg[3:0], bw_reg[3:0]};
+    assign rgb = (!active_area && detected_flag) ? 12'h0F0 : {bw_reg[3:0], bw_reg[3:0], bw_reg[3:0]};
     assign vsync_out = vsync_z_z;
     
     VGA u1_VGA(

@@ -11,13 +11,13 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="12345523166666fs"></ZoomStartTime>
-      <ZoomEndTime time="12345789366667fs"></ZoomEndTime>
-      <Cursor1Time time="12345745000000fs"></Cursor1Time>
+      <ZoomStartTime time="12320047103334fs"></ZoomStartTime>
+      <ZoomEndTime time="12320335083336fs"></ZoomEndTime>
+      <Cursor1Time time="12320155000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="175"></NameColumnWidth>
-      <ValueColumnWidth column_width="90"></ValueColumnWidth>
+      <ValueColumnWidth column_width="86"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="30" />
    <wvobject fp_name="/cascade_test/wr_addr" type="array">
@@ -52,10 +52,6 @@
       <obj_property name="ElementShortName">wea</obj_property>
       <obj_property name="ObjectShortName">wea</obj_property>
    </wvobject>
-   <wvobject fp_name="/cascade_test/i" type="array">
-      <obj_property name="ElementShortName">i[31:0]</obj_property>
-      <obj_property name="ObjectShortName">i[31:0]</obj_property>
-   </wvobject>
    <wvobject fp_name="/cascade_test/address_a" type="array">
       <obj_property name="ElementShortName">address_a[14:0]</obj_property>
       <obj_property name="ObjectShortName">address_a[14:0]</obj_property>
@@ -63,10 +59,6 @@
    <wvobject fp_name="/cascade_test/ii_wrdata" type="array">
       <obj_property name="ElementShortName">ii_wrdata[19:0]</obj_property>
       <obj_property name="ObjectShortName">ii_wrdata[19:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cascade_test/ii_rddata_a" type="array">
-      <obj_property name="ElementShortName">ii_rddata_a[19:0]</obj_property>
-      <obj_property name="ObjectShortName">ii_rddata_a[19:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/cascade_test/cap_done" type="logic">
       <obj_property name="ElementShortName">cap_done</obj_property>
@@ -153,5 +145,14 @@
       <obj_property name="ElementShortName">result[4:0]</obj_property>
       <obj_property name="ObjectShortName">result[4:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/ii_rddata_a" type="array">
+      <obj_property name="ElementShortName">ii_rddata_a[19:0]</obj_property>
+      <obj_property name="ObjectShortName">ii_rddata_a[19:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u1_classifier/data" type="array">
+      <obj_property name="ElementShortName">data[5:0][20:0]</obj_property>
+      <obj_property name="ObjectShortName">data[5:0][20:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
    </wvobject>
 </wave_config>

@@ -27,7 +27,7 @@ module top_level(
     input wire btnl, // INCREMENT THRESHOLD
     input wire btnc, // CAPTURE FRAME
     input wire btnr, // DECREMENT THRESHOLD
-    input wire [3:0] sw,
+    input wire [3:0] sw,// sw[0] switches on continuous mode
     output wire led,
     output vga_hsync,
     output vga_vsync,
@@ -75,19 +75,19 @@ module top_level(
     assign clk_vga = clk_25;
     assign xclk = clk_25;
     
-    assign led_no = u1_classifier.score[20:16];
+//    assign led_no = u1_classifier.score[20:16];
     
-                disp_hex_mux u1_disp_hex_mux(
-                  .clk(ov7670_pclk),
-                  .reset(rst),
-                  .hex3(u1_classifier.score[15:12]),
-                  .hex2(u1_classifier.score[11:8]),
-                  .hex1(u1_classifier.score[7:4]),
-                  .hex0(u1_classifier.score[3:0]),
-                  .dp_in(4'b1011),
-                  .an(an),
-                  .sseg({sseg[7], sseg[0:6]})
-                );
+//                disp_hex_mux u1_disp_hex_mux(
+//                  .clk(ov7670_pclk),
+//                  .reset(rst),
+//                  .hex3(u1_classifier.score[15:12]),
+//                  .hex2(u1_classifier.score[11:8]),
+//                  .hex1(u1_classifier.score[7:4]),
+//                  .hex0(u1_classifier.score[3:0]),
+//                  .dp_in(4'b1011),
+//                  .an(an),
+//                  .sseg({sseg[7], sseg[0:6]})
+//                );
     
     clock_generator u1_clock_generator(
         .reset(reset_in),
@@ -120,7 +120,8 @@ module top_level(
         .nsync(nsync),
         .rgb(rgb_display_data),
         .rd_addr(rd_addr),
-        .ii_rddata(ii_rddata)
+        .ii_rddata(ii_rddata),
+        .detected_flag(detected_flag)
     );
     
     debounce u1_debounce_capture(
@@ -198,7 +199,7 @@ module top_level(
         .rst(rst),
         .cap_done(cap_done),
         .detect_done(detect_done),
-        .continue(continue),
+        .continue(continue || sw[0]), // sw[0] switches on continuous mode
         .write_en_in(wren),
         .wr_addr(wr_addr),
         .classifier_rd_addr(classifier_rd_addr),
@@ -207,16 +208,28 @@ module top_level(
         .write_en_out(wea)
     );
     
-    classifier u1_classifier(
+    cascade dut_cascade(
         .clk(ov7670_pclk),
         .rst(rst),
-        .detect_en(detect_en), //in
+        .detect_en(detect_en),
         .detect_done(detect_done), //out
-        .data_in( {1'b0, ii_rddata_a} ), //conversion to signed //in
+        .data_in( {1'b0, ii_rddata_a} ), //conversion to signed //in //ii_rddata_a
         .rd_addr(classifier_rd_addr), //out
         .detected_flag(detected_flag), //out
         .increment_threshold(increment_threshold),
         .decrement_threshold(decrement_threshold)
     );
+        
+//    classifier u1_classifier(
+//        .clk(ov7670_pclk),
+//        .rst(rst),
+//        .detect_en(detect_en), //in
+//        .detect_done(detect_done), //out
+//        .data_in( {1'b0, ii_rddata_a} ), //conversion to signed //in
+//        .rd_addr(classifier_rd_addr), //out
+//        .detected_flag(detected_flag), //out
+//        .increment_threshold(increment_threshold),
+//        .decrement_threshold(decrement_threshold)
+//    );
     
 endmodule
