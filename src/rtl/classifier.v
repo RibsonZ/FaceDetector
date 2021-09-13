@@ -74,12 +74,12 @@ module classifier(
             end
             state <= IDLE;
             /* Numeration of pixels is left to right, top to bottom */
-            addresses[0] <= II_WIDTH * 60 + II_WIDTH - 1; // positive bottom right / negative top right
-            addresses[1] <= II_WIDTH * 60; // positive bottom left / negative top left
-            addresses[2] <= II_WIDTH - 1; // positive top right
-            addresses[3] <= 0; // positive top left
-            addresses[4] <= II_WIDTH * (II_HEIGHT - 1) + II_WIDTH - 1;// negative bottom right
-            addresses[5] <= II_WIDTH * (II_HEIGHT - 1);// negative bottom left
+            addresses[0] <= 104 + 20 + 52 * II_WIDTH; // positive bottom right / negative top right
+            addresses[1] <= 39 + 20 + 52 * II_WIDTH; // positive bottom left / negative top left
+            addresses[2] <= 104 + 20 + 32 * II_WIDTH; // positive top right
+            addresses[3] <= 39 + 20 + 32 * II_WIDTH; // positive top left
+            addresses[4] <= 104 + 20 + 72 * II_WIDTH;// negative bottom right
+            addresses[5] <= 39 + 20 + 72 * II_WIDTH;// negative bottom left
             counter <= 0;
             detect_done <= 0;
             rd_addr <= 0;
