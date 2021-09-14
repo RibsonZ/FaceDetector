@@ -27,7 +27,7 @@ module top_level(
     input wire btnl, // INCREMENT THRESHOLD
     input wire btnc, // CAPTURE FRAME
     input wire btnr, // DECREMENT THRESHOLD
-    input wire [3:0] sw,// sw[0] switches on continuous mode
+//    input wire [3:0] sw,// sw[0] switches on continuous mode
     output wire led,
     output vga_hsync,
     output vga_vsync,
@@ -40,10 +40,12 @@ module top_level(
     output ov7670_sioc,
     inout ov7670_siod,
     output ov7670_pwdn,
-    output [0:7] sseg,
-    output [3:0] an,
-    output [4:0] led_no,
-    output ov7670_reset
+//    output [0:7] sseg,
+//    output [3:0] an,
+//    output [4:0] led_no,
+    output ov7670_reset,
+    inout ps2c,
+    inout ps2d
     );
     
     wire clk_camera;
@@ -70,9 +72,11 @@ module top_level(
     wire wea; //into buff
     wire [19:0] classifier_rd_addr;
     wire detected_flag;
-    wire [7:0] vcnt, hcnt;
+    wire [11:0] vcnt, hcnt;
     wire [11:0] rgb_display_out;
     wire nblank_out;
+    wire left, middle, right;
+    wire mouse_left, mouse_right;
     
     assign led = detected_flag;
 //    assign vga_vsync = vsync;
@@ -115,6 +119,34 @@ module top_level(
     
     assign rst = rst_vga | rst_camera;
     
+    MouseCtl #(.SYSCLK_FREQUENCY(25000000),.DATA_WIDTH(64))
+    u1_MouseCtl (
+        .clk(ov7670_pclk),
+        .rst(rst),
+        .xpos(),
+        .ypos(),
+        .zpos(),
+        .left(left),
+        .middle(middle),
+        .right(right),
+        .new_event(),
+        .value(0),
+        .setx(0),
+        .sety(0),
+        .setmax_x(0),
+        .setmax_y(0),
+        .ps2_clk(ps2c),
+        .ps2_data(ps2d)
+    );
+    
+    control_module u1_control_module(
+        .clk(ov7670_pclk),
+        .rst(rst),
+        .mouse_left(mouse_left), //debounced
+        .mouse_right(mouse_right), //debounced
+        .continue(continue)
+    );
+    
     integral_image_display u1_integral_image_display(
         .rst(rst),
         .clk_vga(clk_vga),
@@ -125,7 +157,6 @@ module top_level(
         .rgb(rgb_display_data),
         .rd_addr(rd_addr),
         .ii_rddata(ii_rddata),
-//        .detected_flag(detected_flag),
         .hcnt_out(hcnt),
         .vcnt_out(vcnt)
     );
@@ -144,20 +175,20 @@ module top_level(
         .vsync_out(vga_vsync),
         .rgb_out(rgb_display_out),
         .nblank_out(nblank_out),
-        .detected_flag(),
-        .continuous(),
+        .detected_flag(detected_flag),
+        .continuous(continue),
         .hblnk_out(),
         .vblnk_out(),
         .vcount_out(),
         .hcount_out()
     );
     
-    debounce u1_debounce_capture(
-        .rst(rst),
-        .clk(ov7670_pclk),
-        .i(btnc),
-        .o(continue)
-    );
+//    debounce u1_debounce_capture(
+//        .rst(rst),
+//        .clk(ov7670_pclk),
+//        .i(btnc),
+//        .o(continue)
+//    );
     
     debounce u2_debounce_increment(
         .rst(rst),
@@ -171,6 +202,20 @@ module top_level(
         .clk(ov7670_pclk),
         .i(btnr),
         .o(decrement_threshold)
+    );
+    
+    debounce u4_debounce(
+        .rst(rst),
+        .clk(ov7670_pclk),
+        .i(left),
+        .o(mouse_left)
+    );
+        
+    debounce u5_debounce(
+        .rst(rst),
+        .clk(ov7670_pclk),
+        .i(right),
+        .o(mouse_right)
     );
 
     ov7670_controller u1_ov7670_controller (
@@ -227,7 +272,7 @@ module top_level(
         .rst(rst),
         .cap_done(cap_done),
         .detect_done(detect_done),
-        .continue(continue || sw[0]), // sw[0] switches on continuous mode
+        .continue(continue),
         .write_en_in(wren),
         .wr_addr(wr_addr),
         .classifier_rd_addr(classifier_rd_addr),
@@ -235,6 +280,8 @@ module top_level(
         .address_a_out(address_a), // goes to ii_buffer
         .write_en_out(wea)
     );
+    
+    
     
     cascade dut_cascade(
         .clk(ov7670_pclk),

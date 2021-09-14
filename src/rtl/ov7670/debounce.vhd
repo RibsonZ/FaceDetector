@@ -18,7 +18,7 @@ end debounce;
 architecture Behavioral of debounce is
 	signal c : unsigned(23 downto 0);
 	signal tick_flag : STD_LOGIC;
-    constant threshold : unsigned(23 downto 0) := x"1312D0";
+    constant threshold : unsigned(23 downto 0) := x"04c4b4";--x"1312D0";
 	
 begin
 	process(clk)

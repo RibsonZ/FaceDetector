@@ -23,19 +23,19 @@
 module draw_rectangle(
     input wire rst,
     input wire pclk,
-    input wire [7:0] hcount_in,
+    input wire [11:0] hcount_in,
     input wire hsync_in,
     input wire hblnk_in,
-    input wire [7:0] vcount_in,
+    input wire [11:0] vcount_in,
     input wire vsync_in,
     input wire vblnk_in,
     input wire [11:0] rgb_in,
     input wire detected_flag,
     input wire continuous,
-    output reg [7:0] hcount_out,
+    output reg [11:0] hcount_out,
     output reg hsync_out,
     output reg hblnk_out,
-    output reg [7:0] vcount_out,
+    output reg [11:0] vcount_out,
     output reg vsync_out,
     output reg vblnk_out,
     output reg [11:0] rgb_out,
@@ -50,8 +50,8 @@ module draw_rectangle(
     localparam RECTANGLE_WIDTH = 100;
     localparam RECTANGLE_COLOUR_NOT_CONTINUOUS = 12'hf_f_0;
     localparam RECTANGLE_COLOUR_CONTINUOUS = 12'h0_0_f;
-    localparam CIRCLE_X_POSITION = 400;
-    localparam CIRCLE_Y_POSITION = 200;
+    localparam CIRCLE_X_POSITION = 500;
+    localparam CIRCLE_Y_POSITION = 150;
     localparam CIRCLE_RADIUS = 50;
     localparam CIRCLE_COLOUR_DETECTED = 12'h0_f_0;
     localparam CIRCLE_COLOUR_NOT_DETECTED = 12'hf_0_0;
@@ -80,32 +80,30 @@ module draw_rectangle(
     end
     
     always @* begin
-        if (continuous) begin
-            if (hcount_in >= RECTANGLE_X_POSITION && hcount_in < (RECTANGLE_X_POSITION + RECTANGLE_WIDTH) && vcount_in >= RECTANGLE_Y_POSITION && vcount_in <= (RECTANGLE_Y_POSITION+RECTANGLE_HEIGHT)) 
-                rgb_out_nxt = RECTANGLE_COLOUR_CONTINUOUS;
-            else 
-                rgb_out_nxt = rgb_in;  
-        end
-        else begin
-            if (hcount_in >= RECTANGLE_X_POSITION && hcount_in < (RECTANGLE_X_POSITION + RECTANGLE_WIDTH) && vcount_in >= RECTANGLE_Y_POSITION && vcount_in <= (RECTANGLE_Y_POSITION+RECTANGLE_HEIGHT)) 
-                rgb_out_nxt = RECTANGLE_COLOUR_NOT_CONTINUOUS;
-            else 
-                rgb_out_nxt = rgb_in;  
-        end
+        /* STATUS RECT */
+        if (hcount_in >= RECTANGLE_X_POSITION
+            && hcount_in < (RECTANGLE_X_POSITION + RECTANGLE_WIDTH)
+            && vcount_in >= RECTANGLE_Y_POSITION
+            && vcount_in <= (RECTANGLE_Y_POSITION+RECTANGLE_HEIGHT)) begin 
         
-        if (detected_flag) begin
-            if (((hcount_in-CIRCLE_X_POSITION)*(hcount_in-CIRCLE_X_POSITION) + (vcount_in-CIRCLE_Y_POSITION)*(vcount_in-CIRCLE_Y_POSITION) <= CIRCLE_RADIUS)) 
-                rgb_out_nxt <= CIRCLE_COLOUR_DETECTED;
-            else
-                rgb_out_nxt = rgb_in;  
+            if (continuous) begin
+                rgb_out_nxt = RECTANGLE_COLOUR_CONTINUOUS;         
+            end
+            else begin
+                rgb_out_nxt = RECTANGLE_COLOUR_NOT_CONTINUOUS;
+            end
+        end
+        /* DETECTION INDICATOR CIRCLE */
+        else if ((hcount_in-CIRCLE_X_POSITION)*(hcount_in-CIRCLE_X_POSITION) + (vcount_in-CIRCLE_Y_POSITION)*(vcount_in-CIRCLE_Y_POSITION) <= CIRCLE_RADIUS) begin
+            if (detected_flag) begin
+                rgb_out_nxt = CIRCLE_COLOUR_DETECTED;
+            end
+            else begin
+                rgb_out_nxt = CIRCLE_COLOUR_NOT_DETECTED;
+            end
         end
         else begin
-            if (((hcount_in-CIRCLE_X_POSITION)*(hcount_in-CIRCLE_X_POSITION) + (vcount_in-CIRCLE_Y_POSITION)*(vcount_in-CIRCLE_Y_POSITION) <= CIRCLE_RADIUS)) 
-                rgb_out_nxt <= CIRCLE_COLOUR_NOT_DETECTED;
-            else
-                rgb_out_nxt = rgb_in;  
+            rgb_out_nxt = rgb_in;  
         end
     end
-
-
 endmodule

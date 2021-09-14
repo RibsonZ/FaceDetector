@@ -32,8 +32,8 @@ module integral_image_display(
         output [14:0] rd_addr,
         input  [19:0] ii_rddata,
 //        input detected_flag,
-        output [7:0] hcnt_out,
-        output [7:0] vcnt_out
+        output [11:0] hcnt_out,
+        output [11:0] vcnt_out
     );
     
     localparam
@@ -51,11 +51,10 @@ module integral_image_display(
     wire vsync;
     reg vsync_z, vsync_z_z, vsync_z_z_z, active_area_z, active_area_z_z, active_area_z_z_z;
     
+    
     assign rd_addr = ii_address;
-    assign rgb = /*(!active_area && detected_flag) ? 12'h0F0 :*/ {bw_reg[3:0], bw_reg[3:0], bw_reg[3:0]};
+    assign rgb = {bw_reg[3:0], bw_reg[3:0], bw_reg[3:0]};
     assign vsync_out = vsync_z_z;
-    assign vcnt_out = row_ctr;
-    assign hcnt_out = col_ctr;
     
     VGA u1_VGA(
         .rst(rst),
@@ -67,7 +66,9 @@ module integral_image_display(
         .vsync(vsync),
         .nblank(nblank),
         .nsync(nsync),
-        .activeArea(active_area)
+        .activeArea(active_area),
+        .hcnt_out(hcnt_out),
+        .vcnt_out(vcnt_out)
     );
     
     // up to date with the VGA module, dictates the address and introduces delay

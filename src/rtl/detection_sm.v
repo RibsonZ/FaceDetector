@@ -81,6 +81,8 @@ module detection_sm(
         continue_latched_nxt = continue_latched;
         cap_done_z_nxt = cap_done;
         detect_en_nxt = detect_en;
+        state_nxt = state;
+        addr_sel_nxt = addr_sel;
         case(state)
             IDLE: begin
                 addr_sel_nxt = CLASSIFIER_RD_ADDR;

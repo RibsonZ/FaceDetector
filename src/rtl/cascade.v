@@ -174,6 +174,8 @@ module cascade(
         detect_en_1_nxt = 0;
         detect_en_2_nxt = 0;
         detect_en_3_nxt = 0;
+        state_nxt = state;
+        rd_addr = 0;
         
         case(state)
             IDLE:

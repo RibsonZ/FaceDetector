@@ -122,6 +122,7 @@ module classifier_1x2(
         detect_done_nxt = detect_done;
         detect_en_z_nxt = detect_en;
         threshold_nxt = threshold;
+        state_nxt = state;
         
         case (state)
             IDLE: 
