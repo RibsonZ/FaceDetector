@@ -79,7 +79,8 @@ module detection_sm(
     //Mealy - outputs result from this: states and inputs
     always @* begin
         continue_latched_nxt = continue_latched;
-        cap_done_z_nxt <= cap_done;
+        cap_done_z_nxt = cap_done;
+        detect_en_nxt = detect_en;
         case(state)
             IDLE: begin
                 addr_sel_nxt = CLASSIFIER_RD_ADDR;

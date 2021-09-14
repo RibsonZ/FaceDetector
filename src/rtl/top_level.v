@@ -54,6 +54,7 @@ module top_level(
     wire resend;
     wire nblank;
     wire vsync;
+    wire hsync;
     wire nsync;
     wire [14:0] rd_addr, wr_addr; //integral image addresses
     wire rst_vga, rst_camera, rst;
@@ -69,9 +70,12 @@ module top_level(
     wire wea; //into buff
     wire [19:0] classifier_rd_addr;
     wire detected_flag;
+    wire [7:0] vcnt, hcnt;
+    wire [11:0] rgb_display_out;
+    wire nblank_out;
     
     assign led = detected_flag;
-    assign vga_vsync = vsync;
+//    assign vga_vsync = vsync;
     assign clk_vga = clk_25;
     assign xclk = clk_25;
     
@@ -114,14 +118,38 @@ module top_level(
     integral_image_display u1_integral_image_display(
         .rst(rst),
         .clk_vga(clk_vga),
-        .vga_hsync(vga_hsync),
+        .vga_hsync(hsync),
         .vsync_out(vsync),
         .nblank(nblank),
         .nsync(nsync),
         .rgb(rgb_display_data),
         .rd_addr(rd_addr),
         .ii_rddata(ii_rddata),
-        .detected_flag(detected_flag)
+//        .detected_flag(detected_flag),
+        .hcnt_out(hcnt),
+        .vcnt_out(vcnt)
+    );
+    
+    draw_rectangle ul_draw_rectangle(
+        .rst(rst),
+        .pclk(clk_vga),
+        .hcount_in(hcnt),
+        .vcount_in(vcnt),
+        .hsync_in(hsync),
+        .vsync_in(vsync),
+        .hblnk_in(!nblank),
+        .vblnk_in(!nblank),
+        .rgb_in(rgb_display_data),
+        .hsync_out(vga_hsync),
+        .vsync_out(vga_vsync),
+        .rgb_out(rgb_display_out),
+        .nblank_out(nblank_out),
+        .detected_flag(),
+        .continuous(),
+        .hblnk_out(),
+        .vblnk_out(),
+        .vcount_out(),
+        .hcount_out()
     );
     
     debounce u1_debounce_capture(
@@ -186,8 +214,8 @@ module top_level(
     );
     
     RGB u1_RGB(
-        .din(rgb_display_data),
-        .nblank(nblank),
+        .din(rgb_display_out),
+        .nblank(nblank_out),
         .r(vga_r),
         .g(vga_g),
         .b(vga_b)
@@ -219,17 +247,5 @@ module top_level(
         .increment_threshold(increment_threshold),
         .decrement_threshold(decrement_threshold)
     );
-        
-//    classifier u1_classifier(
-//        .clk(ov7670_pclk),
-//        .rst(rst),
-//        .detect_en(detect_en), //in
-//        .detect_done(detect_done), //out
-//        .data_in( {1'b0, ii_rddata_a} ), //conversion to signed //in
-//        .rd_addr(classifier_rd_addr), //out
-//        .detected_flag(detected_flag), //out
-//        .increment_threshold(increment_threshold),
-//        .decrement_threshold(decrement_threshold)
-//    );
     
 endmodule
