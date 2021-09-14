@@ -40,9 +40,6 @@ module top_level(
     output ov7670_sioc,
     inout ov7670_siod,
     output ov7670_pwdn,
-//    output [0:7] sseg,
-//    output [3:0] an,
-//    output [4:0] led_no,
     output ov7670_reset,
     inout ps2c,
     inout ps2d
@@ -79,23 +76,8 @@ module top_level(
     wire mouse_left, mouse_right;
     
     assign led = detected_flag;
-//    assign vga_vsync = vsync;
     assign clk_vga = clk_25;
     assign xclk = clk_25;
-    
-//    assign led_no = u1_classifier.score[20:16];
-    
-//                disp_hex_mux u1_disp_hex_mux(
-//                  .clk(ov7670_pclk),
-//                  .reset(rst),
-//                  .hex3(u1_classifier.score[15:12]),
-//                  .hex2(u1_classifier.score[11:8]),
-//                  .hex1(u1_classifier.score[7:4]),
-//                  .hex0(u1_classifier.score[3:0]),
-//                  .dp_in(4'b1011),
-//                  .an(an),
-//                  .sseg({sseg[7], sseg[0:6]})
-//                );
     
     clock_generator u1_clock_generator(
         .reset(reset_in),
@@ -182,13 +164,6 @@ module top_level(
         .vcount_out(),
         .hcount_out()
     );
-    
-//    debounce u1_debounce_capture(
-//        .rst(rst),
-//        .clk(ov7670_pclk),
-//        .i(btnc),
-//        .o(continue)
-//    );
     
     debounce u2_debounce_increment(
         .rst(rst),
@@ -280,8 +255,6 @@ module top_level(
         .address_a_out(address_a), // goes to ii_buffer
         .write_en_out(wea)
     );
-    
-    
     
     cascade dut_cascade(
         .clk(ov7670_pclk),

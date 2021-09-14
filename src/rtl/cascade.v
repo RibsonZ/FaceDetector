@@ -52,7 +52,6 @@ module cascade(
     /* CLASSIFIER 1 VARS */
     reg detect_en_1, detect_en_1_nxt;
     wire detect_done_1;
-//    wire signed [20:0] data_in_1;
     wire [14:0] rd_addr_1;
     wire detected_flag_1;
     /*********************/
@@ -60,7 +59,6 @@ module cascade(
     /* CLASSIFIER 2 VARS */
     reg detect_en_2, detect_en_2_nxt;
     wire detect_done_2;
-//    wire signed [20:0] data_in_2;
     wire [14:0] rd_addr_2;
     wire detected_flag_2;
     /*********************/
@@ -68,7 +66,6 @@ module cascade(
     /* CLASSIFIER 3 VARS */
     reg detect_en_3, detect_en_3_nxt;
     wire detect_done_3;
-//    wire signed [20:0] data_in_3;
     wire [14:0] rd_addr_3;
     wire detected_flag_3;
     /*********************/

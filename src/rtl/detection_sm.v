@@ -29,11 +29,9 @@ module detection_sm(
     input write_en_in,
     input [14:0] wr_addr, // write address from capture module, data goes straight to the memory block
     input [14:0] classifier_rd_addr, // read address from detect module
-//    input [19:0] data_in, data will go straight to detection module
     output reg detect_en,
     output [14:0] address_a_out,
-    output write_en_out//,
-//    output reg led_out
+    output write_en_out
     );
     
     localparam
@@ -49,8 +47,6 @@ module detection_sm(
     reg [1:0] state, state_nxt;
     
     reg addr_sel, addr_sel_nxt;
-//    reg write_en_out_nxt;
-//    reg led_out_nxt;
     reg detect_en_nxt;
     reg cap_done_z, cap_done_z_nxt;
     
@@ -60,7 +56,6 @@ module detection_sm(
     always@(posedge clk) begin
         if(rst) begin
             detect_en <= 0;
-//            write_en_out <= 0;
             addr_sel <= 0;
             state <= IDLE;
             continue_latched <= 0;
@@ -68,7 +63,6 @@ module detection_sm(
         end
         else begin
             state <= state_nxt;
-//            write_en_out <= write_en_out_nxt;
             detect_en <= detect_en_nxt;
             addr_sel <= addr_sel_nxt;
             continue_latched <= continue_latched_nxt;
@@ -76,7 +70,6 @@ module detection_sm(
         end
     end
     
-    //Mealy - outputs result from this: states and inputs
     always @* begin
         continue_latched_nxt = continue_latched;
         cap_done_z_nxt = cap_done;
@@ -86,7 +79,6 @@ module detection_sm(
         case(state)
             IDLE: begin
                 addr_sel_nxt = CLASSIFIER_RD_ADDR;
-//                write_en_out_nxt = 0;
                 detect_en_nxt = 0;
                 
                 if(continue) begin
@@ -103,7 +95,6 @@ module detection_sm(
             end
             CAPTURE: begin
                 addr_sel_nxt = WR_ADDR;
-//                write_en_out_nxt = write_en_in;
                 detect_en_nxt = 0;
                 
                 if(cap_done && !cap_done_z) begin //rising edge
@@ -115,7 +106,6 @@ module detection_sm(
             end
             DETECT: begin
                 addr_sel_nxt = CLASSIFIER_RD_ADDR;
-//                write_en_out_nxt = 0;
                 detect_en_nxt = 1;
                 
                 if(detect_done) begin
