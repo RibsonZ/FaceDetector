@@ -174,35 +174,27 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/rtl/MouseCtl.vhd">
+      <File Path="$PPRDIR/../src/rtl/MouseCtl.vhd">
         <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../src/rtl/MouseCtl.vhd"/>
-          <Attr Name="ImportTime" Val="1495019236"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/rtl/Ps2Interface.vhd">
+      <File Path="$PPRDIR/../src/rtl/Ps2Interface.vhd">
         <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../src/rtl/Ps2Interface.vhd"/>
-          <Attr Name="ImportTime" Val="1495019236"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/rtl/draw.v">
+      <File Path="$PPRDIR/../src/rtl/draw.v">
         <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../src/rtl/draw.v"/>
-          <Attr Name="ImportTime" Val="1631690108"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/rtl/classifier_2x2.v">
+      <File Path="$PPRDIR/../src/rtl/classifier_2x2.v">
         <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../src/rtl/classifier_2x2.v"/>
-          <Attr Name="ImportTime" Val="1631696698"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
