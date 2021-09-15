@@ -11,3 +11,4 @@ doc/
 *.sim/
 *.runs/
 *.log
+*.srcs
