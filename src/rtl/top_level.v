@@ -24,10 +24,10 @@
 module top_level(
     input wire clk100,
     input wire reset_in, // BTNU
-    input wire btnl, // INCREMENT THRESHOLD
-    input wire btnc, // CAPTURE FRAME
-    input wire btnr, // DECREMENT THRESHOLD
-    input wire [3:0] sw,
+//    input wire btnl, // INCREMENT THRESHOLD
+//    input wire btnc, // CAPTURE FRAME
+//    input wire btnr, // DECREMENT THRESHOLD
+//    input wire [3:0] sw,// sw[0] switches on continuous mode
     output wire led,
     output vga_hsync,
     output vga_vsync,
@@ -40,54 +40,78 @@ module top_level(
     output ov7670_sioc,
     inout ov7670_siod,
     output ov7670_pwdn,
-    output [0:7] sseg,
-    output [3:0] an,
-    output [4:0] led_no,
-    output ov7670_reset
+    output ov7670_reset,
+    inout mou_ps2c,
+    inout mou_ps2d
     );
     
     wire clk_camera;
     wire clk_vga;
     wire xclk;
     wire clk_25;
-    wire wren;
-    wire resend;
-    wire nblank;
-    wire vsync;
-    wire nsync;
-    wire [14:0] rd_addr, wr_addr; //integral image addresses
+//    wire wren;
+//    wire resend;
+//    wire nblank;
+//    wire vsync;
+//    wire hsync;
+//    wire nsync;
+//    wire [14:0] rd_addr, wr_addr; //integral image addresses
     wire rst_vga, rst_camera, rst;
     wire locked;
-    reg write_en;
-    wire [19:0] ii_wrdata, ii_rddata, ii_rddata_a;
-    wire [11:0] rgb_display_data;
-    wire continue, decrement_threshold, increment_threshold;
-    wire detect_en;
-    wire cap_done; // out from ii_cap
-    wire detect_done; // out from detect
-    wire [14:0] address_a; // into buff
-    wire wea; //into buff
-    wire [19:0] classifier_rd_addr;
-    wire detected_flag;
+//    reg write_en;
+//    wire [19:0] ii_wrdata, ii_rddata, ii_rddata_a;
+//    wire [11:0] rgb_display_data;
+//    wire continue;//, decrement_threshold, increment_threshold;
+//    wire detect_en;
+//    wire cap_done; // out from ii_cap
+//    wire detect_done; // out from detect
+//    wire [14:0] address_a; // into buff
+//    wire wea; //into buff
+//    wire [19:0] classifier_rd_addr;
+//    wire detected_flag;
+//    wire [11:0] vcnt, hcnt;
+//    wire [11:0] rgb_display_out;
+//    wire nblank_out;
+//    wire left, middle, right;
+//    wire mouse_left, mouse_right;
+
+    wire m2d_left, m2d_right;
+    wire d2ctl_left, d2_ctl_right;
+    wire ctl2det_continue;
+    wire [19:0] iic2buf_wrdata;
     
-    assign led = detected_flag;
-    assign vga_vsync = vsync;
+    wire [14:0] iic2det_addr;
+    wire iic2det_wren, iic2det_cap_done;
+    
+    wire [14:0] casc2det_addr;
+    wire casc2det_detect_done;
+    
+    wire casc2draw_detected_flag;
+    
+    wire [14:0] det2buf_addr;
+    wire det2buf_we;
+    
+    wire det2casc_detect_en;
+    
+    wire [19:0] buf2casc_data;
+    
+    wire [19:0] buf2disp_data;
+    
+    wire [14:0] disp2buf_addr;
+    
+    wire [11:0] disp2draw_hcnt;
+    wire disp2draw_nblank;
+    wire [11:0] disp2draw_rgb;
+    wire [11:0] disp2draw_vcnt;
+    wire disp2draw_hsync;
+    wire disp2draw_vsync;
+    
+    wire [11:0] draw2rgb_data;
+    wire draw2RGB_nblank;
+    
+    assign led = casc2draw_detected_flag;
     assign clk_vga = clk_25;
     assign xclk = clk_25;
-    
-    assign led_no = u1_classifier.score[20:16];
-    
-                disp_hex_mux u1_disp_hex_mux(
-                  .clk(ov7670_pclk),
-                  .reset(rst),
-                  .hex3(u1_classifier.score[15:12]),
-                  .hex2(u1_classifier.score[11:8]),
-                  .hex1(u1_classifier.score[7:4]),
-                  .hex0(u1_classifier.score[3:0]),
-                  .dp_in(4'b1011),
-                  .an(an),
-                  .sseg({sseg[7], sseg[0:6]})
-                );
     
     clock_generator u1_clock_generator(
         .reset(reset_in),
@@ -111,37 +135,81 @@ module top_level(
     
     assign rst = rst_vga | rst_camera;
     
+    MouseCtl u1_MouseCtl (
+        .clk(ov7670_pclk),
+        .rst(rst),
+        .xpos(),
+        .ypos(),
+        .zpos(),
+        .left(m2d_left),
+        .middle(),
+        .right(m2d_right),
+        .new_event(),
+        .value(0),
+        .setx(0),
+        .sety(0),
+        .setmax_x(0),
+        .setmax_y(0),
+        .ps2_clk(mou_ps2c),
+        .ps2_data(mou_ps2d)
+    );
+    
+    debounce u4_debounce(
+        .rst(rst),
+        .clk(ov7670_pclk),
+        .i(m2d_left),
+        .o(d2ctl_left)
+    );
+        
+    debounce u5_debounce(
+        .rst(rst),
+        .clk(ov7670_pclk),
+        .i(m2d_right),
+        .o(d2_ctl_right)
+    );
+    
+    control_module u1_control_module(
+        .clk(ov7670_pclk),
+        .rst(rst),
+        .mouse_left(d2ctl_left), //debounced
+        .mouse_right(d2_ctl_right), //debounced
+        .continue(ctl2det_continue)
+    );
+    
     integral_image_display u1_integral_image_display(
         .rst(rst),
         .clk_vga(clk_vga),
-        .vga_hsync(vga_hsync),
-        .vsync_out(vsync),
-        .nblank(nblank),
-        .nsync(nsync),
-        .rgb(rgb_display_data),
-        .rd_addr(rd_addr),
-        .ii_rddata(ii_rddata)
+        .vga_hsync(disp2draw_hsync),
+        .vsync_out(disp2draw_vsync),
+        .nblank(disp2draw_nblank),
+        .nsync(),
+        .rgb(disp2draw_rgb),
+        .rd_addr(disp2buf_addr),
+        .ii_rddata(buf2disp_data),
+        .hcnt_out(disp2draw_hcnt),
+        .vcnt_out(disp2draw_vcnt)
     );
     
-    debounce u1_debounce_capture(
+    draw ul_draw(
         .rst(rst),
-        .clk(ov7670_pclk),
-        .i(btnc),
-        .o(continue)
-    );
-    
-    debounce u2_debounce_increment(
-        .rst(rst),
-        .clk(ov7670_pclk),
-        .i(btnl),
-        .o(increment_threshold)
-    );
-    
-    debounce u3_debounce_decrement(
-        .rst(rst),
-        .clk(ov7670_pclk),
-        .i(btnr),
-        .o(decrement_threshold)
+        .pclk(clk_vga),
+        .hcount_in(disp2draw_hcnt),
+        .vcount_in(disp2draw_vcnt),
+        .hsync_in(disp2draw_hsync),
+        .vsync_in(disp2draw_vsync),
+        .hblnk_in(!disp2draw_nblank),
+        .vblnk_in(!disp2draw_nblank),
+        .rgb_in(disp2draw_rgb),
+        .hsync_out(vga_hsync),
+        .vsync_out(vga_vsync),
+        .rgb_out(draw2rgb_data),
+        .nblank_out(draw2RGB_nblank),
+        .detected_flag(casc2draw_detected_flag),
+        .continuous(ctl2det_continue),
+        .hblnk_out(),
+        .vblnk_out(),
+        .vcount_out(),
+        .hcount_out()
     );
 
     ov7670_controller u1_ov7670_controller (
@@ -159,16 +227,16 @@ module top_level(
     
     integral_image_buffer u1_integral_image_buffer(
         /* BRAM_PORTA */
-        .addra(address_a), //14:0, write address
+        .addra(det2buf_addr), //14:0, write address
         .clka(ov7670_pclk),
-        .dina(ii_wrdata), //19:0, input data
-        .douta(ii_rddata_a),
-        .wea(wea), //write enable
+        .dina(iic2buf_wrdata), //19:0, input data
+        .douta(buf2casc_data),
+        .wea(det2buf_we), //write enable
         /* BRAM_PORTB */
-        .addrb(rd_addr), //14:0, read address
+        .addrb(disp2buf_addr), //14:0, read address
         .clkb(clk_vga),
         .dinb(0),
-        .doutb(ii_rddata), //19:0, output data
+        .doutb(buf2disp_data), //19:0, output data
         .web(0)
     );
 
@@ -178,45 +246,44 @@ module top_level(
         .ov7670_vsync(ov7670_vsync),
         .ov7670_href(ov7670_href),
         .ov7670_data(ov7670_data),
-        .we(wren),
-        .ii_address(wr_addr),
-        .cap_done(cap_done),
-        .ii_wrdata(ii_wrdata)
+        .we(iic2det_wren),
+        .ii_address(iic2det_addr),
+        .cap_done(iic2det_cap_done),
+        .ii_wrdata(iic2buf_wrdata)
     );
     
     RGB u1_RGB(
-        .din(rgb_display_data),
-        .nblank(nblank),
+        .din(draw2rgb_data),
+        .nblank(draw2RGB_nblank),
         .r(vga_r),
         .g(vga_g),
         .b(vga_b)
     );
     
-    
     detection_sm u1_detection_sm(
         .clk(ov7670_pclk),
         .rst(rst),
-        .cap_done(cap_done),
-        .detect_done(detect_done),
-        .continue(continue),
-        .write_en_in(wren),
-        .wr_addr(wr_addr),
-        .classifier_rd_addr(classifier_rd_addr),
-        .detect_en(detect_en),
-        .address_a_out(address_a), // goes to ii_buffer
-        .write_en_out(wea)
+        .cap_done(iic2det_cap_done),
+        .detect_done(casc2det_detect_done),
+        .continue(ctl2det_continue),
+        .write_en_in(iic2det_wren),
+        .wr_addr(iic2det_addr),
+        .classifier_rd_addr(casc2det_addr),
+        .detect_en(det2casc_detect_en),
+        .address_a_out(det2buf_addr),
+        .write_en_out(det2buf_we)
     );
     
-    classifier u1_classifier(
+    cascade u1_cascade(
         .clk(ov7670_pclk),
         .rst(rst),
-        .detect_en(detect_en), //in
-        .detect_done(detect_done), //out
-        .data_in( {1'b0, ii_rddata_a} ), //conversion to signed //in
-        .rd_addr(classifier_rd_addr), //out
-        .detected_flag(detected_flag), //out
-        .increment_threshold(increment_threshold),
-        .decrement_threshold(decrement_threshold)
+        .detect_en(det2casc_detect_en),
+        .detect_done(casc2det_detect_done), //out
+        .data_in( {1'b0, buf2casc_data} ), //conversion to signed //in
+        .rd_addr(casc2det_addr), //out
+        .detected_flag(casc2draw_detected_flag), //out
+        .increment_threshold(0),
+        .decrement_threshold(0)
     );
     
 endmodule

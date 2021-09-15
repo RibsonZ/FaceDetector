@@ -5,7 +5,7 @@
 // 
 // Create Date: 09/09/2021 12:38:43 PM
 // Design Name: 
-// Module Name: classifier
+// Module Name: classifier_1x2
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -19,7 +19,13 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-module classifier(
+module classifier_1x2(
+    input [14:0] address_0,
+    input [14:0] address_1,
+    input [14:0] address_2,
+    input [14:0] address_3,
+    input [14:0] address_4,
+    input [14:0] address_5,
     input clk,
     input rst,
     input increment_threshold,
@@ -34,11 +40,11 @@ module classifier(
     /* TWO VERTICAL
     *
     *   -------------------------
-    *   |       *-------*       |
+    *   |       3-------2       |
     *   |       |       |       |
-    *   |       *-------*       |
+    *   |       1-------0       |
     *   |       |///////|       |
-    *   |       *-------*       |
+    *   |       5-------4       |
     *   -------------------------
     */
     
@@ -49,8 +55,9 @@ module classifier(
     IDLE = 3'b001,
     COLLECT_DATA = 3'b010,
     COMPUTE_SCORE = 3'b100,
-    THRESHOLD = 500,
+    THRESHOLD = 0,
     MAX_THRESHOLD = 160 * 120 * 21'h0F,
+    MIN_THRESHOLD = - MAX_THRESHOLD,
     II_WIDTH = 160,
     II_HEIGHT = 120;
     
@@ -74,12 +81,12 @@ module classifier(
             end
             state <= IDLE;
             /* Numeration of pixels is left to right, top to bottom */
-            addresses[0] <= II_WIDTH * 60 + II_WIDTH - 1; // positive bottom right / negative top right
-            addresses[1] <= II_WIDTH * 60; // positive bottom left / negative top left
-            addresses[2] <= II_WIDTH - 1; // positive top right
-            addresses[3] <= 0; // positive top left
-            addresses[4] <= II_WIDTH * (II_HEIGHT - 1) + II_WIDTH - 1;// negative bottom right
-            addresses[5] <= II_WIDTH * (II_HEIGHT - 1);// negative bottom left
+            addresses[0] <= address_0; // positive bottom right / negative top right
+            addresses[1] <= address_1; // positive bottom left / negative top left
+            addresses[2] <= address_2; // positive top right
+            addresses[3] <= address_3; // positive top left
+            addresses[4] <= address_4; // negative bottom right
+            addresses[5] <= address_5; // negative bottom left
             counter <= 0;
             detect_done <= 0;
             rd_addr <= 0;
@@ -115,6 +122,7 @@ module classifier(
         detect_done_nxt = detect_done;
         detect_en_z_nxt = detect_en;
         threshold_nxt = threshold;
+        state_nxt = state;
         
         case (state)
             IDLE: 
@@ -124,7 +132,7 @@ module classifier(
                     end
                     
                     if (decrement_threshold) begin
-                        threshold_nxt = (threshold - 100 > 0) ? threshold - 100 : threshold;
+                        threshold_nxt = (threshold - 100 > MIN_THRESHOLD) ? threshold - 100 : threshold;
                     end
                     
                     if (detect_en && !detect_en_z) begin

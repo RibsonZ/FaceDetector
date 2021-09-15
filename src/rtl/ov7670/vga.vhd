@@ -17,7 +17,9 @@ entity VGA is
            Hsync,Vsync : out  STD_LOGIC;						-- les deux signaux de synchronisation pour l'écran VGA
 			  Nblank : out  STD_LOGIC;								-- signal de commande du convertisseur N/A ADV7123
            activeArea : out  STD_LOGIC;
-			  Nsync : out  STD_LOGIC);	-- signaux de synchronisation et commande de l'écran TFT
+			  Nsync : out  STD_LOGIC;	-- signaux de synchronisation et commande de l'écran TFT
+			  hcnt_out : out std_logic_vector(11 downto 0);
+			  vcnt_out : out std_logic_vector(11 downto 0));
 end VGA;
 
 architecture Behavioral of VGA is
@@ -34,9 +36,16 @@ constant VD: integer :=480;	--la taille de l'écran (vertical)
 constant VF: integer :=10;		--front porch
 constant VB: integer :=33;		--back porch
 constant VR: integer :=2;		--retrace
+constant POS_X: integer :=  240;
+constant POS_Y: integer :=  180;
+constant WIDTH: integer :=  160;
+constant HEIGHT: integer :=  120;
 
 begin
-
+    
+    hcnt_out <= "00" & hcnt;
+    vcnt_out <= "00" & vcnt;    
+    
 -- initialisation d'un compteur de 0 à 799 (800 pixel par ligne):
 -- à chaque front d'horloge en incrémente le compteur de colonnes
 -- c-a-d du 0 à 799.
@@ -46,24 +55,24 @@ begin
                 if (rst = '1') then
                     Hcnt <= "0000000000";
                     Vcnt <= "1000001000";
-                    activeArea <= '0';
+--                    activeArea <= '0';
                 elsif (Hcnt = HM) then
                     Hcnt <= "0000000000";
                     if (Vcnt= VM) then
                         Vcnt <= "0000000000";
-                        activeArea <= '1';
+--                        activeArea <= '1';
                     else
                         if rez_160x120 = '1' then
-                            if vCnt < 120-1 then
-                                activeArea <= '1';
+                            if vCnt > 179 and vCnt < 360 then
+--                                activeArea <= '1';
                             end if;
                         elsif rez_320x240 = '1' then
                             if vCnt < 240-1 then
-                                activeArea <= '1';
+--                                activeArea <= '1';
                             end if;
                         else
                             if vCnt < 480-1 then
-                                activeArea <= '1';
+--                                activeArea <= '1';
                             end if;
                         end if;
                         Vcnt <= Vcnt+1;
@@ -71,18 +80,24 @@ begin
                 else
                     if rez_160x120 = '1' then
                         if hcnt = 160-1 then
-                            activeArea <= '0';
+--                            activeArea <= '0';
                         end if;
                     elsif rez_320x240 = '1' then
                         if hcnt = 320-1 then
-                            activeArea <= '0';
+--                            activeArea <= '0';
                         end if;
                     else
                         if hcnt = 640-1 then
-                            activeArea <= '0';
+--                            activeArea <= '0';
                         end if;
                     end if;
                     Hcnt <= Hcnt + 1;
+                end if;
+                
+                if ((hcnt >= POS_X) and (hcnt < POS_X + WIDTH) and (vcnt >= POS_Y) and (vcnt < POS_Y + HEIGHT)) then
+                    activeArea <= '1';
+                else
+                    activeArea <= '0';
                 end if;
             end if;
         end process;
