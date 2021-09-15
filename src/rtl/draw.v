@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module draw_rectangle(
+module draw(
     input wire rst,
     input wire pclk,
     input wire [11:0] hcount_in,

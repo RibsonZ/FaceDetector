@@ -3,13 +3,13 @@
 
 #USB HID (PS/2)
 #Bank = 16, Pin name = ,					Sch name = PS2_CLK
-set_property PACKAGE_PIN C17 [get_ports ps2c]
-set_property IOSTANDARD LVCMOS33 [get_ports ps2c]
-set_property PULLUP true [get_ports ps2c]
+set_property PACKAGE_PIN C17 [get_ports mou_ps2c]
+set_property IOSTANDARD LVCMOS33 [get_ports mou_ps2c]
+set_property PULLUP true [get_ports mou_ps2c]
 #Bank = 16, Pin name = ,					Sch name = PS2_DATA
-set_property PACKAGE_PIN B17 [get_ports ps2d]
-set_property IOSTANDARD LVCMOS33 [get_ports ps2d]
-set_property PULLUP true [get_ports ps2d]
+set_property PACKAGE_PIN B17 [get_ports mou_ps2d]
+set_property IOSTANDARD LVCMOS33 [get_ports mou_ps2d]
+set_property PULLUP true [get_ports mou_ps2d]
 
 ## Clock signal
 set_property PACKAGE_PIN W5 [get_ports clk100]							
@@ -114,14 +114,14 @@ set_property PACKAGE_PIN U16 [get_ports {led}]
 set_property PACKAGE_PIN T18 [get_ports {reset_in}]
     set_property IOSTANDARD LVCMOS33 [get_ports {reset_in}]
 #Bank = 14, Sch name = BTNC
-set_property PACKAGE_PIN U18 [get_ports btnc]						
-	set_property IOSTANDARD LVCMOS33 [get_ports btnc]
-#Bank = 14, Sch name = BTNL
-set_property PACKAGE_PIN W19 [get_ports btnl]                        
-     set_property IOSTANDARD LVCMOS33 [get_ports btnl]
-#Bank = 14, Sch name = BTNR
-set_property PACKAGE_PIN T17 [get_ports btnr]						
-         set_property IOSTANDARD LVCMOS33 [get_ports btnr]
+#set_property PACKAGE_PIN U18 [get_ports btnc]						
+#	set_property IOSTANDARD LVCMOS33 [get_ports btnc]
+##Bank = 14, Sch name = BTNL
+#set_property PACKAGE_PIN W19 [get_ports btnl]                        
+#     set_property IOSTANDARD LVCMOS33 [get_ports btnl]
+##Bank = 14, Sch name = BTNR
+#set_property PACKAGE_PIN T17 [get_ports btnr]						
+#         set_property IOSTANDARD LVCMOS33 [get_ports btnr]
 
 
 ## OV7670 Camera header pins
