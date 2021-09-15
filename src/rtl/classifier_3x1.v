@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: AGH UST
-// Engineer: Miko³aj Karelus
+// Engineer: Mikolaj Karelus
 // 
 // Create Date: 09/09/2021 12:38:43 PM
 // Design Name: 

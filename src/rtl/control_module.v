@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: AGH UST
+// Engineer: Wojciech Zebrowski
 // 
 // Create Date: 09/14/2021 09:03:15 PM
 // Design Name: 
