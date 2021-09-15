@@ -30,7 +30,7 @@ module integral_image_capture(
         output we,
         output reg [14:0] ii_address,
         output reg cap_done,
-        output reg [31:0] ii_wrdata
+        output reg [19:0] ii_wrdata
     );
     
     wire [18:0] wraddress;

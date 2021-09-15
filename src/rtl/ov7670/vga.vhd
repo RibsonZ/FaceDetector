@@ -18,8 +18,8 @@ entity VGA is
 			  Nblank : out  STD_LOGIC;								-- signal de commande du convertisseur N/A ADV7123
            activeArea : out  STD_LOGIC;
 			  Nsync : out  STD_LOGIC;	-- signaux de synchronisation et commande de l'écran TFT
-			  hcnt_out : out std_logic_vector(9 downto 0);
-			  vcnt_out : out std_logic_vector(9 downto 0));
+			  hcnt_out : out std_logic_vector(11 downto 0);
+			  vcnt_out : out std_logic_vector(11 downto 0));
 end VGA;
 
 architecture Behavioral of VGA is
@@ -43,8 +43,8 @@ constant HEIGHT: integer :=  120;
 
 begin
     
-    hcnt_out <= hcnt;
-    vcnt_out <= vcnt;    
+    hcnt_out <= "00" & hcnt;
+    vcnt_out <= "00" & vcnt;    
     
 -- initialisation d'un compteur de 0 à 799 (800 pixel par ligne):
 -- à chaque front d'horloge en incrémente le compteur de colonnes
