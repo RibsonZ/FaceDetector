@@ -135,8 +135,7 @@ module top_level(
     
     assign rst = rst_vga | rst_camera;
     
-    MouseCtl #(.SYSCLK_FREQUENCY(25000000),.DATA_WIDTH(64))
-    u1_MouseCtl (
+    MouseCtl u1_MouseCtl (
         .clk(ov7670_pclk),
         .rst(rst),
         .xpos(),
@@ -275,7 +274,7 @@ module top_level(
         .write_en_out(det2buf_we)
     );
     
-    cascade dut_cascade(
+    cascade u1_cascade(
         .clk(ov7670_pclk),
         .rst(rst),
         .detect_en(det2casc_detect_en),

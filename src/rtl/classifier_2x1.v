@@ -55,7 +55,7 @@ module classifier_2x1(
     IDLE = 3'b001,
     COLLECT_DATA = 3'b010,
     COMPUTE_SCORE = 3'b100,
-    THRESHOLD = 500,
+    THRESHOLD = 0,
     MAX_THRESHOLD = 160 * 120 * 21'h0F,
     MIN_THRESHOLD = - MAX_THRESHOLD,
     II_WIDTH = 160,

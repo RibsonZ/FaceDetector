@@ -5,7 +5,7 @@
 // 
 // Create Date: 09/09/2021 12:38:43 PM
 // Design Name: 
-// Module Name: classifier_1x2
+// Module Name: classifier_3x1
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -19,13 +19,15 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-module classifier_1x2(
+module classifier_2x2(
     input [14:0] address_0,
     input [14:0] address_1,
     input [14:0] address_2,
     input [14:0] address_3,
     input [14:0] address_4,
     input [14:0] address_5,
+    input [14:0] address_6,
+    input [14:0] address_7,
     input clk,
     input rst,
     input increment_threshold,
@@ -37,25 +39,25 @@ module classifier_1x2(
     output reg detected_flag // result, set in compute_score state
     );
     
-    /* TWO VERTICAL
+    /* THREE HORIZONTAL
     *
-    *   -------------------------
-    *   |       3-------2       |
-    *   |       |       |       |
-    *   |       1-------0       |
-    *   |       |///////|       |
-    *   |       5-------4       |
-    *   -------------------------
+    *   -----------------------------------------
+    *   |       3-------1-------5-------7       |
+    *   |       |       |///////|       |       |
+    *   |       |       |///////|       |       |
+    *   |       |       |///////|       |       |
+    *   |       2-------0-------4-------6       |
+    *   -----------------------------------------
     */
     
     
     localparam
-    DATA_POINTS_NO = 6, // TWO VERTICAL : six datapoints necessary
+    DATA_POINTS_NO = 8, // THREE HORIZONTAL : eight datapoints necessary
     DELAY = 16,
     IDLE = 3'b001,
     COLLECT_DATA = 3'b010,
     COMPUTE_SCORE = 3'b100,
-    THRESHOLD = 0,
+    THRESHOLD = 500,
     MAX_THRESHOLD = 160 * 120 * 21'h0F,
     MIN_THRESHOLD = - MAX_THRESHOLD,
     II_WIDTH = 160,
@@ -80,13 +82,15 @@ module classifier_1x2(
                 data[i] <= 0;
             end
             state <= IDLE;
-            /* Numeration of pixels is left to right, top to bottom */
-            addresses[0] <= address_0; // positive bottom right / negative top right
-            addresses[1] <= address_1; // positive bottom left / negative top left
-            addresses[2] <= address_2; // positive top right
-            addresses[3] <= address_3; // positive top left
-            addresses[4] <= address_4; // negative bottom right
-            addresses[5] <= address_5; // negative bottom left
+            /* Numeration of pixels in integral_image_buffer is left to right, top to bottom */
+            addresses[0] <= address_0; // positive1 bottom right / negative bottom left
+            addresses[1] <= address_1; // positive1 top right / negative top left
+            addresses[2] <= address_2; // positive1 bottom left
+            addresses[3] <= address_3; // positive1 top left
+            addresses[4] <= address_4; // negative bottom right / positive2 bottom left
+            addresses[5] <= address_5; // negative top left / positive2 top left
+            addresses[6] <= address_6; // positive2 bottom right
+            addresses[7] <= address_7; // positive2 top right
             counter <= 0;
             detect_done <= 0;
             rd_addr <= 0;
@@ -113,8 +117,8 @@ module classifier_1x2(
             data_nxt[i] = data[i];
         end
         
-        // difference between two discrete definite integrals of a flattened 2D function {address := grayscale value} (image)
-        score = ( data[0] - data[1] - data[2] + data[3] ) - ( data[4] - data[5] - data[0] + data[1] );
+        // difference between discrete definite integrals of a flattened 2D function {address := grayscale value} (image)
+        score = ( data[0] - data[1] - data[2] + data[3] ) - ( data[4] - data[5] - data[0] + data[1] ) + ( data[6] - data[7] - data[4] + data[5] );
         
         rd_addr_nxt = rd_addr;
         detected_flag_nxt = detected_flag;

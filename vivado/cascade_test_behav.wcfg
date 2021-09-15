@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="12320047103334fs"></ZoomStartTime>
-      <ZoomEndTime time="12320335083336fs"></ZoomEndTime>
-      <Cursor1Time time="12320155000000fs"></Cursor1Time>
+      <ZoomStartTime time="12321119402201fs"></ZoomStartTime>
+      <ZoomEndTime time="12321462119560fs"></ZoomEndTime>
+      <Cursor1Time time="12321405000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="175"></NameColumnWidth>
-      <ValueColumnWidth column_width="86"></ValueColumnWidth>
+      <ValueColumnWidth column_width="78"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="30" />
+   <WVObjectSize size="131" />
    <wvobject fp_name="/cascade_test/wr_addr" type="array">
       <obj_property name="ElementShortName">wr_addr[14:0]</obj_property>
       <obj_property name="ObjectShortName">wr_addr[14:0]</obj_property>
@@ -150,9 +150,412 @@
       <obj_property name="ElementShortName">ii_rddata_a[19:0]</obj_property>
       <obj_property name="ObjectShortName">ii_rddata_a[19:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/cascade_test/dut_cascade/u1_classifier/data" type="array">
-      <obj_property name="ElementShortName">data[5:0][20:0]</obj_property>
-      <obj_property name="ObjectShortName">data[5:0][20:0]</obj_property>
-      <obj_property name="isExpanded"></obj_property>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/detect_en" type="logic">
+      <obj_property name="ElementShortName">detect_en</obj_property>
+      <obj_property name="ObjectShortName">detect_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/detect_done" type="logic">
+      <obj_property name="ElementShortName">detect_done</obj_property>
+      <obj_property name="ObjectShortName">detect_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/data_in" type="array">
+      <obj_property name="ElementShortName">data_in[20:0]</obj_property>
+      <obj_property name="ObjectShortName">data_in[20:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/rd_addr" type="array">
+      <obj_property name="ElementShortName">rd_addr[14:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_addr[14:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/detected_flag" type="logic">
+      <obj_property name="ElementShortName">detected_flag</obj_property>
+      <obj_property name="ObjectShortName">detected_flag</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/counter" type="array">
+      <obj_property name="ElementShortName">counter[7:0]</obj_property>
+      <obj_property name="ObjectShortName">counter[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/counter_nxt" type="array">
+      <obj_property name="ElementShortName">counter_nxt[7:0]</obj_property>
+      <obj_property name="ObjectShortName">counter_nxt[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/detect_done_nxt" type="logic">
+      <obj_property name="ElementShortName">detect_done_nxt</obj_property>
+      <obj_property name="ObjectShortName">detect_done_nxt</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/state" type="array">
+      <obj_property name="ElementShortName">state[2:0]</obj_property>
+      <obj_property name="ObjectShortName">state[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/state_nxt" type="array">
+      <obj_property name="ElementShortName">state_nxt[2:0]</obj_property>
+      <obj_property name="ObjectShortName">state_nxt[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/addresses" type="array">
+      <obj_property name="ElementShortName">addresses[8:0][14:0]</obj_property>
+      <obj_property name="ObjectShortName">addresses[8:0][14:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/rd_addr_nxt" type="array">
+      <obj_property name="ElementShortName">rd_addr_nxt[14:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_addr_nxt[14:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/data" type="array">
+      <obj_property name="ElementShortName">data[8:0][20:0]</obj_property>
+      <obj_property name="ObjectShortName">data[8:0][20:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/data_nxt" type="array">
+      <obj_property name="ElementShortName">data_nxt[8:0][20:0]</obj_property>
+      <obj_property name="ObjectShortName">data_nxt[8:0][20:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/score" type="array">
+      <obj_property name="ElementShortName">score[20:0]</obj_property>
+      <obj_property name="ObjectShortName">score[20:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/threshold" type="array">
+      <obj_property name="ElementShortName">threshold[20:0]</obj_property>
+      <obj_property name="ObjectShortName">threshold[20:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/threshold_nxt" type="array">
+      <obj_property name="ElementShortName">threshold_nxt[20:0]</obj_property>
+      <obj_property name="ObjectShortName">threshold_nxt[20:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/detected_flag_nxt" type="logic">
+      <obj_property name="ElementShortName">detected_flag_nxt</obj_property>
+      <obj_property name="ObjectShortName">detected_flag_nxt</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/detect_en_z" type="logic">
+      <obj_property name="ElementShortName">detect_en_z</obj_property>
+      <obj_property name="ObjectShortName">detect_en_z</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/detect_en_z_nxt" type="logic">
+      <obj_property name="ElementShortName">detect_en_z_nxt</obj_property>
+      <obj_property name="ObjectShortName">detect_en_z_nxt</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/DATA_POINTS_NO" type="array">
+      <obj_property name="ElementShortName">DATA_POINTS_NO[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DATA_POINTS_NO[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/DELAY" type="array">
+      <obj_property name="ElementShortName">DELAY[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DELAY[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/IDLE" type="array">
+      <obj_property name="ElementShortName">IDLE[2:0]</obj_property>
+      <obj_property name="ObjectShortName">IDLE[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/COLLECT_DATA" type="array">
+      <obj_property name="ElementShortName">COLLECT_DATA[2:0]</obj_property>
+      <obj_property name="ObjectShortName">COLLECT_DATA[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/COMPUTE_SCORE" type="array">
+      <obj_property name="ElementShortName">COMPUTE_SCORE[2:0]</obj_property>
+      <obj_property name="ObjectShortName">COMPUTE_SCORE[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/THRESHOLD" type="array">
+      <obj_property name="ElementShortName">THRESHOLD[31:0]</obj_property>
+      <obj_property name="ObjectShortName">THRESHOLD[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/MAX_THRESHOLD" type="array">
+      <obj_property name="ElementShortName">MAX_THRESHOLD[31:0]</obj_property>
+      <obj_property name="ObjectShortName">MAX_THRESHOLD[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/MIN_THRESHOLD" type="array">
+      <obj_property name="ElementShortName">MIN_THRESHOLD[31:0]</obj_property>
+      <obj_property name="ObjectShortName">MIN_THRESHOLD[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/II_WIDTH" type="array">
+      <obj_property name="ElementShortName">II_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">II_WIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/u4_classifier/II_HEIGHT" type="array">
+      <obj_property name="ElementShortName">II_HEIGHT[31:0]</obj_property>
+      <obj_property name="ObjectShortName">II_HEIGHT[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en" type="logic">
+      <obj_property name="ElementShortName">detect_en</obj_property>
+      <obj_property name="ObjectShortName">detect_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_done" type="logic">
+      <obj_property name="ElementShortName">detect_done</obj_property>
+      <obj_property name="ObjectShortName">detect_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/data_in" type="array">
+      <obj_property name="ElementShortName">data_in[20:0]</obj_property>
+      <obj_property name="ObjectShortName">data_in[20:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/rd_addr" type="array">
+      <obj_property name="ElementShortName">rd_addr[14:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_addr[14:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detected_flag" type="logic">
+      <obj_property name="ElementShortName">detected_flag</obj_property>
+      <obj_property name="ObjectShortName">detected_flag</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/result" type="array">
+      <obj_property name="ElementShortName">result[4:0]</obj_property>
+      <obj_property name="ObjectShortName">result[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/result_nxt" type="array">
+      <obj_property name="ElementShortName">result_nxt[4:0]</obj_property>
+      <obj_property name="ObjectShortName">result_nxt[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/state" type="array">
+      <obj_property name="ElementShortName">state[3:0]</obj_property>
+      <obj_property name="ObjectShortName">state[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/state_nxt" type="array">
+      <obj_property name="ElementShortName">state_nxt[3:0]</obj_property>
+      <obj_property name="ObjectShortName">state_nxt[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detected_flag_nxt" type="logic">
+      <obj_property name="ElementShortName">detected_flag_nxt</obj_property>
+      <obj_property name="ObjectShortName">detected_flag_nxt</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_done_nxt" type="logic">
+      <obj_property name="ElementShortName">detect_done_nxt</obj_property>
+      <obj_property name="ObjectShortName">detect_done_nxt</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en_z" type="logic">
+      <obj_property name="ElementShortName">detect_en_z</obj_property>
+      <obj_property name="ObjectShortName">detect_en_z</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en_z_nxt" type="logic">
+      <obj_property name="ElementShortName">detect_en_z_nxt</obj_property>
+      <obj_property name="ObjectShortName">detect_en_z_nxt</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en_1" type="logic">
+      <obj_property name="ElementShortName">detect_en_1</obj_property>
+      <obj_property name="ObjectShortName">detect_en_1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en_1_nxt" type="logic">
+      <obj_property name="ElementShortName">detect_en_1_nxt</obj_property>
+      <obj_property name="ObjectShortName">detect_en_1_nxt</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_done_1" type="logic">
+      <obj_property name="ElementShortName">detect_done_1</obj_property>
+      <obj_property name="ObjectShortName">detect_done_1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/rd_addr_1" type="array">
+      <obj_property name="ElementShortName">rd_addr_1[14:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_addr_1[14:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detected_flag_1" type="logic">
+      <obj_property name="ElementShortName">detected_flag_1</obj_property>
+      <obj_property name="ObjectShortName">detected_flag_1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en_2" type="logic">
+      <obj_property name="ElementShortName">detect_en_2</obj_property>
+      <obj_property name="ObjectShortName">detect_en_2</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en_2_nxt" type="logic">
+      <obj_property name="ElementShortName">detect_en_2_nxt</obj_property>
+      <obj_property name="ObjectShortName">detect_en_2_nxt</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_done_2" type="logic">
+      <obj_property name="ElementShortName">detect_done_2</obj_property>
+      <obj_property name="ObjectShortName">detect_done_2</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/rd_addr_2" type="array">
+      <obj_property name="ElementShortName">rd_addr_2[14:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_addr_2[14:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detected_flag_2" type="logic">
+      <obj_property name="ElementShortName">detected_flag_2</obj_property>
+      <obj_property name="ObjectShortName">detected_flag_2</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en_3" type="logic">
+      <obj_property name="ElementShortName">detect_en_3</obj_property>
+      <obj_property name="ObjectShortName">detect_en_3</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en_3_nxt" type="logic">
+      <obj_property name="ElementShortName">detect_en_3_nxt</obj_property>
+      <obj_property name="ObjectShortName">detect_en_3_nxt</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_done_3" type="logic">
+      <obj_property name="ElementShortName">detect_done_3</obj_property>
+      <obj_property name="ObjectShortName">detect_done_3</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/rd_addr_3" type="array">
+      <obj_property name="ElementShortName">rd_addr_3[14:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_addr_3[14:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detected_flag_3" type="logic">
+      <obj_property name="ElementShortName">detected_flag_3</obj_property>
+      <obj_property name="ObjectShortName">detected_flag_3</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en_4" type="logic">
+      <obj_property name="ElementShortName">detect_en_4</obj_property>
+      <obj_property name="ObjectShortName">detect_en_4</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en_4_nxt" type="logic">
+      <obj_property name="ElementShortName">detect_en_4_nxt</obj_property>
+      <obj_property name="ObjectShortName">detect_en_4_nxt</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_done_4" type="logic">
+      <obj_property name="ElementShortName">detect_done_4</obj_property>
+      <obj_property name="ObjectShortName">detect_done_4</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/rd_addr_4" type="array">
+      <obj_property name="ElementShortName">rd_addr_4[14:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_addr_4[14:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detected_flag_4" type="logic">
+      <obj_property name="ElementShortName">detected_flag_4</obj_property>
+      <obj_property name="ObjectShortName">detected_flag_4</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en_5" type="logic">
+      <obj_property name="ElementShortName">detect_en_5</obj_property>
+      <obj_property name="ObjectShortName">detect_en_5</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en_5_nxt" type="logic">
+      <obj_property name="ElementShortName">detect_en_5_nxt</obj_property>
+      <obj_property name="ObjectShortName">detect_en_5_nxt</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_done_5" type="logic">
+      <obj_property name="ElementShortName">detect_done_5</obj_property>
+      <obj_property name="ObjectShortName">detect_done_5</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/rd_addr_5" type="array">
+      <obj_property name="ElementShortName">rd_addr_5[14:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_addr_5[14:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detected_flag_5" type="logic">
+      <obj_property name="ElementShortName">detected_flag_5</obj_property>
+      <obj_property name="ObjectShortName">detected_flag_5</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en_6" type="logic">
+      <obj_property name="ElementShortName">detect_en_6</obj_property>
+      <obj_property name="ObjectShortName">detect_en_6</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en_6_nxt" type="logic">
+      <obj_property name="ElementShortName">detect_en_6_nxt</obj_property>
+      <obj_property name="ObjectShortName">detect_en_6_nxt</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_done_6" type="logic">
+      <obj_property name="ElementShortName">detect_done_6</obj_property>
+      <obj_property name="ObjectShortName">detect_done_6</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/rd_addr_6" type="array">
+      <obj_property name="ElementShortName">rd_addr_6[14:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_addr_6[14:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detected_flag_6" type="logic">
+      <obj_property name="ElementShortName">detected_flag_6</obj_property>
+      <obj_property name="ObjectShortName">detected_flag_6</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en_7" type="logic">
+      <obj_property name="ElementShortName">detect_en_7</obj_property>
+      <obj_property name="ObjectShortName">detect_en_7</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en_7_nxt" type="logic">
+      <obj_property name="ElementShortName">detect_en_7_nxt</obj_property>
+      <obj_property name="ObjectShortName">detect_en_7_nxt</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_done_7" type="logic">
+      <obj_property name="ElementShortName">detect_done_7</obj_property>
+      <obj_property name="ObjectShortName">detect_done_7</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/rd_addr_7" type="array">
+      <obj_property name="ElementShortName">rd_addr_7[14:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_addr_7[14:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detected_flag_7" type="logic">
+      <obj_property name="ElementShortName">detected_flag_7</obj_property>
+      <obj_property name="ObjectShortName">detected_flag_7</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en_8" type="logic">
+      <obj_property name="ElementShortName">detect_en_8</obj_property>
+      <obj_property name="ObjectShortName">detect_en_8</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en_8_nxt" type="logic">
+      <obj_property name="ElementShortName">detect_en_8_nxt</obj_property>
+      <obj_property name="ObjectShortName">detect_en_8_nxt</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_done_8" type="logic">
+      <obj_property name="ElementShortName">detect_done_8</obj_property>
+      <obj_property name="ObjectShortName">detect_done_8</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/rd_addr_8" type="array">
+      <obj_property name="ElementShortName">rd_addr_8[14:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_addr_8[14:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detected_flag_8" type="logic">
+      <obj_property name="ElementShortName">detected_flag_8</obj_property>
+      <obj_property name="ObjectShortName">detected_flag_8</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en_9" type="logic">
+      <obj_property name="ElementShortName">detect_en_9</obj_property>
+      <obj_property name="ObjectShortName">detect_en_9</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_en_9_nxt" type="logic">
+      <obj_property name="ElementShortName">detect_en_9_nxt</obj_property>
+      <obj_property name="ObjectShortName">detect_en_9_nxt</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detect_done_9" type="logic">
+      <obj_property name="ElementShortName">detect_done_9</obj_property>
+      <obj_property name="ObjectShortName">detect_done_9</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/rd_addr_9" type="array">
+      <obj_property name="ElementShortName">rd_addr_9[14:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_addr_9[14:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/detected_flag_9" type="logic">
+      <obj_property name="ElementShortName">detected_flag_9</obj_property>
+      <obj_property name="ObjectShortName">detected_flag_9</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/IDLE" type="array">
+      <obj_property name="ElementShortName">IDLE[3:0]</obj_property>
+      <obj_property name="ObjectShortName">IDLE[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/DETECT_1" type="array">
+      <obj_property name="ElementShortName">DETECT_1[3:0]</obj_property>
+      <obj_property name="ObjectShortName">DETECT_1[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/DETECT_2" type="array">
+      <obj_property name="ElementShortName">DETECT_2[3:0]</obj_property>
+      <obj_property name="ObjectShortName">DETECT_2[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/DETECT_3" type="array">
+      <obj_property name="ElementShortName">DETECT_3[3:0]</obj_property>
+      <obj_property name="ObjectShortName">DETECT_3[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/DETECT_4" type="array">
+      <obj_property name="ElementShortName">DETECT_4[3:0]</obj_property>
+      <obj_property name="ObjectShortName">DETECT_4[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/DETECT_5" type="array">
+      <obj_property name="ElementShortName">DETECT_5[3:0]</obj_property>
+      <obj_property name="ObjectShortName">DETECT_5[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/DETECT_6" type="array">
+      <obj_property name="ElementShortName">DETECT_6[3:0]</obj_property>
+      <obj_property name="ObjectShortName">DETECT_6[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/DETECT_7" type="array">
+      <obj_property name="ElementShortName">DETECT_7[3:0]</obj_property>
+      <obj_property name="ObjectShortName">DETECT_7[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/DETECT_8" type="array">
+      <obj_property name="ElementShortName">DETECT_8[3:0]</obj_property>
+      <obj_property name="ObjectShortName">DETECT_8[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/DETECT_9" type="array">
+      <obj_property name="ElementShortName">DETECT_9[3:0]</obj_property>
+      <obj_property name="ObjectShortName">DETECT_9[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/RETURN" type="array">
+      <obj_property name="ElementShortName">RETURN[3:0]</obj_property>
+      <obj_property name="ObjectShortName">RETURN[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/II_WIDTH" type="array">
+      <obj_property name="ElementShortName">II_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">II_WIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cascade_test/dut_cascade/II_HEIGHT" type="array">
+      <obj_property name="ElementShortName">II_HEIGHT[31:0]</obj_property>
+      <obj_property name="ObjectShortName">II_HEIGHT[31:0]</obj_property>
    </wvobject>
 </wave_config>
